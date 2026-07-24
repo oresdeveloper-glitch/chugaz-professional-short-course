@@ -1,0 +1,9 @@
+export { default as Hero } from "./Hero";
+export { default as Stats } from "./Stats";
+export { default as AboutSection } from "./AboutSection";
+export { default as CoursesSection } from "./CoursesSection";
+export { default as WhyChooseUs } from "./WhyChooseUs";
+export { default as Testimonials } from "./Testimonials";
+export { default as Gallery } from "./Gallery";
+export { default as CTA } from "./CTA";
+export { default as News } from "./News";

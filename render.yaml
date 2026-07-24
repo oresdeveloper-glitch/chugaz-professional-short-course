@@ -2,6 +2,7 @@ services:
   - type: web
     name: chugaz-backend
     runtime: php
+    rootDir: backend
     region: frankfurt
     plan: free
     buildCommand: composer install --no-interaction --prefer-dist --optimize-autoloader
@@ -24,10 +25,13 @@ services:
         value: chugazshortcourse.com,chugaz-frontend.vercel.app
       - key: SESSION_DOMAIN
         value: .chugazshortcourse.com
+      - key: NEXT_PUBLIC_API_URL
+        value: https://chugaz-backend.onrender.com/api
 
 databases:
   - name: chugaz-db
     region: frankfurt
     plan: free
+    rootDir: backend
     databaseName: chugaz_db
     user: chugaz
