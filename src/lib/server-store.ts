@@ -52,17 +52,29 @@ function getDefaults(): StoredData {
   }
 }
 
-function readData(): StoredData {
+const globalCache = globalThis as any
+if (!globalCache.__chugaz_data) {
   try {
     if (fs.existsSync(DATA_FILE)) {
-      return JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"))
+      globalCache.__chugaz_data = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"))
     }
   } catch {}
-  return getDefaults()
+  if (!globalCache.__chugaz_data) {
+    globalCache.__chugaz_data = getDefaults()
+    try { fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true }) } catch {}
+  }
+}
+
+function readData(): StoredData {
+  return globalCache.__chugaz_data
 }
 
 function writeData(data: StoredData): void {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2))
+  globalCache.__chugaz_data = data
+  try {
+    fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true })
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2))
+  } catch {}
 }
 
 const counterFile = path.join(TMP, "chugaz_counter.txt")
