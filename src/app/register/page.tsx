@@ -170,6 +170,38 @@ export default function RegisterPage() {
     return sum + (course?.fee || 0)
   }, 0)
 
+  const downloadReceipt = () => {
+    const courseRows = selectedCourses.map(id => {
+      const c = courses.find(c => c.id === id)
+      return c ? `<tr><td style="padding:8px;border-bottom:1px solid #ddd">${c.title}</td><td style="padding:8px;border-bottom:1px solid #ddd;text-align:right">${c.fee.toLocaleString()} TZS</td></tr>` : ""
+    }).join("")
+    const date = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+    const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Registration Receipt - ${registrationNumber}</title></head><body style="font-family:Arial,sans-serif;max-width:600px;margin:40px auto;padding:20px">
+<h1 style="color:#0B1F4D;border-bottom:3px solid #F4B400;padding-bottom:10px">CHUGAZ Stationery</h1>
+<p style="color:#666">Professional Short Course Registration Receipt</p>
+<table style="width:100%;margin:20px 0"><tr><td style="color:#888;font-size:12px">Receipt No</td><td style="font-weight:bold">${registrationNumber}</td></tr>
+<tr><td style="color:#888;font-size:12px">Date</td><td style="font-weight:bold">${date}</td></tr>
+<tr><td style="color:#888;font-size:12px">Student</td><td style="font-weight:bold">${formData.firstName} ${formData.middleName} ${formData.lastName}</td></tr>
+<tr><td style="color:#888;font-size:12px">Email</td><td style="font-weight:bold">${formData.email}</td></tr>
+<tr><td style="color:#888;font-size:12px">Phone</td><td style="font-weight:bold">${formData.phone}</td></tr>
+<tr><td style="color:#888;font-size:12px">Training Mode</td><td style="font-weight:bold;text-transform:capitalize">${formData.trainingMode || "—"}</td></tr>
+<tr><td style="color:#888;font-size:12px">Payment Method</td><td style="font-weight:bold;text-transform:capitalize">${formData.paymentMethod || "—"}</td></tr></table>
+<h3 style="color:#0B1F4D">Registered Courses</h3>
+<table style="width:100%;border-collapse:collapse">${courseRows}</table>
+<table style="width:100%;margin-top:10px"><tr><td style="font-weight:bold;font-size:16px;padding-top:10px;border-top:2px solid #0B1F4D">Total Fee</td><td style="font-weight:bold;font-size:16px;padding-top:10px;border-top:2px solid #0B1F4D;text-align:right">${totalFee.toLocaleString()} TZS</td></tr></table>
+<p style="margin-top:30px;font-size:12px;color:#888;border-top:1px solid #ddd;padding-top:15px">Thank you for registering. This is a computer-generated receipt.</p>
+<p style="font-size:11px;color:#aaa">CHUGAZ Stationery | Mbeya, Tanzania</p></body></html>`
+    const blob = new Blob([html], { type: "text/html" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `CHUGAZ-Receipt-${registrationNumber}.html`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
   if (submitted) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#0B1F4D] to-[#1a3a7a] flex items-center justify-center p-4">
@@ -202,7 +234,7 @@ export default function RegisterPage() {
             One of our instructors will contact you shortly at <strong>{formData.email}</strong>
           </p>
           <div className="flex gap-4 justify-center">
-            <Button className="bg-[#F4B400] hover:bg-[#e5a800] text-[#0B1F4D] font-button font-semibold rounded-[20px] px-8">
+            <Button onClick={downloadReceipt} className="bg-[#F4B400] hover:bg-[#e5a800] text-[#0B1F4D] font-button font-semibold rounded-[20px] px-8">
               <Download className="w-4 h-4 mr-2" /> Download Receipt
             </Button>
             <Link href="/">
