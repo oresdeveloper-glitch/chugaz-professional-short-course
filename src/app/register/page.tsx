@@ -171,26 +171,151 @@ export default function RegisterPage() {
   }, 0)
 
   const downloadReceipt = () => {
-    const courseRows = selectedCourses.map(id => {
+    const courseRows = selectedCourses.map((id, i) => {
       const c = courses.find(c => c.id === id)
-      return c ? `<tr><td style="padding:8px;border-bottom:1px solid #ddd">${c.title}</td><td style="padding:8px;border-bottom:1px solid #ddd;text-align:right">${c.fee.toLocaleString()} TZS</td></tr>` : ""
+      return c ? `<tr style="background:${i % 2 === 0 ? "#fff" : "#f8f9fa"}"><td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#6b7280;text-align:center">${i + 1}</td><td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;font-weight:600;color:#0B1F4D">${c.title}</td><td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#6b7280">${c.category}</td><td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;text-align:right;font-weight:600;color:#0B1F4D">${c.fee.toLocaleString()} TZS</td></tr>` : ""
     }).join("")
-    const date = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
-    const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Registration Receipt - ${registrationNumber}</title></head><body style="font-family:Arial,sans-serif;max-width:600px;margin:40px auto;padding:20px">
-<h1 style="color:#0B1F4D;border-bottom:3px solid #F4B400;padding-bottom:10px">CHUGAZ Stationery</h1>
-<p style="color:#666">Professional Short Course Registration Receipt</p>
-<table style="width:100%;margin:20px 0"><tr><td style="color:#888;font-size:12px">Receipt No</td><td style="font-weight:bold">${registrationNumber}</td></tr>
-<tr><td style="color:#888;font-size:12px">Date</td><td style="font-weight:bold">${date}</td></tr>
-<tr><td style="color:#888;font-size:12px">Student</td><td style="font-weight:bold">${formData.firstName} ${formData.middleName} ${formData.lastName}</td></tr>
-<tr><td style="color:#888;font-size:12px">Email</td><td style="font-weight:bold">${formData.email}</td></tr>
-<tr><td style="color:#888;font-size:12px">Phone</td><td style="font-weight:bold">${formData.phone}</td></tr>
-<tr><td style="color:#888;font-size:12px">Training Mode</td><td style="font-weight:bold;text-transform:capitalize">${formData.trainingMode || "—"}</td></tr>
-<tr><td style="color:#888;font-size:12px">Payment Method</td><td style="font-weight:bold;text-transform:capitalize">${formData.paymentMethod || "—"}</td></tr></table>
-<h3 style="color:#0B1F4D">Registered Courses</h3>
-<table style="width:100%;border-collapse:collapse">${courseRows}</table>
-<table style="width:100%;margin-top:10px"><tr><td style="font-weight:bold;font-size:16px;padding-top:10px;border-top:2px solid #0B1F4D">Total Fee</td><td style="font-weight:bold;font-size:16px;padding-top:10px;border-top:2px solid #0B1F4D;text-align:right">${totalFee.toLocaleString()} TZS</td></tr></table>
-<p style="margin-top:30px;font-size:12px;color:#888;border-top:1px solid #ddd;padding-top:15px">Thank you for registering. This is a computer-generated receipt.</p>
-<p style="font-size:11px;color:#aaa">CHUGAZ Stationery | Mbeya, Tanzania</p></body></html>`
+    const dateStr = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CHUGAZ Registration Receipt - ${registrationNumber}</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, Arial, sans-serif; background: #f3f4f6; padding: 40px 20px; -webkit-font-smoothing: antialiased; }
+  .page { max-width: 780px; margin: 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); overflow: hidden; }
+  .header { background: #0B1F4D; padding: 32px 40px 24px; color: #fff; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .header h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+  .header h1 span { color: #F4B400; }
+  .header .tagline { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+  .receipt-badge { background: rgba(244,180,0,0.15); color: #F4B400; padding: 8px 18px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px; }
+  .status-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .status-bar .label { font-size: 12px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+  .status-bar .value { font-size: 18px; font-weight: 700; margin-top: 2px; letter-spacing: 1px; }
+  .status-bar .status { background: #10b981; color: #fff; font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .body { padding: 32px 40px; }
+  .section-title { font-size: 13px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+  .info-item label { display: block; font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+  .info-item p { font-size: 14px; font-weight: 600; color: #111827; }
+  .divider { height: 1px; background: #e5e7eb; margin: 24px 0; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 2px solid #e5e7eb; }
+  thead th:last-child { text-align: right; }
+  thead th:first-child { text-align: center; width: 40px; }
+  tfoot td { padding: 14px 12px 0; }
+  .total-row td { padding: 14px 12px; border-top: 2px solid #0B1F4D; font-weight: 800; font-size: 18px; color: #0B1F4D; }
+  .total-row td:last-child { text-align: right; }
+  .footer { background: #f9fafb; padding: 24px 40px; border-top: 1px solid #e5e7eb; }
+  .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .footer-item label { display: block; font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .footer-item p { font-size: 13px; color: #374151; }
+  .footer-bottom { text-align: center; margin-top: 20px; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #9ca3af; line-height: 1.6; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page { box-shadow: none; border-radius: 0; }
+    .no-print { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <h1>CHUGAZ <span>Stationery</span></h1>
+        <p class="tagline">Professional Short Course Registration</p>
+      </div>
+      <div class="receipt-badge">RECEIPT</div>
+    </div>
+    <div class="status-bar">
+      <div>
+        <div class="label">Registration No</div>
+        <div class="value">${registrationNumber}</div>
+      </div>
+      <div style="text-align:center">
+        <div class="label">Date</div>
+        <div class="value" style="font-size:15px">${dateStr}</div>
+      </div>
+      <div>
+        <div class="status">${formData.paymentMethod === "cash" ? "Pending" : "Confirmed"}</div>
+      </div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="section-title">Student Information</div>
+    <div class="info-grid">
+      <div class="info-item">
+        <label>Full Name</label>
+        <p>${formData.firstName} ${formData.middleName ? formData.middleName + " " : ""}${formData.lastName}</p>
+      </div>
+      <div class="info-item">
+        <label>Email</label>
+        <p>${formData.email}</p>
+      </div>
+      <div class="info-item">
+        <label>Phone</label>
+        <p>${formData.phone}${formData.whatsapp ? " / " + formData.whatsapp : ""}</p>
+      </div>
+      <div class="info-item">
+        <label>Training Mode</label>
+        <p style="text-transform:capitalize">${formData.trainingMode || "—"}</p>
+      </div>
+      <div class="info-item">
+        <label>Preferred Time</label>
+        <p style="text-transform:capitalize">${formData.preferredTime || "—"}</p>
+      </div>
+      <div class="info-item">
+        <label>Payment Method</label>
+        <p style="text-transform:capitalize">${formData.paymentMethod || "—"}</p>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="section-title">Registered Courses</div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Course</th>
+          <th>Category</th>
+          <th>Fee</th>
+        </tr>
+      </thead>
+      <tbody>${courseRows}</tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="3">Total Fee</td>
+          <td>${totalFee.toLocaleString()} TZS</td>
+        </tr>
+      </tfoot>
+    </table>
+    <div style="margin-top:24px;padding:16px 20px;background:#fefce8;border-radius:12px;font-size:13px;color:#92400e">
+      <strong style="display:block;margin-bottom:4px">Payment Instructions</strong>
+      Pay via Vodacom M-Pesa to <strong>50360811</strong> (Agustino Emmanuel Wilian). Upload your payment confirmation on the registration portal.
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-grid">
+      <div class="footer-item">
+        <label>Institution</label>
+        <p>CHUGAZ Stationery<br>Mbeya, Tanzania</p>
+      </div>
+      <div class="footer-item">
+        <label>Contact</label>
+        <p>+255 503 608 11<br>info@chugazstationery.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      This is a computer-generated receipt. No signature is required.<br>
+      &copy; ${new Date().getFullYear()} CHUGAZ Stationery. All rights reserved.
+    </div>
+  </div>
+</div>
+</body>
+</html>`
     const blob = new Blob([html], { type: "text/html" })
     const url = URL.createObjectURL(blob)
     const a = document.createElement("a")
