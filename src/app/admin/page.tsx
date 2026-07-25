@@ -62,46 +62,54 @@ export default function AdminDashboard() {
       router.push("/login")
       return
     }
-    getAllStudents().then(data => setStudents(data))
+    getAllStudents().then(data => setStudents(data)).catch(e => { console.error("Load students error:", e); showToast("Failed to load students") })
   }, [router])
 
   const updateStudentStatus = async (email: string, status: "approved" | "rejected") => {
     const student = students.find(s => s.email === email)
     if (!student) return
     try {
-      await api.post(`/students/${student.regNo}/${status}`)
+      const url = `/students/${student.regNo}/${status}`
+      console.log("POST", url)
+      await api.post(url)
       setStudents(prev => prev.map(s => s.email === email ? { ...s, status } : s))
-      showToast(`Student ${status === "approved" ? "approved" : "rejected"}`)
-    } catch (e: any) { showToast(e?.message || "Action failed") }
+      showToast(`Student ${status}`)
+    } catch (e: any) { console.error("Status error:", e); showToast(e?.message || `Failed to ${status}`) }
   }
 
   const confirmPayment = async (email: string) => {
     const student = students.find(s => s.email === email)
     if (!student) return
     try {
-      const res = await api.post(`/students/${student.regNo}/payment`)
+      const url = `/students/${student.regNo}/payment`
+      console.log("POST", url)
+      const res = await api.post(url)
       setStudents(prev => prev.map(s => s.email === email ? { ...s, paymentStatus: (res as any).payment_status } : s))
       showToast(`Payment ${(res as any).payment_status === "confirmed" ? "confirmed" : "reset"}`)
-    } catch (e: any) { showToast(e?.message || "Action failed") }
+    } catch (e: any) { console.error("Payment error:", e); showToast(e?.message || "Payment action failed") }
   }
 
   const sendReminder = async (email: string, reason: string) => {
     const student = students.find(s => s.email === email)
     if (!student) return
     try {
-      await api.post(`/students/${student.regNo}/remind`, { reason })
+      const url = `/students/${student.regNo}/remind`
+      console.log("POST", url, { reason })
+      await api.post(url, { reason })
       showToast("Reminder sent")
-    } catch (e: any) { showToast(e?.message || "Action failed") }
+    } catch (e: any) { console.error("Reminder error:", e); showToast(e?.message || "Reminder failed") }
   }
 
   const deleteStudent = async (email: string) => {
     const student = students.find(s => s.email === email)
     if (!student) return
     try {
-      await api.delete(`/students/${student.regNo}`)
+      const url = `/students/${student.regNo}`
+      console.log("DELETE", url)
+      await api.delete(url)
       setStudents(prev => prev.filter(s => s.email !== email))
       showToast("Student deleted")
-    } catch (e: any) { showToast(e?.message || "Action failed") }
+    } catch (e: any) { console.error("Delete error:", e); showToast(e?.message || "Delete failed") }
   }
 
   const handleLogout = async () => {

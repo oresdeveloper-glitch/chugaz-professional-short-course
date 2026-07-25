@@ -64,10 +64,6 @@ export async function getStudentData(_email: string): Promise<any> {
 }
 
 export async function getAllStudents(): Promise<any[]> {
-  try {
-    const res = await api.get("/students")
-    return res.data || []
-  } catch {
-    return []
-  }
+  const res = await api.get("/students")
+  return res.data || []
 }

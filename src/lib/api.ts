@@ -25,8 +25,11 @@ async function request<T = any>(
 
   const headers: Record<string, string> = {
     Accept: "application/json",
-    "Content-Type": "application/json",
     ...(options.headers as Record<string, string>),
+  }
+
+  if (options.body) {
+    headers["Content-Type"] = "application/json"
   }
 
   if (token) {
