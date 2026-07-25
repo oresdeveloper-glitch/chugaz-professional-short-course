@@ -8,7 +8,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Too many messages. Try again later." }, { status: 429 })
   }
 
-  const body = await req.json()
+  let body: any
+  try { body = await req.json() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
   const { name, email, subject, message } = body
 
   if (!name?.trim() || !email?.trim() || !message?.trim()) {

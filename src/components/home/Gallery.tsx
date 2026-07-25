@@ -6,7 +6,6 @@ import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, Camera } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { galleryImages } from "@/data/gallery";
-import type { GalleryItem } from "@/types";
 
 const containerVariants = {
   hidden: { opacity: 0 },

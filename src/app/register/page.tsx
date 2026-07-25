@@ -3,11 +3,11 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
-  User, Mail, Phone, MapPin, BookOpen, CreditCard, CheckCircle2,
-  ChevronLeft, ChevronRight, Upload, Globe, Calendar,
+  User, Mail, BookOpen, CreditCard, CheckCircle2,
+  ChevronLeft, ChevronRight, Globe,
   Camera, Download, Home, Check,
   Wallet, Building, Clock, Sun, Moon, Smartphone,
-  Lock, Eye, EyeOff
+  Eye, EyeOff, Calendar
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
+
 import { Checkbox } from "@/components/ui/checkbox"
 import { courses } from "@/data/courses"
 import { api } from "@/lib/api"
@@ -168,7 +168,7 @@ export default function RegisterPage() {
       return c ? `<tr style="background:${i % 2 === 0 ? "#fff" : "#f8f9fa"}"><td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#6b7280;text-align:center">${i + 1}</td><td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;font-weight:600;color:#0B1F4D">${c.title}</td><td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#6b7280">${c.category}</td><td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;text-align:right;font-weight:600;color:#0B1F4D">${c.fee.toLocaleString()} TZS</td></tr>` : ""
     }).join("")
     const dateStr = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
-    const txHtml = formData.transactionId ? `<tr><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;color:#6b7280;font-size:13px">Transaction ID</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;font-weight:600;color:#0B1F4D;font-size:13px">${formData.transactionId}</td></tr>` : ""
+    const _txHtml = formData.transactionId ? `<tr><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;color:#6b7280;font-size:13px">Transaction ID</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;font-weight:600;color:#0B1F4D;font-size:13px">${formData.transactionId}</td></tr>` : ""
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -527,8 +527,8 @@ export default function RegisterPage() {
                           <option value="secondary">Secondary Education</option>
                           <option value="certificate">Certificate</option>
                           <option value="diploma">Diploma</option>
-                          <option value="bachelor">Bachelor's Degree</option>
-                          <option value="master">Master's Degree</option>
+                          <option value="bachelor">Bachelor&apos;s Degree</option>
+                          <option value="master">Master&apos;s Degree</option>
                           <option value="phd">PhD</option>
                           <option value="other">Other</option>
                         </select>

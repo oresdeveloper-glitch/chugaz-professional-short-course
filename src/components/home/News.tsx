@@ -25,7 +25,7 @@ const cardVariants = {
   },
 };
 
-function NewsCard({ item, index }: { item: NewsItem; index: number }) {
+function NewsCard({ item }: { item: NewsItem }) {
   const date = new Date(item.date);
   const formatted = date.toLocaleDateString("en-US", {
     year: "numeric",
@@ -114,8 +114,8 @@ export default function News() {
           viewport={{ once: true }}
           className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {newsItems.map((item, index) => (
-            <NewsCard key={item.id} item={item} index={index} />
+          {newsItems.map((item) => (
+            <NewsCard key={item.id} item={item} />
           ))}
         </motion.div>
 

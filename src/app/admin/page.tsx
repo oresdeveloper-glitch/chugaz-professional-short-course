@@ -3,18 +3,17 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import {
-  LayoutDashboard, Users, BookOpen, CreditCard, Award,
-  FileBarChart, MessageSquare, Settings, LogOut, Menu, X,
-  Bell, Search, Download, Trash2, Edit,
+  LayoutDashboard, Users, BookOpen, CreditCard,
+  MessageSquare, Settings, LogOut, Menu, X,
+  Bell, Search, Trash2,
   CheckCircle2, XCircle, UserPlus, TrendingUp, Clock,
-  GraduationCap, Mail, Phone, MapPin, Calendar, Eye
+  GraduationCap, Mail, Eye
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
@@ -51,6 +50,12 @@ export default function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState("")
   const [filterStatus, setFilterStatus] = useState("all")
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null)
+  const [toast, setToast] = useState("")
+
+  const showToast = (msg: string) => {
+    setToast(msg)
+    setTimeout(() => setToast(""), 3000)
+  }
 
   useEffect(() => {
     if (!isAuthenticated() || !isAdmin()) {
@@ -66,7 +71,8 @@ export default function AdminDashboard() {
     try {
       await api.post(`/students/${student.regNo}/${status}`)
       setStudents(prev => prev.map(s => s.email === email ? { ...s, status } : s))
-    } catch {}
+      showToast(`Student ${status === "approved" ? "approved" : "rejected"}`)
+    } catch (e: any) { showToast(e?.message || "Action failed") }
   }
 
   const confirmPayment = async (email: string) => {
@@ -75,7 +81,8 @@ export default function AdminDashboard() {
     try {
       const res = await api.post(`/students/${student.regNo}/payment`)
       setStudents(prev => prev.map(s => s.email === email ? { ...s, paymentStatus: (res as any).payment_status } : s))
-    } catch {}
+      showToast(`Payment ${(res as any).payment_status === "confirmed" ? "confirmed" : "reset"}`)
+    } catch (e: any) { showToast(e?.message || "Action failed") }
   }
 
   const sendReminder = async (email: string, reason: string) => {
@@ -83,7 +90,8 @@ export default function AdminDashboard() {
     if (!student) return
     try {
       await api.post(`/students/${student.regNo}/remind`, { reason })
-    } catch {}
+      showToast("Reminder sent")
+    } catch (e: any) { showToast(e?.message || "Action failed") }
   }
 
   const deleteStudent = async (email: string) => {
@@ -92,7 +100,8 @@ export default function AdminDashboard() {
     try {
       await api.delete(`/students/${student.regNo}`)
       setStudents(prev => prev.filter(s => s.email !== email))
-    } catch {}
+      showToast("Student deleted")
+    } catch (e: any) { showToast(e?.message || "Action failed") }
   }
 
   const handleLogout = async () => {
@@ -173,6 +182,11 @@ export default function AdminDashboard() {
       </aside>
 
       <div className="flex-1 min-h-screen min-w-0">
+        {toast && (
+          <div className="fixed top-4 right-4 z-[100] bg-[#0B1F4D] text-white px-5 py-3 rounded-[20px] shadow-xl text-sm font-medium animate-in slide-in-from-top-2">
+            {toast}
+          </div>
+        )}
         <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-4 md:px-8 py-3 md:py-4 flex items-center justify-between sticky top-0 z-30">
           <div className="flex items-center gap-3 md:gap-4">
             <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white p-2 min-w-[44px] min-h-[44px] flex items-center justify-center">
@@ -415,7 +429,7 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredStudents.map((s, i) => (
+                    {filteredStudents.map((s) => (
                       <tr key={s.regNo} className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
                         <td className="py-3 px-3 md:px-4 text-sm font-medium text-[#0B1F4D] whitespace-nowrap">{s.regNo}</td>
                         <td className="py-3 px-3 md:px-4 whitespace-nowrap"><span className="text-sm">{s.firstName} {s.lastName}</span></td>
@@ -541,7 +555,7 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {students.slice().reverse().map((s, i) => {
+                    {students.slice().reverse().map((s) => {
                       const amount = s.courses.length * 200000
                       return (
                         <tr key={s.regNo} className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">

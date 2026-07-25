@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { GraduationCap, BookOpen, Settings, Star } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface StatItem {
   icon: React.ElementType;

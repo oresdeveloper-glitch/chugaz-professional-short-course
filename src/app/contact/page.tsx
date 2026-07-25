@@ -4,9 +4,8 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import {
   MapPin, Phone, Mail, Clock, Send, MessageSquare,
-  Globe, Camera, ExternalLink, Play, Music2, ChevronRight
+  Globe, Camera, ExternalLink, Music2
 } from "lucide-react"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"

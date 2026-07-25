@@ -1,10 +1,9 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Target, Eye, Star, Lightbulb, Shield, Users, Heart, Zap, ChevronRight, Award, BookOpen, Clock, Users2, ArrowRight } from "lucide-react"
+import { Target, Eye, Star, Lightbulb, Shield, Users, Heart, Zap, ChevronRight, Award, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"

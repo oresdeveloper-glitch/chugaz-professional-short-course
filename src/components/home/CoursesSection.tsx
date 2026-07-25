@@ -3,8 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { Clock, DollarSign, ArrowRight, Users } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Clock, DollarSign, ArrowRight } from "lucide-react";
 import { getFeaturedCourses } from "@/data/courses";
 import type { Course } from "@/types";
 
@@ -27,7 +26,7 @@ const cardVariants = {
   },
 };
 
-function CourseCard({ course, index }: { course: Course; index: number }) {
+function CourseCard({ course }: { course: Course }) {
   return (
     <motion.div
       variants={cardVariants}
@@ -104,8 +103,8 @@ export default function CoursesSection() {
           viewport={{ once: true }}
           className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
-          {featuredCourses.map((course, index) => (
-            <CourseCard key={course.id} course={course} index={index} />
+          {featuredCourses.map((course) => (
+            <CourseCard key={course.id} course={course} />
           ))}
         </motion.div>
 

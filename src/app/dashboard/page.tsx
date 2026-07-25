@@ -5,14 +5,14 @@ import { motion } from "framer-motion"
 import {
   LayoutDashboard, BookOpen, CreditCard, Download, Bell,
   Settings, User, FileText, Award, LogOut, Menu, X,
-  ChevronRight, Clock, CheckCircle2, AlertCircle, GraduationCap, ArrowUpRight
+  Clock, CheckCircle2, GraduationCap, ArrowUpRight
 } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
@@ -54,7 +54,7 @@ export default function StudentDashboard() {
         const r = res as any
         setNotifications(r.data || [])
         setUnreadCount(r.unread || 0)
-      }).catch(() => {})
+      }).catch((e) => console.error("Fetch notifications error:", e))
     }
   }, [router])
 
@@ -71,7 +71,7 @@ export default function StudentDashboard() {
     )
   }
 
-  const initials = `${user.firstName[0]}${user.lastName[0]}`
+  const initials = `${(user.firstName || "")[0] || ""}${(user.lastName || "")[0] || ""}` || user.email[0].toUpperCase()
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex">
@@ -122,7 +122,7 @@ export default function StudentDashboard() {
             <h2 className="text-lg font-heading font-bold text-[#0B1F4D] dark:text-white">{sidebarItems.find(i => i.tab === activeTab)?.label || "Dashboard"}</h2>
           </div>
           <div className="flex items-center gap-4 relative">
-            <button onClick={() => { setShowNotifications(!showNotifications); if (!showNotifications) { api.post("/notifications/read", { id: "all" }).catch(() => {}); setUnreadCount(0) } }} className="relative text-gray-600 dark:text-gray-400">
+            <button onClick={() => { setShowNotifications(!showNotifications); if (!showNotifications) { api.post("/notifications/read", { id: "all" }).catch((e) => console.error("Mark read error:", e)); setUnreadCount(0) } }} className="relative text-gray-600 dark:text-gray-400">
               <Bell className="w-5 h-5" />
               {unreadCount > 0 && (
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">{unreadCount}</span>
@@ -370,7 +370,7 @@ export default function StudentDashboard() {
             <div className="flex justify-between text-sm"><span className="text-gray-500">Amount</span><span className="font-semibold">{total.toLocaleString()} TZS</span></div>
             {studentData.paymentStatus !== "confirmed" && (
               <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-[20px] text-sm text-yellow-700 dark:text-yellow-300">
-                Pay via M-Pesa to <strong>50360811</strong> (Agustino Emmanuel Wiliam) using reference <strong className="font-mono">{studentData.paymentRef}</strong>
+                Pay via M-Pesa to <strong>50360811</strong> (Agustino Emmanuel Wilian) using reference <strong className="font-mono">{studentData.paymentRef}</strong>
               </div>
             )}
           </CardContent>

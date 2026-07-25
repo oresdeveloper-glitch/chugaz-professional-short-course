@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, CheckCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const highlights = [
   "Industry-experienced instructors",

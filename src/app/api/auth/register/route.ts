@@ -13,7 +13,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Too many registration attempts. Try again later." }, { status: 429 })
   }
 
-  const body = await req.json()
+  let body: any
+  try { body = await req.json() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
 
   if (body.website && body.website.trim()) {
     return NextResponse.json({ message: "Bot detected" }, { status: 400 })

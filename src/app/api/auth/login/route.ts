@@ -3,7 +3,9 @@ import { readData, writeData } from "@/lib/server-store"
 import { verifyPassword, generateToken, hashPassword, checkRateLimit } from "@/lib/auth-server"
 
 export async function POST(req: Request) {
-  const { email, password } = await req.json()
+  let body: any
+  try { body = await req.json() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
+  const { email, password } = body
 
   if (!email || !password) {
     return NextResponse.json({ message: "Email and password required" }, { status: 422 })
@@ -17,7 +19,7 @@ export async function POST(req: Request) {
   const data = readData()
 
   function migratePassword(record: any): boolean {
-    if (!record.password.includes(":")) {
+    if (!record.password || !record.password.includes(":")) {
       record.password = hashPassword(record.password)
       return true
     }

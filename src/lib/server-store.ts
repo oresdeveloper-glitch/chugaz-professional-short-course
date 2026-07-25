@@ -1,7 +1,9 @@
 import fs from "fs"
 import path from "path"
+import os from "os"
 
-const DATA_FILE = path.join("/tmp", "chugaz_data.json")
+const TMP = process.env.CHUGAZ_DATA_DIR || os.tmpdir()
+const DATA_FILE = path.join(TMP, "chugaz_data.json")
 
 interface StoredData {
   students: any[]
@@ -10,6 +12,7 @@ interface StoredData {
   messages: any[]
   tokens: any[]
   notifications: any[]
+  resetCodes: any[]
 }
 
 function getDefaults(): StoredData {
@@ -45,6 +48,7 @@ function getDefaults(): StoredData {
     messages: [],
     tokens: [],
     notifications: [],
+    resetCodes: [],
   }
 }
 
@@ -61,7 +65,7 @@ function writeData(data: StoredData): void {
   fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2))
 }
 
-const counterFile = path.join("/tmp", "chugaz_counter.txt")
+const counterFile = path.join(TMP, "chugaz_counter.txt")
 
 function getNextRegNumber(): string {
   let counter = 1
@@ -74,5 +78,5 @@ function getNextRegNumber(): string {
   return `CHG2026${String(counter).padStart(5, "0")}`
 }
 
-export { readData, writeData, getNextRegNumber, getDefaults }
+export { readData, writeData, getNextRegNumber }
 export type { StoredData }

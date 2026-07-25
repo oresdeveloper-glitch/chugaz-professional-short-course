@@ -1,4 +1,4 @@
-import { api, ApiError } from "./api"
+import { api } from "./api"
 
 export interface AuthUser {
   id: number
@@ -54,7 +54,7 @@ export function isAdmin(): boolean {
   return user?.role === "admin"
 }
 
-export async function getStudentData(email: string): Promise<any> {
+export async function getStudentData(_email: string): Promise<any> {
   try {
     const res = await api.get(`/auth/me`)
     return res.data?.student || null

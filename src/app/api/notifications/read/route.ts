@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { readData, writeData, getDefaults } from "@/lib/server-store"
+import { readData, writeData } from "@/lib/server-store"
 
 export async function POST(req: Request) {
   const authHeader = req.headers.get("authorization")
@@ -8,7 +8,8 @@ export async function POST(req: Request) {
   }
 
   const token = authHeader.slice(7)
-  const body = await req.json()
+  let body: any
+  try { body = await req.json() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
   const notificationId = body.id
 
   const data = readData()

@@ -10,7 +10,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   }
 
   const { id } = await params
-  const body = await req.json()
+  let body: any
+  try { body = await req.json() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
   const reason = body.reason || "general"
 
   if (!REASONS.includes(reason)) {

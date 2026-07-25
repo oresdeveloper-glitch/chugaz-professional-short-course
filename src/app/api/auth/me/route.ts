@@ -47,6 +47,7 @@ export async function GET(req: Request) {
 
   if (result.type === "admin") {
     const admin = data.admins[0]
+    if (!admin) return NextResponse.json({ data: { type: "guest", student: null } })
     const { password, ...safe } = admin
     return NextResponse.json({ data: { type: "admin", admin: safe } })
   }

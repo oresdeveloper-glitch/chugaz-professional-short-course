@@ -9,7 +9,6 @@ import {
   CheckCircle2,
   Award,
   Clock,
-  Users,
   ChevronLeft,
   ArrowRight,
   Star,
