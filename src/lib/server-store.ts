@@ -52,29 +52,26 @@ function getDefaults(): StoredData {
   }
 }
 
-const globalCache = globalThis as any
-if (!globalCache.__chugaz_data) {
-  try {
-    if (fs.existsSync(DATA_FILE)) {
-      globalCache.__chugaz_data = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"))
-    }
-  } catch {}
-  if (!globalCache.__chugaz_data) {
-    globalCache.__chugaz_data = getDefaults()
-    try { fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true }) } catch {}
-  }
+function ensureDir(): void {
+  const dir = path.dirname(DATA_FILE)
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
 }
 
 function readData(): StoredData {
-  return globalCache.__chugaz_data
+  try {
+    ensureDir()
+    if (fs.existsSync(DATA_FILE)) {
+      return JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"))
+    }
+  } catch {}
+  return getDefaults()
 }
 
 function writeData(data: StoredData): void {
-  globalCache.__chugaz_data = data
   try {
-    fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true })
+    ensureDir()
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2))
-  } catch {}
+  } catch (e) { console.error("writeData error:", e) }
 }
 
 const counterFile = path.join(TMP, "chugaz_counter.txt")
@@ -82,11 +79,12 @@ const counterFile = path.join(TMP, "chugaz_counter.txt")
 function getNextRegNumber(): string {
   let counter = 1
   try {
+    ensureDir()
     if (fs.existsSync(counterFile)) {
       counter = parseInt(fs.readFileSync(counterFile, "utf-8").trim(), 10) + 1
     }
   } catch {}
-  fs.writeFileSync(counterFile, String(counter))
+  try { fs.writeFileSync(counterFile, String(counter)) } catch (e) { console.error("counter write error:", e) }
   return `CHG2026${String(counter).padStart(5, "0")}`
 }
 
