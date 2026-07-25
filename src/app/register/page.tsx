@@ -36,7 +36,7 @@ const initialFormData = {
   password: "", confirmPassword: "",
   phone: "", whatsapp: "", email: "", region: "", district: "", street: "", postalAddress: "",
   trainingMode: "", preferredTime: "",
-  paymentMethod: "", paymentReceipt: null as File | null,
+  paymentMethod: "", transactionId: "",
   declaration: false,
 }
 
@@ -45,11 +45,11 @@ export default function RegisterPage() {
   const [formData, setFormData] = useState(initialFormData)
   const [selectedCourses, setSelectedCourses] = useState<string[]>([])
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
-  const [receiptPreview, setReceiptPreview] = useState<string | null>(null)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [registrationNumber, setRegistrationNumber] = useState("")
+  const [paymentRef, setPaymentRef] = useState("")
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [serverError, setServerError] = useState("")
   const [website, setWebsite] = useState("")
@@ -72,16 +72,6 @@ export default function RegisterPage() {
       setFormData(prev => ({ ...prev, photo: file }))
       const reader = new FileReader()
       reader.onloadend = () => setPhotoPreview(reader.result as string)
-      reader.readAsDataURL(file)
-    }
-  }
-
-  const handleReceiptUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      setFormData(prev => ({ ...prev, paymentReceipt: file }))
-      const reader = new FileReader()
-      reader.onloadend = () => setReceiptPreview(reader.result as string)
       reader.readAsDataURL(file)
     }
   }
@@ -153,9 +143,11 @@ export default function RegisterPage() {
         preferred_time: formData.preferredTime || undefined,
         courses: courseTitles,
         payment_method: formData.paymentMethod || undefined,
+        transaction_id: formData.transactionId || undefined,
       })
 
       setRegistrationNumber(json.data.student.registration_number)
+      setPaymentRef(json.data.payment_ref)
       setSubmitted(true)
     } catch (e: any) {
       const msg = e.errors ? Object.values(e.errors).flat().join(", ") : e.message || "Registration failed"
@@ -176,6 +168,7 @@ export default function RegisterPage() {
       return c ? `<tr style="background:${i % 2 === 0 ? "#fff" : "#f8f9fa"}"><td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#6b7280;text-align:center">${i + 1}</td><td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;font-weight:600;color:#0B1F4D">${c.title}</td><td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#6b7280">${c.category}</td><td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;text-align:right;font-weight:600;color:#0B1F4D">${c.fee.toLocaleString()} TZS</td></tr>` : ""
     }).join("")
     const dateStr = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+    const txHtml = formData.transactionId ? `<tr><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;color:#6b7280;font-size:13px">Transaction ID</td><td style="padding:8px 12px;border-bottom:1px solid #e5e7eb;font-weight:600;color:#0B1F4D;font-size:13px">${formData.transactionId}</td></tr>` : ""
     const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -237,11 +230,12 @@ export default function RegisterPage() {
         <div class="value">${registrationNumber}</div>
       </div>
       <div style="text-align:center">
+        <div class="label">Payment Ref</div>
+        <div class="value" style="font-size:15px;letter-spacing:0.5px">${paymentRef}</div>
+      </div>
+      <div style="text-align:right">
         <div class="label">Date</div>
         <div class="value" style="font-size:15px">${dateStr}</div>
-      </div>
-      <div>
-        <div class="status">${formData.paymentMethod === "cash" ? "Pending" : "Confirmed"}</div>
       </div>
     </div>
   </div>
@@ -272,6 +266,14 @@ export default function RegisterPage() {
         <label>Payment Method</label>
         <p style="text-transform:capitalize">${formData.paymentMethod || "—"}</p>
       </div>
+      <div class="info-item">
+        <label>Payment Reference</label>
+        <p style="font-family:monospace;letter-spacing:0.5px">${paymentRef}</p>
+      </div>
+      ${formData.transactionId ? `<div class="info-item">
+        <label>Transaction ID</label>
+        <p style="font-family:monospace">${formData.transactionId}</p>
+      </div>` : ""}
     </div>
     <div class="divider"></div>
     <div class="section-title">Registered Courses</div>
@@ -349,12 +351,31 @@ export default function RegisterPage() {
           <p className="text-gray-500 dark:text-gray-400 mb-6">
             Thank you for registering with CHUGAZ Stationery
           </p>
-          <div className="bg-[#F4B400]/10 rounded-[20px] p-6 mb-6">
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Your Registration Number</p>
-            <p className="text-2xl font-heading font-extrabold text-[#F4B400] tracking-wider">
-              {registrationNumber}
-            </p>
+          <div className="bg-[#F4B400]/10 rounded-[20px] p-6 mb-6 space-y-3">
+            <div>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Registration Number</p>
+              <p className="text-2xl font-heading font-extrabold text-[#F4B400] tracking-wider">
+                {registrationNumber}
+              </p>
+            </div>
+            <div className="border-t border-[#F4B400]/20 pt-3">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Payment Reference</p>
+              <p className="text-lg font-heading font-extrabold text-[#0B1F4D] dark:text-white tracking-wider font-mono">
+                {paymentRef}
+              </p>
+            </div>
           </div>
+          {formData.paymentMethod === "mobile" && (
+            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-[20px] p-4 mb-6 text-left">
+              <p className="text-sm text-blue-700 dark:text-blue-300 font-medium mb-2">
+                Use this reference when making payment
+              </p>
+              <p className="text-xs text-blue-600 dark:text-blue-400">
+                Send your payment via <strong>Vodacom M-Pesa</strong> to <strong>50360811</strong> (Agustino Emmanuel Wilian)
+                and use <strong>{paymentRef}</strong> as your payment reference.
+              </p>
+            </div>
+          )}
           <p className="text-gray-600 dark:text-gray-300 mb-8">
             One of our instructors will contact you shortly at <strong>{formData.email}</strong>
           </p>
@@ -723,26 +744,27 @@ export default function RegisterPage() {
                           ))}
                         </div>
                       </div>
-                      <div>
-                        <Label className="text-lg mb-3 block">Upload Payment Receipt</Label>
-                        <label className="cursor-pointer">
-                          <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-[20px] p-8 text-center hover:border-[#F4B400] transition-colors">
-                            {receiptPreview ? (
-                              <Image src={receiptPreview} alt="Receipt preview" width={200} height={200} className="mx-auto rounded-[20px] object-cover max-h-48" />
-                            ) : (
-                              <div>
-                                <Upload className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-                                <p className="text-gray-500">Click to upload payment receipt</p>
-                                <p className="text-sm text-gray-400">PNG, JPG or PDF</p>
-                              </div>
-                            )}
-                          </div>
-                          <input type="file" accept="image/*" onChange={handleReceiptUpload} className="hidden" />
-                        </label>
-                      </div>
+
+                      {formData.paymentMethod === "mobile" && (
+                        <div>
+                          <Label className="text-lg mb-3 block">M-Pesa Transaction ID</Label>
+                          <Input
+                            value={formData.transactionId}
+                            onChange={e => updateForm("transactionId", e.target.value.replace(/\s/g, ""))}
+                            className="rounded-[20px] font-mono"
+                            placeholder="e.g. PBT78J4K9M"
+                            maxLength={30}
+                          />
+                          <p className="text-xs text-gray-400 mt-1">
+                            Enter the confirmation code from your M-Pesa message
+                          </p>
+                          {errors.transactionId && <p className="text-red-500 text-sm mt-1">{errors.transactionId}</p>}
+                        </div>
+                      )}
+
                       <div className="bg-blue-50 dark:bg-blue-900/20 rounded-[20px] p-4 space-y-2">
                         <p className="text-sm text-blue-700 dark:text-blue-300 font-medium">
-                          Payment Instructions: Make your payment to the following account and upload the receipt above.
+                          Make your payment to the following account
                         </p>
                         <div className="bg-white dark:bg-blue-900/40 rounded-[20px] p-4 space-y-2">
                           <div className="flex justify-between items-center">
@@ -759,7 +781,7 @@ export default function RegisterPage() {
                           </div>
                         </div>
                         <p className="text-xs text-blue-600 dark:text-blue-400">
-                          After payment, upload the M-Pesa confirmation message screenshot above.
+                          After payment, enter the M-Pesa confirmation code above. You can also pay in cash at our office.
                         </p>
                       </div>
                     </div>

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { readData, writeData, getNextRegNumber } from "@/lib/server-store"
-import { hashPassword, checkRateLimit } from "@/lib/auth-server"
+import { hashPassword, checkRateLimit, generatePaymentRef, validateTransactionId } from "@/lib/auth-server"
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PHONE_RE = /^\+?[\d\s\-()]{7,15}$/
@@ -61,6 +61,16 @@ export async function POST(req: Request) {
     if (val && val.length > MAX_LENGTH) errors[field] = [`Max ${MAX_LENGTH} characters`]
   }
 
+  const payment_method = body.payment_method || null
+  const transaction_id = body.transaction_id?.trim() || null
+
+  if (payment_method === "mobile" && !transaction_id) {
+    errors.transaction_id = ["Transaction ID is required for mobile payments"]
+  }
+  if (transaction_id && !validateTransactionId(transaction_id)) {
+    errors.transaction_id = ["Invalid transaction ID format"]
+  }
+
   if (Object.keys(errors).length > 0) {
     return NextResponse.json({ message: "Validation failed", errors }, { status: 422 })
   }
@@ -80,6 +90,7 @@ export async function POST(req: Request) {
   }
 
   const regNum = getNextRegNumber()
+  const payment_ref = generatePaymentRef(regNum)
   const student = {
     id: Date.now(),
     registration_number: regNum,
@@ -102,7 +113,9 @@ export async function POST(req: Request) {
     training_mode: body.training_mode || null,
     preferred_time: body.preferred_time || null,
     courses: body.courses || [],
-    payment_method: body.payment_method || null,
+    payment_method,
+    transaction_id,
+    payment_ref,
     status: "pending",
     payment_status: "pending",
     created_at: new Date().toISOString(),
@@ -113,6 +126,10 @@ export async function POST(req: Request) {
 
   return NextResponse.json({
     message: "Registration successful",
-    data: { student: { ...student, password: undefined }, registration_number: regNum },
+    data: {
+      student: { ...student, password: undefined },
+      registration_number: regNum,
+      payment_ref,
+    },
   }, { status: 201 })
 }

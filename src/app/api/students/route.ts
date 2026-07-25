@@ -31,6 +31,9 @@ export async function GET(req: Request) {
       trainingMode: rest.training_mode,
       preferredTime: rest.preferred_time,
       paymentMethod: rest.payment_method,
+      paymentRef: rest.payment_ref,
+      transactionId: rest.transaction_id,
+      paymentStatus: rest.payment_status,
       status: rest.status,
       createdAt: rest.created_at,
     }

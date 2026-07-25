@@ -6,6 +6,17 @@ const KEY_LENGTH = 64
 const DIGEST = "sha512"
 const TOKEN_EXPIRY_HOURS = 24
 
+const TX_ID_RE = /^[A-Za-z0-9]{6,30}$/
+
+export function generatePaymentRef(regNum: string): string {
+  const raw = crypto.randomUUID().replace(/-/g, "").slice(0, 10).toUpperCase()
+  return `CHUGAZ-${raw}-${regNum.slice(-4)}`
+}
+
+export function validateTransactionId(txId: string): boolean {
+  return TX_ID_RE.test(txId)
+}
+
 export function hashPassword(password: string): string {
   const salt = crypto.randomBytes(16).toString("hex")
   const hash = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST).toString("hex")
