@@ -1,29 +1,25 @@
-FROM node:20-alpine AS base
+FROM php:8.2-cli
+
+RUN apt-get update && apt-get install -y \
+    git unzip libsqlite3-dev libpng-dev libonig-dev libxml2-dev \
+    && docker-php-ext-install pdo pdo_sqlite mbstring gd xml
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 WORKDIR /app
 
-FROM base AS deps
-RUN apk add --no-cache libc6-compat
-COPY package.json package-lock.json* ./
-RUN npm ci
+COPY backend/ /app/
 
-FROM base AS builder
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-ENV NEXT_TELEMETRY_DISABLED=1
-RUN npm run build
+RUN mv .env.example .env 2>/dev/null || true
 
-FROM base AS runner
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV PORT=7860
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN php artisan key:generate --force
 
-COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+RUN php artisan storage:link
 
-USER nextjs
 EXPOSE 7860
-CMD ["node", "server.js"]
+
+CMD php artisan migrate --force && \
+    php artisan db:seed --force && \
+    php artisan serve --host=0.0.0.0 --port=7860

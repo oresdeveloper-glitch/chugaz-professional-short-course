@@ -47,3 +47,6 @@ backend/public/storage/
 public/images/*.png
 public/images/*.jpg
 public/images/*.jpeg
+
+.vercel
+.env*
