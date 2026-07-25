@@ -31,7 +31,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Orresy",
       title: "Senior ICT Instructor",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Eng.+ORRESY",
+      image: "/images/Eng.ORRESY.png",
       bio: "Experienced ICT professional with over 10 years of teaching experience."
     },
     featured: true
@@ -65,7 +65,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Arch. Illela",
       title: "Programming Expert",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Arch.+ILLELA",
+      image: "/images/Arch.ILLELA.jpg",
       bio: "Expert programmer with years of experience in C and embedded systems."
     },
     featured: true
@@ -99,7 +99,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Orresy",
       title: "Software Engineering Lead",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Eng.+ORRESY",
+      image: "/images/Eng.ORRESY.png",
       bio: "Full-stack developer and software engineering instructor."
     },
     featured: false
@@ -133,7 +133,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Godwin",
       title: "Python Developer & Instructor",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Eng.+GODWIN",
+      image: "/images/Eng.GODWIN.png",
       bio: "Python specialist with expertise in data science and automation."
     },
     featured: true
@@ -167,7 +167,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Arch. Illela",
       title: "Java Architect",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Arch.+ILLELA",
+      image: "/images/Arch.ILLELA.jpg",
       bio: "Enterprise Java developer with extensive experience."
     },
     featured: false
@@ -201,7 +201,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Orresy",
       title: "Full-Stack Developer",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Eng.+ORRESY",
+      image: "/images/Eng.ORRESY.png",
       bio: "Expert JavaScript developer and web technologies instructor."
     },
     featured: true
@@ -235,7 +235,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Godwin",
       title: "Web Design Instructor",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Eng.+GODWIN",
+      image: "/images/Eng.GODWIN.png",
       bio: "Creative web designer and frontend developer."
     },
     featured: true
@@ -269,7 +269,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Arch. Illela",
       title: "UI/UX Design Lead",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Arch.+ILLELA",
+      image: "/images/Arch.ILLELA.jpg",
       bio: "Award-winning designer with expertise in user experience."
     },
     featured: true
@@ -303,7 +303,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Godwin",
       title: "Creative Design Director",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Eng.+GODWIN",
+      image: "/images/Eng.GODWIN.png",
       bio: "Professional graphic designer with agency experience."
     },
     featured: true
@@ -337,7 +337,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Arch. Illela",
       title: "CAD Specialist & Architect",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Arch.+ILLELA",
+      image: "/images/Arch.ILLELA.jpg",
       bio: "Professional architect and CAD expert with years of industry experience."
     },
     featured: true
@@ -371,7 +371,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Arch. Illela",
       title: "BIM Specialist",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Arch.+ILLELA",
+      image: "/images/Arch.ILLELA.jpg",
       bio: "BIM expert and architectural designer."
     },
     featured: false
@@ -405,7 +405,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Orresy",
       title: "Mechanical Design Engineer",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Eng.+ORRESY",
+      image: "/images/Eng.ORRESY.png",
       bio: "Mechanical engineer with expertise in product design."
     },
     featured: true
@@ -439,7 +439,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Godwin",
       title: "Computer Skills Instructor",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Eng.+GODWIN",
+      image: "/images/Eng.GODWIN.png",
       bio: "Expert in computer applications and productivity tools."
     },
     featured: false
@@ -473,7 +473,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Orresy",
       title: "Data Analysis Instructor",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Eng.+ORRESY",
+      image: "/images/Eng.ORRESY.png",
       bio: "Data analytics expert and Excel specialist."
     },
     featured: false
@@ -507,7 +507,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Godwin",
       title: "Presentation Skills Coach",
-      image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Eng.+GODWIN",
+      image: "/images/Eng.GODWIN.png",
       bio: "Expert in business communication and presentations."
     },
     featured: false

@@ -45,19 +45,19 @@ const trainers = [
   {
     name: "Arch. ILLELA",
     title: "UI/UX Design Lead & CAD Specialist",
-    image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Arch.+ILLELA",
+    image: "/images/Arch.ILLELA.jpg",
     bio: "Award-winning architect and designer with extensive experience in UI/UX design, AutoCAD, ArchiCAD, and programming. Passionate about bridging design and technology.",
   },
   {
     name: "Eng. ORRESY",
     title: "Senior ICT Instructor & Full-Stack Developer",
-    image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Eng.+ORRESY",
+    image: "/images/Eng.ORRESY.png",
     bio: "Experienced ICT professional and full-stack developer with over a decade of teaching experience. Specializes in JavaScript, Python, Java, and web technologies.",
   },
   {
     name: "Eng. GODWIN",
     title: "Creative Design Director & Python Specialist",
-    image: "https://placehold.co/400x400/0B1F4D/F4B400?text=Eng.+GODWIN",
+    image: "/images/Eng.GODWIN.png",
     bio: "Creative design expert and Python specialist with deep knowledge in graphic design, web design, and data science. Dedicated to nurturing creative talent.",
   },
 ]

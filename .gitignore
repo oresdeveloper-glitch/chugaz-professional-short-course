@@ -43,10 +43,7 @@ backend/.env
 backend/storage/
 backend/public/storage/
 
-# Binary images (HF Spaces blocks binary files in git)
-public/images/*.png
-public/images/*.jpg
-public/images/*.jpeg
+
 
 .vercel
 .env*
