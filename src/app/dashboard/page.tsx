@@ -18,6 +18,7 @@ import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import { getCurrentUser, getStudentData, logout, isAuthenticated } from "@/lib/auth"
 import { courses } from "@/data/courses"
+import { api } from "@/lib/api"
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Dashboard", active: true },
@@ -33,6 +34,9 @@ export default function StudentDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
   const [studentData, setStudentData] = useState<any>(null)
+  const [notifications, setNotifications] = useState<any[]>([])
+  const [unreadCount, setUnreadCount] = useState(0)
+  const [showNotifications, setShowNotifications] = useState(false)
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -43,6 +47,11 @@ export default function StudentDashboard() {
     setUser(u)
     if (u) {
       getStudentData(u.email).then(data => setStudentData(data))
+      api.get("/notifications").then((res) => {
+        const r = res as any
+        setNotifications(r.data || [])
+        setUnreadCount(r.unread || 0)
+      }).catch(() => {})
     }
   }, [router])
 
@@ -109,11 +118,34 @@ export default function StudentDashboard() {
             </button>
             <h2 className="text-lg font-heading font-bold text-[#0B1F4D] dark:text-white">Dashboard</h2>
           </div>
-          <div className="flex items-center gap-4">
-            <button className="relative text-gray-600 dark:text-gray-400">
+          <div className="flex items-center gap-4 relative">
+            <button onClick={() => { setShowNotifications(!showNotifications); if (!showNotifications) { api.post("/notifications/read", { id: "all" }).catch(() => {}); setUnreadCount(0) } }} className="relative text-gray-600 dark:text-gray-400">
               <Bell className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">0</span>
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center">{unreadCount}</span>
+              )}
             </button>
+            {showNotifications && (
+              <div className="absolute top-full right-0 mt-2 w-80 bg-white dark:bg-gray-900 rounded-[20px] shadow-xl border border-gray-200 dark:border-gray-700 z-50 max-h-96 overflow-y-auto">
+                <div className="p-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                  <span className="text-sm font-semibold text-[#0B1F4D] dark:text-white">Notifications</span>
+                  {notifications.length > 0 && (
+                    <button onClick={() => { setNotifications([]); setUnreadCount(0) }} className="text-xs text-gray-500 hover:text-red-500">Clear</button>
+                  )}
+                </div>
+                {notifications.length === 0 ? (
+                  <div className="p-6 text-center text-sm text-gray-500">No notifications</div>
+                ) : (
+                  notifications.map((n: any) => (
+                    <div key={n.id} className={`p-3 border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 ${!n.read ? "bg-blue-50 dark:bg-blue-900/10" : ""}`}>
+                      <p className="text-xs font-semibold text-[#0B1F4D] dark:text-white">{n.title}</p>
+                      <p className="text-xs text-gray-500 mt-1">{n.message}</p>
+                      <p className="text-[10px] text-gray-400 mt-1">{new Date(n.created_at).toLocaleDateString()}</p>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
             <Avatar className="w-9 h-9 md:w-10 md:h-10 rounded-[20px]">
               <AvatarFallback className="text-sm bg-[#F4B400] text-[#0B1F4D]">{initials}</AvatarFallback>
             </Avatar>

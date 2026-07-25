@@ -78,6 +78,14 @@ export default function AdminDashboard() {
     } catch {}
   }
 
+  const sendReminder = async (email: string, reason: string) => {
+    const student = students.find(s => s.email === email)
+    if (!student) return
+    try {
+      await api.post(`/students/${student.regNo}/remind`, { reason })
+    } catch {}
+  }
+
   const deleteStudent = async (email: string) => {
     const student = students.find(s => s.email === email)
     if (!student) return
@@ -285,6 +293,7 @@ export default function AdminDashboard() {
                                       <button onClick={() => updateStudentStatus(s.email, "rejected")} className="p-1.5 md:p-1.5 bg-red-100 dark:bg-red-900/30 rounded-[10px] text-red-600 hover:bg-red-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Reject"><XCircle className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
                                     </>
                                   )}
+                                  <button onClick={() => { sendReminder(s.email, "payment"); }} className="p-1.5 md:p-1.5 bg-blue-100 dark:bg-blue-900/30 rounded-[10px] text-blue-600 hover:bg-blue-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Send Payment Reminder"><Bell className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
                                   <button onClick={() => deleteStudent(s.email)} className="p-1.5 md:p-1.5 bg-gray-100 dark:bg-gray-800 rounded-[10px] text-gray-600 hover:bg-gray-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Delete"><Trash2 className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
                                 </div>
                               </td>
@@ -342,6 +351,20 @@ export default function AdminDashboard() {
                       </Button>
                     </>
                   )}
+                </div>
+                <div className="flex gap-2">
+                  <Button onClick={() => { sendReminder(selectedStudent.email, "payment"); setSelectedStudent(null) }}
+                    className="flex-1 rounded-[20px] bg-blue-600 hover:bg-blue-700 text-white min-h-[44px] text-xs">
+                    <Bell className="w-4 h-4 mr-1" /> Remind Payment
+                  </Button>
+                  <Button onClick={() => { sendReminder(selectedStudent.email, "registration"); setSelectedStudent(null) }}
+                    className="flex-1 rounded-[20px] bg-indigo-600 hover:bg-indigo-700 text-white min-h-[44px] text-xs">
+                    <Bell className="w-4 h-4 mr-1" /> Reg. Follow-up
+                  </Button>
+                  <Button onClick={() => { sendReminder(selectedStudent.email, "general"); setSelectedStudent(null) }}
+                    className="flex-1 rounded-[20px] bg-gray-600 hover:bg-gray-700 text-white min-h-[44px] text-xs">
+                    <Bell className="w-4 h-4 mr-1" /> General
+                  </Button>
                 </div>
                 <Button variant="outline" onClick={() => setSelectedStudent(null)} className="rounded-[20px] min-h-[44px]">Close</Button>
               </div>
@@ -418,6 +441,7 @@ export default function AdminDashboard() {
                                 <button onClick={() => updateStudentStatus(s.email, "rejected")} className="p-1.5 md:p-1.5 bg-red-100 rounded-[10px] text-red-600 hover:bg-red-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Reject"><XCircle className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
                               </>
                             )}
+                            <button onClick={() => { sendReminder(s.email, "payment"); }} className="p-1.5 md:p-1.5 bg-blue-100 rounded-[10px] text-blue-600 hover:bg-blue-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Send Payment Reminder"><Bell className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
                             <button onClick={() => deleteStudent(s.email)} className="p-1.5 md:p-1.5 bg-gray-100 rounded-[10px] text-gray-600 hover:bg-gray-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Delete"><Trash2 className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
                           </div>
                         </td>

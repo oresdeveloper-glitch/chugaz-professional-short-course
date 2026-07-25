@@ -9,6 +9,7 @@ interface StoredData {
   courses: any[]
   messages: any[]
   tokens: any[]
+  notifications: any[]
 }
 
 function getDefaults(): StoredData {
@@ -43,6 +44,7 @@ function getDefaults(): StoredData {
     ],
     messages: [],
     tokens: [],
+    notifications: [],
   }
 }
 
