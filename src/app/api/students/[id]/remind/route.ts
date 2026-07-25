@@ -14,7 +14,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   try { body = await req.json() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
   const reason = body.reason || "general"
 
-  if (!REASONS.includes(reason)) {
+  if (!REASONS.includes(reason) && reason !== "custom") {
     return NextResponse.json({ message: "Invalid reminder reason" }, { status: 422 })
   }
 
@@ -27,8 +27,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     id: Date.now(),
     student_email: student.email,
     reason,
-    title: getTitle(reason),
-    message: getMessage(reason, student),
+    title: body.title || getTitle(reason),
+    message: body.message || getMessage(reason, student),
     read: false,
     created_at: new Date().toISOString(),
   }
@@ -37,7 +37,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   data.notifications.push(notification)
   writeData(data)
 
-  return NextResponse.json({ message: "Reminder sent", notification })
+  return NextResponse.json({ message: "Notification sent", notification })
 }
 
 function getTitle(reason: string): string {

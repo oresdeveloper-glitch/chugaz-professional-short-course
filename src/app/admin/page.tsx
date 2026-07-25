@@ -50,6 +50,7 @@ export default function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState("")
   const [filterStatus, setFilterStatus] = useState("all")
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null)
+  const [customMsg, setCustomMsg] = useState("")
   const [toast, setToast] = useState("")
 
   const showToast = (msg: string) => {
@@ -98,6 +99,17 @@ export default function AdminDashboard() {
       await api.post(url, { reason })
       showToast("Reminder sent")
     } catch (e: any) { console.error("Reminder error:", e); showToast(e?.message || "Reminder failed") }
+  }
+
+  const sendCustomNotification = async (email: string) => {
+    const student = students.find(s => s.email === email)
+    if (!student || !customMsg.trim()) return
+    try {
+      const url = `/students/${student.regNo}/remind`
+      await api.post(url, { reason: "custom", title: "Notification from Admin", message: customMsg.trim() })
+      setCustomMsg("")
+      showToast("Custom notification sent")
+    } catch (e: any) { console.error("Custom notification error:", e); showToast(e?.message || "Failed to send") }
   }
 
   const deleteStudent = async (email: string) => {
@@ -388,7 +400,15 @@ export default function AdminDashboard() {
                     <Bell className="w-4 h-4 mr-1" /> General
                   </Button>
                 </div>
-                <Button variant="outline" onClick={() => setSelectedStudent(null)} className="rounded-[20px] min-h-[44px]">Close</Button>
+                <Separator className="my-2" />
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Custom Notification</label>
+                  <textarea value={customMsg} onChange={e => setCustomMsg(e.target.value)} className="w-full rounded-[16px] border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-3 text-sm min-h-[80px] resize-none outline-none focus:ring-2 focus:ring-[#F4B400]" placeholder="Type your message here..." />
+                  <Button onClick={() => { sendCustomNotification(selectedStudent.email); setSelectedStudent(null) }} disabled={!customMsg.trim()} className="w-full rounded-[20px] bg-[#0B1F4D] hover:bg-[#162d5a] text-white min-h-[40px] text-sm">
+                    <Bell className="w-4 h-4 mr-2" /> Send Notification
+                  </Button>
+                </div>
+                <Button variant="outline" onClick={() => { setSelectedStudent(null); setCustomMsg("") }} className="rounded-[20px] min-h-[44px]">Close</Button>
               </div>
             </div>
           </div>
