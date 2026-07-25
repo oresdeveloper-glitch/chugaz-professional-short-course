@@ -7,6 +7,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { api } from "@/lib/api"
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("")
@@ -19,15 +20,10 @@ export default function ForgotPasswordPage() {
     setLoading(true)
     setError("")
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"}/auth/forgot-password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      })
-      if (res.ok) setSent(true)
-      else setError("Email not found")
+      await api.post("/auth/forgot-password", { email })
+      setSent(true)
     } catch {
-      setError("Connection failed")
+      setError("Email not found")
     }
     setLoading(false)
   }

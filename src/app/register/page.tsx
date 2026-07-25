@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Checkbox } from "@/components/ui/checkbox"
 import { courses } from "@/data/courses"
+import { api } from "@/lib/api"
 
 const steps = [
   { id: 1, title: "Personal Info", icon: User },
@@ -120,45 +121,33 @@ export default function RegisterPage() {
     setSubmitting(true)
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"}/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          first_name: formData.firstName,
-          middle_name: formData.middleName,
-          last_name: formData.lastName,
-          password: formData.password,
-          password_confirmation: formData.confirmPassword,
-          gender: formData.gender || undefined,
-          date_of_birth: formData.dateOfBirth || undefined,
-          nationality: formData.nationality || undefined,
-          occupation: formData.occupation || undefined,
-          education_level: formData.educationLevel || undefined,
-          phone: formData.phone,
-          whatsapp: formData.whatsapp || undefined,
-          email: formData.email,
-          region: formData.region || undefined,
-          district: formData.district || undefined,
-          street: formData.street || undefined,
-          postal_address: formData.postalAddress || undefined,
-          training_mode: formData.trainingMode || undefined,
-          preferred_time: formData.preferredTime || undefined,
-        }),
+      const json = await api.post("/auth/register", {
+        first_name: formData.firstName,
+        middle_name: formData.middleName,
+        last_name: formData.lastName,
+        password: formData.password,
+        password_confirmation: formData.confirmPassword,
+        gender: formData.gender || undefined,
+        date_of_birth: formData.dateOfBirth || undefined,
+        nationality: formData.nationality || undefined,
+        occupation: formData.occupation || undefined,
+        education_level: formData.educationLevel || undefined,
+        phone: formData.phone,
+        whatsapp: formData.whatsapp || undefined,
+        email: formData.email,
+        region: formData.region || undefined,
+        district: formData.district || undefined,
+        street: formData.street || undefined,
+        postal_address: formData.postalAddress || undefined,
+        training_mode: formData.trainingMode || undefined,
+        preferred_time: formData.preferredTime || undefined,
       })
-
-      const json = await res.json()
-
-      if (!res.ok) {
-        const msg = json.errors ? Object.values(json.errors).flat().join(", ") : json.message || "Registration failed"
-        alert(msg)
-        setSubmitting(false)
-        return
-      }
 
       setRegistrationNumber(json.data.student.registration_number)
       setSubmitted(true)
-    } catch {
-      alert("Connection failed. Please try again.")
+    } catch (e: any) {
+      const msg = e.errors ? Object.values(e.errors).flat().join(", ") : e.message || "Registration failed"
+      alert(msg)
     }
     setSubmitting(false)
   }
