@@ -36,8 +36,8 @@ export default function LoginPage() {
       } else {
         setError("Invalid email or password. Please try again.")
       }
-    } catch {
-      setError("Connection failed. Please try again.")
+    } catch (e: any) {
+      setError(e?.message || "Connection failed. Please try again.")
     }
     setLoading(false)
   }

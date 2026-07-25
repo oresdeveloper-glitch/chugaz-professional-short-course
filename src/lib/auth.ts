@@ -30,6 +30,7 @@ export async function login(email: string, password: string): Promise<AuthUser |
     return user
   } catch (e) {
     if (e instanceof ApiError) return null
+    console.error("Login error:", e)
     throw e
   }
 }
