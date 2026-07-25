@@ -51,10 +51,13 @@ export default function RegisterPage() {
   const [submitted, setSubmitted] = useState(false)
   const [registrationNumber, setRegistrationNumber] = useState("")
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [serverError, setServerError] = useState("")
+  const [website, setWebsite] = useState("")
 
   const updateForm = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }))
     if (errors[field]) setErrors(prev => ({ ...prev, [field]: "" }))
+    if (serverError) setServerError("")
   }
 
   const toggleCourse = (id: string) => {
@@ -89,7 +92,8 @@ export default function RegisterPage() {
       if (!formData.firstName.trim()) newErrors.firstName = "Required"
       if (!formData.lastName.trim()) newErrors.lastName = "Required"
       if (!formData.password.trim()) newErrors.password = "Required"
-      else if (formData.password.length < 6) newErrors.password = "Min 6 characters"
+      else if (formData.password.length < 8 || !/[a-z]/.test(formData.password) || !/[A-Z]/.test(formData.password) || !/\d/.test(formData.password))
+        newErrors.password = "Min 8 chars, uppercase + lowercase + number"
       if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords do not match"
     }
     if (step === 2) {
@@ -127,6 +131,7 @@ export default function RegisterPage() {
       }).filter(Boolean) as string[]
 
       const json = await api.post("/auth/register", {
+        website,
         first_name: formData.firstName,
         middle_name: formData.middleName,
         last_name: formData.lastName,
@@ -154,7 +159,8 @@ export default function RegisterPage() {
       setSubmitted(true)
     } catch (e: any) {
       const msg = e.errors ? Object.values(e.errors).flat().join(", ") : e.message || "Registration failed"
-      alert(msg)
+      setServerError(msg)
+      window.scrollTo({ top: 0, behavior: "smooth" })
     }
     setSubmitting(false)
   }
@@ -231,7 +237,23 @@ export default function RegisterPage() {
           </p>
         </motion.div>
 
+        {serverError && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 px-6 py-3 rounded-[20px] mb-4 text-sm"
+          >
+            {serverError}
+          </motion.div>
+        )}
+
         <Card className="rounded-[20px] shadow-xl border-0">
+          {/* Honeypot - invisible to users */}
+          <div aria-hidden="true" className="absolute opacity-0 pointer-events-none" style={{ height: 0, overflow: "hidden" }}>
+            <label>Website</label>
+            <input tabIndex={-1} autoComplete="off" value={website} onChange={e => setWebsite(e.target.value)} />
+          </div>
+
           {/* Progress Bar */}
           <div className="bg-[#0B1F4D] dark:bg-gray-900 p-4 md:p-8">
             <div className="flex items-center justify-between mb-4">
@@ -336,7 +358,7 @@ export default function RegisterPage() {
                       <div>
                         <Label>Password *</Label>
                         <div className="relative">
-                          <Input type={showPassword ? "text" : "password"} value={formData.password} onChange={e => updateForm("password", e.target.value)} className="rounded-[20px] pr-10" placeholder="Create password (min 6 chars)" />
+                          <Input type={showPassword ? "text" : "password"} value={formData.password} onChange={e => updateForm("password", e.target.value)} className="rounded-[20px] pr-10" placeholder="Min 8 chars, upper + lower + number" />
                           <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                             {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                           </button>
