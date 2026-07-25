@@ -121,6 +121,11 @@ export default function RegisterPage() {
     setSubmitting(true)
 
     try {
+      const courseTitles = selectedCourses.map(id => {
+        const course = courses.find(c => c.id === id)
+        return course?.title
+      }).filter(Boolean) as string[]
+
       const json = await api.post("/auth/register", {
         first_name: formData.firstName,
         middle_name: formData.middleName,
@@ -141,6 +146,8 @@ export default function RegisterPage() {
         postal_address: formData.postalAddress || undefined,
         training_mode: formData.trainingMode || undefined,
         preferred_time: formData.preferredTime || undefined,
+        courses: courseTitles,
+        payment_method: formData.paymentMethod || undefined,
       })
 
       setRegistrationNumber(json.data.student.registration_number)

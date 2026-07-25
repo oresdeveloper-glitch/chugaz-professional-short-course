@@ -19,6 +19,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import { isAuthenticated, isAdmin, logout, getAllStudents } from "@/lib/auth"
+import { api } from "@/lib/api"
 
 type Student = {
   regNo: string; firstName: string; middleName: string; lastName: string;
@@ -62,14 +63,8 @@ export default function AdminDashboard() {
     const student = students.find(s => s.email === email)
     if (!student) return
     try {
-      const token = localStorage.getItem("chugaz_token")
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"}/students/${student.regNo}/approve`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
-      })
-      if (res.ok) {
-        setStudents(prev => prev.map(s => s.email === email ? { ...s, status } : s))
-      }
+      await api.post(`/students/${student.regNo}/${status}`)
+      setStudents(prev => prev.map(s => s.email === email ? { ...s, status } : s))
     } catch {}
   }
 
@@ -77,14 +72,8 @@ export default function AdminDashboard() {
     const student = students.find(s => s.email === email)
     if (!student) return
     try {
-      const token = localStorage.getItem("chugaz_token")
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api"}/students/${student.regNo}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
-      })
-      if (res.ok) {
-        setStudents(prev => prev.filter(s => s.email !== email))
-      }
+      await api.delete(`/students/${student.regNo}`)
+      setStudents(prev => prev.filter(s => s.email !== email))
     } catch {}
   }
 

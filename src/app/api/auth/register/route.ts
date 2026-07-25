@@ -42,6 +42,8 @@ export async function POST(req: Request) {
     postal_address: body.postal_address || null,
     training_mode: body.training_mode || null,
     preferred_time: body.preferred_time || null,
+    courses: body.courses || [],
+    payment_method: body.payment_method || null,
     status: "pending",
     payment_status: "pending",
     created_at: new Date().toISOString(),
