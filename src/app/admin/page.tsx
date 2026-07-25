@@ -51,6 +51,7 @@ export default function AdminDashboard() {
   const [filterStatus, setFilterStatus] = useState("all")
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null)
   const [customMsg, setCustomMsg] = useState("")
+  const closeModal = () => { setSelectedStudent(null); setCustomMsg("") }
   const [toast, setToast] = useState("")
 
   const showToast = (msg: string) => {
@@ -342,7 +343,7 @@ export default function AdminDashboard() {
         </Card>
 
         {selectedStudent && (
-          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-3 md:p-4" onClick={() => setSelectedStudent(null)}>
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-3 md:p-4" onClick={closeModal}>
             <div className="bg-white dark:bg-gray-900 rounded-[20px] p-4 md:p-8 max-w-lg w-full max-h-[80vh] overflow-y-auto mx-2 md:mx-0" onClick={e => e.stopPropagation()}>
               <h3 className="text-lg md:text-xl font-heading font-bold text-[#0B1F4D] dark:text-white mb-3 md:mb-4">Student Details</h3>
               <div className="space-y-2 md:space-y-3 text-xs md:text-sm">
@@ -369,17 +370,17 @@ export default function AdminDashboard() {
               </div>
               <div className="flex flex-col gap-2 mt-4 md:mt-6">
                 <div className="flex gap-2">
-                  <Button onClick={() => { confirmPayment(selectedStudent.email); setSelectedStudent(null) }}
+                  <Button onClick={() => { confirmPayment(selectedStudent.email); closeModal() }}
                     className={`flex-1 rounded-[20px] min-h-[44px] ${selectedStudent.paymentStatus === "confirmed" ? "bg-yellow-500 hover:bg-yellow-600 text-white" : "bg-emerald-600 hover:bg-emerald-700 text-white"}`}>
                     <CreditCard className="w-4 h-4 mr-2" /> {selectedStudent.paymentStatus === "confirmed" ? "Reset Payment" : "Confirm Payment"}
                   </Button>
                   {selectedStudent.status === "pending" && (
                     <>
-                      <Button onClick={() => { updateStudentStatus(selectedStudent.email, "approved"); setSelectedStudent(null) }}
+                      <Button onClick={() => { updateStudentStatus(selectedStudent.email, "approved"); closeModal() }}
                         className="flex-1 rounded-[20px] bg-green-600 hover:bg-green-700 text-white min-h-[44px]">
                         <CheckCircle2 className="w-4 h-4 mr-2" /> Approve
                       </Button>
-                      <Button onClick={() => { updateStudentStatus(selectedStudent.email, "rejected"); setSelectedStudent(null) }}
+                      <Button onClick={() => { updateStudentStatus(selectedStudent.email, "rejected"); closeModal() }}
                         className="flex-1 rounded-[20px] bg-red-600 hover:bg-red-700 text-white min-h-[44px]">
                         <XCircle className="w-4 h-4 mr-2" /> Reject
                       </Button>
@@ -387,15 +388,15 @@ export default function AdminDashboard() {
                   )}
                 </div>
                 <div className="flex gap-2">
-                  <Button onClick={() => { sendReminder(selectedStudent.email, "payment"); setSelectedStudent(null) }}
+                  <Button onClick={() => { sendReminder(selectedStudent.email, "payment"); closeModal() }}
                     className="flex-1 rounded-[20px] bg-blue-600 hover:bg-blue-700 text-white min-h-[44px] text-xs">
                     <Bell className="w-4 h-4 mr-1" /> Remind Payment
                   </Button>
-                  <Button onClick={() => { sendReminder(selectedStudent.email, "registration"); setSelectedStudent(null) }}
+                  <Button onClick={() => { sendReminder(selectedStudent.email, "registration"); closeModal() }}
                     className="flex-1 rounded-[20px] bg-indigo-600 hover:bg-indigo-700 text-white min-h-[44px] text-xs">
                     <Bell className="w-4 h-4 mr-1" /> Reg. Follow-up
                   </Button>
-                  <Button onClick={() => { sendReminder(selectedStudent.email, "general"); setSelectedStudent(null) }}
+                  <Button onClick={() => { sendReminder(selectedStudent.email, "general"); closeModal() }}
                     className="flex-1 rounded-[20px] bg-gray-600 hover:bg-gray-700 text-white min-h-[44px] text-xs">
                     <Bell className="w-4 h-4 mr-1" /> General
                   </Button>
@@ -404,11 +405,11 @@ export default function AdminDashboard() {
                 <div className="space-y-2">
                   <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Custom Notification</label>
                   <textarea value={customMsg} onChange={e => setCustomMsg(e.target.value)} className="w-full rounded-[16px] border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-3 text-sm min-h-[80px] resize-none outline-none focus:ring-2 focus:ring-[#F4B400]" placeholder="Type your message here..." />
-                  <Button onClick={() => { sendCustomNotification(selectedStudent.email); setSelectedStudent(null) }} disabled={!customMsg.trim()} className="w-full rounded-[20px] bg-[#0B1F4D] hover:bg-[#162d5a] text-white min-h-[40px] text-sm">
+                  <Button onClick={() => { sendCustomNotification(selectedStudent.email); closeModal() }} disabled={!customMsg.trim()} className="w-full rounded-[20px] bg-[#0B1F4D] hover:bg-[#162d5a] text-white min-h-[40px] text-sm">
                     <Bell className="w-4 h-4 mr-2" /> Send Notification
                   </Button>
                 </div>
-                <Button variant="outline" onClick={() => { setSelectedStudent(null); setCustomMsg("") }} className="rounded-[20px] min-h-[44px]">Close</Button>
+                <Button variant="outline" onClick={closeModal} className="rounded-[20px] min-h-[44px]">Close</Button>
               </div>
             </div>
           </div>
