@@ -43,6 +43,9 @@ export async function POST(req: Request) {
 
   const student = data.students.find((s: any) => s.email === email.toLowerCase())
   if (student) {
+    if (student.status === "rejected") {
+      return NextResponse.json({ message: "Your account has been rejected. Contact support for more information." }, { status: 403 })
+    }
     if (migratePassword(student)) writeData(data)
     if (verifyPassword(password, student.password)) {
       const token = generateToken("student", student.id)
