@@ -11,28 +11,22 @@ export interface AuthUser {
 }
 
 export async function login(email: string, password: string): Promise<AuthUser | null> {
-  try {
-    const res = await api.post("/auth/login", { email, password })
-    const { type, student, admin, token } = res.data
+  const res = await api.post("/auth/login", { email, password })
+  const { type, student, admin, token } = res.data
 
-    const user: AuthUser = {
-      id: student?.id || admin?.id,
-      email: student?.email || admin?.email,
-      firstName: student?.first_name || admin?.name?.split(" ")[0] || "Admin",
-      lastName: student?.last_name || admin?.name?.split(" ").slice(1).join(" ") || "",
-      regNo: student?.registration_number || "ADMIN001",
-      role: type === "admin" ? "admin" : "student",
-      token,
-    }
-
-    localStorage.setItem("chugaz_user", JSON.stringify(user))
-    localStorage.setItem("chugaz_token", token)
-    return user
-  } catch (e) {
-    if (e instanceof ApiError) return null
-    console.error("Login error:", e)
-    throw e
+  const user: AuthUser = {
+    id: student?.id || admin?.id,
+    email: student?.email || admin?.email,
+    firstName: student?.first_name || admin?.name?.split(" ")[0] || "Admin",
+    lastName: student?.last_name || admin?.name?.split(" ").slice(1).join(" ") || "",
+    regNo: student?.registration_number || "ADMIN001",
+    role: type === "admin" ? "admin" : "student",
+    token,
   }
+
+  localStorage.setItem("chugaz_user", JSON.stringify(user))
+  localStorage.setItem("chugaz_token", token)
+  return user
 }
 
 export async function logout(): Promise<void> {
