@@ -24,11 +24,12 @@ export async function POST(req: Request) {
 
   const student = data.students.find((s: any) => s.email === email && s.password === password)
   if (student) {
+    const { password: _, ...safe } = student
     return NextResponse.json({
       message: "Login successful",
       data: {
         type: "student",
-        student,
+        student: safe,
         token: `token_${student.id}_${Date.now()}`,
       },
     })

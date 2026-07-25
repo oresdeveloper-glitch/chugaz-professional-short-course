@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { api } from "@/lib/api"
 
 const contactInfo = [
   {
@@ -63,11 +64,17 @@ const socialLinks = [
 export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" })
   const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSent(true)
-    setTimeout(() => setSent(false), 3000)
+    setSubmitting(true)
+    try {
+      await api.post("/contact", formData)
+      setSent(true)
+      setFormData({ name: "", email: "", subject: "", message: "" })
+    } catch {}
+    setSubmitting(false)
   }
 
   return (
@@ -208,12 +215,13 @@ export default function ContactPage() {
                     </div>
                     <Button
                       type="submit"
-                      className="w-full bg-[#F4B400] hover:bg-[#e5a800] text-[#0B1F4D] rounded-[20px] font-button font-semibold text-lg py-6"
+                      disabled={submitting}
+                      className="w-full bg-[#F4B400] hover:bg-[#e5a800] text-[#0B1F4D] rounded-[20px] font-button font-semibold text-lg py-6 disabled:opacity-50"
                     >
                       {sent ? (
                         <span className="flex items-center gap-2">Message Sent! <Send className="w-4 h-4" /></span>
                       ) : (
-                        <span className="flex items-center gap-2">Send Message <Send className="w-4 h-4" /></span>
+                        <span className="flex items-center gap-2">{submitting ? "Sending..." : "Send Message"} {!submitting && <Send className="w-4 h-4" />}</span>
                       )}
                     </Button>
                   </form>
