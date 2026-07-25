@@ -27,7 +27,8 @@ type Student = {
   educationLevel: string; phone: string; whatsapp: string; email: string;
   region: string; district: string; street: string; postalAddress: string;
   courses: string[]; trainingMode: string; preferredTime: string;
-  paymentMethod: string; status: "pending" | "approved" | "rejected";
+  paymentMethod: string; paymentRef: string; transactionId: string;
+  paymentStatus: string; status: "pending" | "approved" | "rejected";
   createdAt: string;
 }
 
@@ -65,6 +66,15 @@ export default function AdminDashboard() {
     try {
       await api.post(`/students/${student.regNo}/${status}`)
       setStudents(prev => prev.map(s => s.email === email ? { ...s, status } : s))
+    } catch {}
+  }
+
+  const confirmPayment = async (email: string) => {
+    const student = students.find(s => s.email === email)
+    if (!student) return
+    try {
+      const res = await api.post(`/students/${student.regNo}/payment`)
+      setStudents(prev => prev.map(s => s.email === email ? { ...s, paymentStatus: (res as any).payment_status } : s))
     } catch {}
   }
 
@@ -228,50 +238,60 @@ export default function AdminDashboard() {
             ) : (
               <div className="overflow-x-auto -mx-4 md:-mx-0">
                 <div className="min-w-[700px] md:min-w-0 px-4 md:px-0">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-gray-200 dark:border-gray-700">
-                        <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Reg No.</th>
-                        <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Name</th>
-                        <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Email</th>
-                        <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Courses</th>
-                        <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Date</th>
-                        <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Status</th>
-                        <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {students.slice().reverse().map((s, i) => (
-                        <motion.tr key={s.regNo} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.02 }}
-                          className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
-                        >
-                          <td className="py-3 px-3 md:px-4 text-sm font-medium text-[#0B1F4D] dark:text-white whitespace-nowrap">{s.regNo}</td>
-                          <td className="py-3 px-3 md:px-4 whitespace-nowrap"><span className="text-sm">{s.firstName} {s.lastName}</span></td>
-                          <td className="py-3 px-3 md:px-4 text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">{s.email}</td>
-                          <td className="py-3 px-3 md:px-4 text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">{s.courses.length} course(s)</td>
-                          <td className="py-3 px-3 md:px-4 text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">{new Date(s.createdAt).toLocaleDateString()}</td>
-                          <td className="py-3 px-3 md:px-4 whitespace-nowrap">
-                            <Badge className={cn("rounded-[20px] capitalize", s.status === "approved" ? "bg-green-100 text-green-700" : s.status === "pending" ? "bg-yellow-100 text-yellow-700" : "bg-red-100 text-red-700")}>
-                              {s.status === "approved" ? <CheckCircle2 className="w-3 h-3 mr-1 inline" /> : s.status === "pending" ? <Clock className="w-3 h-3 mr-1 inline" /> : <XCircle className="w-3 h-3 mr-1 inline" />}
-                              {s.status}
-                            </Badge>
-                          </td>
-                          <td className="py-3 px-3 md:px-4 whitespace-nowrap">
-                            <div className="flex gap-1">
-                              <button onClick={() => setSelectedStudent(s)} className="p-1.5 md:p-1.5 bg-blue-100 dark:bg-blue-900/30 rounded-[10px] text-blue-600 hover:bg-blue-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="View"><Eye className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
-                              {s.status === "pending" && (
-                                <>
-                                  <button onClick={() => updateStudentStatus(s.email, "approved")} className="p-1.5 md:p-1.5 bg-green-100 dark:bg-green-900/30 rounded-[10px] text-green-600 hover:bg-green-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Approve"><CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
-                                  <button onClick={() => updateStudentStatus(s.email, "rejected")} className="p-1.5 md:p-1.5 bg-red-100 dark:bg-red-900/30 rounded-[10px] text-red-600 hover:bg-red-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Reject"><XCircle className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
-                                </>
-                              )}
-                              <button onClick={() => deleteStudent(s.email)} className="p-1.5 md:p-1.5 bg-gray-100 dark:bg-gray-800 rounded-[10px] text-gray-600 hover:bg-gray-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Delete"><Trash2 className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
-                            </div>
-                          </td>
-                        </motion.tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      <table className="w-full">
+                        <thead>
+                          <tr className="border-b border-gray-200 dark:border-gray-700">
+                            <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Reg No.</th>
+                            <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Name</th>
+                            <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Email</th>
+                            <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Courses</th>
+                            <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Date</th>
+                            <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Payment</th>
+                            <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Status</th>
+                            <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {students.slice().reverse().map((s, i) => (
+                            <motion.tr key={s.regNo} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.02 }}
+                              className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                            >
+                              <td className="py-3 px-3 md:px-4 text-sm font-medium text-[#0B1F4D] dark:text-white whitespace-nowrap">{s.regNo}</td>
+                              <td className="py-3 px-3 md:px-4 whitespace-nowrap"><span className="text-sm">{s.firstName} {s.lastName}</span></td>
+                              <td className="py-3 px-3 md:px-4 text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">{s.email}</td>
+                              <td className="py-3 px-3 md:px-4 text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">{s.courses.length} course(s)</td>
+                              <td className="py-3 px-3 md:px-4 text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">{new Date(s.createdAt).toLocaleDateString()}</td>
+                              <td className="py-3 px-3 md:px-4 whitespace-nowrap">
+                                <Badge className={cn("rounded-[20px] capitalize", s.paymentStatus === "confirmed" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700")}>
+                                  {s.paymentStatus === "confirmed" ? <CheckCircle2 className="w-3 h-3 mr-1 inline" /> : <Clock className="w-3 h-3 mr-1 inline" />}
+                                  {s.paymentStatus === "confirmed" ? "Paid" : "Pending"}
+                                </Badge>
+                              </td>
+                              <td className="py-3 px-3 md:px-4 whitespace-nowrap">
+                                <Badge className={cn("rounded-[20px] capitalize", s.status === "approved" ? "bg-green-100 text-green-700" : s.status === "pending" ? "bg-yellow-100 text-yellow-700" : "bg-red-100 text-red-700")}>
+                                  {s.status === "approved" ? <CheckCircle2 className="w-3 h-3 mr-1 inline" /> : s.status === "pending" ? <Clock className="w-3 h-3 mr-1 inline" /> : <XCircle className="w-3 h-3 mr-1 inline" />}
+                                  {s.status}
+                                </Badge>
+                              </td>
+                              <td className="py-3 px-3 md:px-4 whitespace-nowrap">
+                                <div className="flex gap-1">
+                                  <button onClick={() => setSelectedStudent(s)} className="p-1.5 md:p-1.5 bg-blue-100 dark:bg-blue-900/30 rounded-[10px] text-blue-600 hover:bg-blue-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="View"><Eye className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
+                                  <button onClick={() => confirmPayment(s.email)} className={`p-1.5 md:p-1.5 rounded-[10px] min-w-[32px] min-h-[32px] flex items-center justify-center ${s.paymentStatus === "confirmed" ? "bg-yellow-100 text-yellow-700 hover:bg-yellow-200" : "bg-emerald-100 text-emerald-600 hover:bg-emerald-200"}`} title={s.paymentStatus === "confirmed" ? "Reset Payment" : "Confirm Payment"}>
+                                    <CreditCard className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                                  </button>
+                                  {s.status === "pending" && (
+                                    <>
+                                      <button onClick={() => updateStudentStatus(s.email, "approved")} className="p-1.5 md:p-1.5 bg-green-100 dark:bg-green-900/30 rounded-[10px] text-green-600 hover:bg-green-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Approve"><CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
+                                      <button onClick={() => updateStudentStatus(s.email, "rejected")} className="p-1.5 md:p-1.5 bg-red-100 dark:bg-red-900/30 rounded-[10px] text-red-600 hover:bg-red-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Reject"><XCircle className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
+                                    </>
+                                  )}
+                                  <button onClick={() => deleteStudent(s.email)} className="p-1.5 md:p-1.5 bg-gray-100 dark:bg-gray-800 rounded-[10px] text-gray-600 hover:bg-gray-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Delete"><Trash2 className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
+                                </div>
+                              </td>
+                            </motion.tr>
+                          ))}
+                        </tbody>
+                      </table>
                 </div>
               </div>
             )}
@@ -298,9 +318,33 @@ export default function AdminDashboard() {
                 <p><strong>Courses:</strong> {selectedStudent.courses.join(", ")}</p>
                 <p><strong>Mode:</strong> {selectedStudent.trainingMode}</p>
                 <p><strong>Time:</strong> {selectedStudent.preferredTime}</p>
-                <p><strong>Payment:</strong> {selectedStudent.paymentMethod}</p>
+                <p><strong>Payment Method:</strong> {selectedStudent.paymentMethod}</p>
+                <p><strong>Payment Ref:</strong> <span className="font-mono text-[#F4B400]">{selectedStudent.paymentRef}</span></p>
+                {selectedStudent.transactionId && <p><strong>Transaction ID:</strong> <span className="font-mono">{selectedStudent.transactionId}</span></p>}
+                <p><strong>Payment Status:</strong> <Badge className={cn("rounded-[20px]", selectedStudent.paymentStatus === "confirmed" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700")}>{selectedStudent.paymentStatus === "confirmed" ? "Paid" : "Pending"}</Badge></p>
+                <p><strong>Registration Status:</strong> <Badge className={cn("rounded-[20px] capitalize", selectedStudent.status === "approved" ? "bg-green-100 text-green-700" : selectedStudent.status === "pending" ? "bg-yellow-100 text-yellow-700" : "bg-red-100 text-red-700")}>{selectedStudent.status}</Badge></p>
               </div>
-              <Button onClick={() => setSelectedStudent(null)} className="mt-4 md:mt-6 w-full rounded-[20px] bg-[#0B1F4D] text-white min-h-[44px]">Close</Button>
+              <div className="flex flex-col gap-2 mt-4 md:mt-6">
+                <div className="flex gap-2">
+                  <Button onClick={() => { confirmPayment(selectedStudent.email); setSelectedStudent(null) }}
+                    className={`flex-1 rounded-[20px] min-h-[44px] ${selectedStudent.paymentStatus === "confirmed" ? "bg-yellow-500 hover:bg-yellow-600 text-white" : "bg-emerald-600 hover:bg-emerald-700 text-white"}`}>
+                    <CreditCard className="w-4 h-4 mr-2" /> {selectedStudent.paymentStatus === "confirmed" ? "Reset Payment" : "Confirm Payment"}
+                  </Button>
+                  {selectedStudent.status === "pending" && (
+                    <>
+                      <Button onClick={() => { updateStudentStatus(selectedStudent.email, "approved"); setSelectedStudent(null) }}
+                        className="flex-1 rounded-[20px] bg-green-600 hover:bg-green-700 text-white min-h-[44px]">
+                        <CheckCircle2 className="w-4 h-4 mr-2" /> Approve
+                      </Button>
+                      <Button onClick={() => { updateStudentStatus(selectedStudent.email, "rejected"); setSelectedStudent(null) }}
+                        className="flex-1 rounded-[20px] bg-red-600 hover:bg-red-700 text-white min-h-[44px]">
+                        <XCircle className="w-4 h-4 mr-2" /> Reject
+                      </Button>
+                    </>
+                  )}
+                </div>
+                <Button variant="outline" onClick={() => setSelectedStudent(null)} className="rounded-[20px] min-h-[44px]">Close</Button>
+              </div>
             </div>
           </div>
         )}
@@ -342,6 +386,7 @@ export default function AdminDashboard() {
                       <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Email</th>
                       <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Phone</th>
                       <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Courses</th>
+                      <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Payment</th>
                       <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Status</th>
                       <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Actions</th>
                     </tr>
@@ -355,10 +400,18 @@ export default function AdminDashboard() {
                         <td className="py-3 px-3 md:px-4 text-sm text-gray-600 whitespace-nowrap">{s.phone}</td>
                         <td className="py-3 px-3 md:px-4 text-sm text-gray-600 whitespace-nowrap">{s.courses.length}</td>
                         <td className="py-3 px-3 md:px-4 whitespace-nowrap">
+                          <Badge className={cn("rounded-[20px] capitalize", s.paymentStatus === "confirmed" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700")}>
+                            {s.paymentStatus === "confirmed" ? "Paid" : "Pending"}
+                          </Badge>
+                        </td>
+                        <td className="py-3 px-3 md:px-4 whitespace-nowrap">
                           <Badge className={cn("rounded-[20px] capitalize", s.status === "approved" ? "bg-green-100 text-green-700" : s.status === "pending" ? "bg-yellow-100 text-yellow-700" : "bg-red-100 text-red-700")}>{s.status}</Badge>
                         </td>
                         <td className="py-3 px-3 md:px-4 whitespace-nowrap">
                           <div className="flex gap-1">
+                            <button onClick={() => confirmPayment(s.email)} className={`p-1.5 md:p-1.5 rounded-[10px] min-w-[32px] min-h-[32px] flex items-center justify-center ${s.paymentStatus === "confirmed" ? "bg-yellow-100 text-yellow-700 hover:bg-yellow-200" : "bg-emerald-100 text-emerald-600 hover:bg-emerald-200"}`} title={s.paymentStatus === "confirmed" ? "Reset Payment" : "Confirm Payment"}>
+                              <CreditCard className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                            </button>
                             {s.status === "pending" && (
                               <>
                                 <button onClick={() => updateStudentStatus(s.email, "approved")} className="p-1.5 md:p-1.5 bg-green-100 rounded-[10px] text-green-600 hover:bg-green-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Approve"><CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
@@ -415,7 +468,9 @@ export default function AdminDashboard() {
   }
 
   function renderPayments() {
-    const totalRevenue = approvedStudents.reduce((sum, s) => sum + (s.courses.length * 200000), 0)
+    const paidStudents = students.filter(s => s.paymentStatus === "confirmed")
+    const pendingPay = students.filter(s => s.paymentStatus !== "confirmed")
+    const totalRevenue = paidStudents.reduce((sum, s) => sum + (s.courses.length * 200000), 0)
     return (
       <Card className="rounded-[20px] border-0 shadow-md">
         <CardHeader className="p-4 md:p-6">
@@ -432,17 +487,64 @@ export default function AdminDashboard() {
             <Card className="rounded-[20px] bg-yellow-50 dark:bg-yellow-900/20 border-0">
               <CardContent className="p-4 md:p-6 text-center">
                 <p className="text-xs md:text-sm text-gray-500">Pending</p>
-                <p className="text-lg md:text-2xl font-heading font-extrabold text-[#F4B400]">{pendingStudents.length}</p>
+                <p className="text-lg md:text-2xl font-heading font-extrabold text-[#F4B400]">{pendingPay.length}</p>
               </CardContent>
             </Card>
             <Card className="rounded-[20px] bg-blue-50 dark:bg-blue-900/20 border-0">
               <CardContent className="p-4 md:p-6 text-center">
                 <p className="text-xs md:text-sm text-gray-500">Completed</p>
-                <p className="text-lg md:text-2xl font-heading font-extrabold text-blue-600">{approvedStudents.length}</p>
+                <p className="text-lg md:text-2xl font-heading font-extrabold text-blue-600">{paidStudents.length}</p>
               </CardContent>
             </Card>
           </div>
-          <div className="text-center text-gray-500 text-xs md:text-sm">Full payment tracking with receipts available in the Laravel backend.</div>
+
+          {students.length === 0 ? (
+            <div className="text-center py-8 text-gray-500">No payment records yet.</div>
+          ) : (
+            <div className="overflow-x-auto -mx-4 md:-mx-0">
+              <div className="min-w-[700px] md:min-w-0 px-4 md:px-0">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-200 dark:border-gray-700">
+                      <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Student</th>
+                      <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Reg No.</th>
+                      <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Payment Ref</th>
+                      <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Transaction ID</th>
+                      <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Method</th>
+                      <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Amount</th>
+                      <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Status</th>
+                      <th className="text-left py-3 px-3 md:px-4 text-sm font-semibold text-gray-500 whitespace-nowrap">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {students.slice().reverse().map((s, i) => {
+                      const amount = s.courses.length * 200000
+                      return (
+                        <tr key={s.regNo} className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                          <td className="py-3 px-3 md:px-4 text-sm font-medium text-[#0B1F4D] whitespace-nowrap">{s.firstName} {s.lastName}</td>
+                          <td className="py-3 px-3 md:px-4 text-sm text-gray-600 whitespace-nowrap">{s.regNo}</td>
+                          <td className="py-3 px-3 md:px-4 text-sm font-mono text-[#F4B400] whitespace-nowrap">{s.paymentRef}</td>
+                          <td className="py-3 px-3 md:px-4 text-sm font-mono text-gray-600 whitespace-nowrap">{s.transactionId || "—"}</td>
+                          <td className="py-3 px-3 md:px-4 text-sm capitalize text-gray-600 whitespace-nowrap">{s.paymentMethod || "—"}</td>
+                          <td className="py-3 px-3 md:px-4 text-sm font-semibold text-gray-900 whitespace-nowrap">{amount.toLocaleString()} TZS</td>
+                          <td className="py-3 px-3 md:px-4 whitespace-nowrap">
+                            <Badge className={cn("rounded-[20px]", s.paymentStatus === "confirmed" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700")}>
+                              {s.paymentStatus === "confirmed" ? "Paid" : "Pending"}
+                            </Badge>
+                          </td>
+                          <td className="py-3 px-3 md:px-4 whitespace-nowrap">
+                            <button onClick={() => confirmPayment(s.email)} className={`p-1.5 md:p-1.5 rounded-[10px] min-w-[32px] min-h-[32px] flex items-center justify-center ${s.paymentStatus === "confirmed" ? "bg-yellow-100 text-yellow-700 hover:bg-yellow-200" : "bg-emerald-100 text-emerald-600 hover:bg-emerald-200"}`} title={s.paymentStatus === "confirmed" ? "Reset Payment" : "Confirm Payment"}>
+                              <CreditCard className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                            </button>
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     )
