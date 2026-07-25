@@ -8,6 +8,7 @@ interface StoredData {
   admins: any[]
   courses: any[]
   messages: any[]
+  tokens: any[]
 }
 
 function getDefaults(): StoredData {
@@ -41,6 +42,7 @@ function getDefaults(): StoredData {
       { id: 15, title: "Microsoft PowerPoint", slug: "microsoft-powerpoint", category: "Computer Skills", fee: 100000 },
     ],
     messages: [],
+    tokens: [],
   }
 }
 

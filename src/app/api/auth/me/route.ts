@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { readData } from "@/lib/server-store"
+import { verifyToken } from "@/lib/auth-server"
 
 function toCamelCase(s: any) {
   if (!s) return null
@@ -32,23 +33,26 @@ function toCamelCase(s: any) {
 
 export async function GET(req: Request) {
   const auth = req.headers.get("authorization")
-  const data = readData()
-
   if (!auth || !auth.startsWith("Bearer ")) {
     return NextResponse.json({ data: { type: "guest", student: null } })
   }
 
   const token = auth.slice(7)
+  const result = verifyToken(token)
+  if (!result) {
+    return NextResponse.json({ data: { type: "guest", student: null } })
+  }
 
-  if (token.startsWith("admin_token_")) {
+  const data = readData()
+
+  if (result.type === "admin") {
     const admin = data.admins[0]
     const { password, ...safe } = admin
     return NextResponse.json({ data: { type: "admin", admin: safe } })
   }
 
-  if (token.startsWith("token_")) {
-    const studentId = parseInt(token.split("_")[1], 10)
-    const student = data.students.find((s: any) => s.id === studentId)
+  if (result.type === "student") {
+    const student = data.students.find((s: any) => s.id === result.userId)
     if (student) {
       return NextResponse.json({ data: { type: "student", student: toCamelCase(student) } })
     }

@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server"
 import { readData } from "@/lib/server-store"
+import { requireAdmin } from "@/lib/auth-server"
 
-export async function GET() {
+export async function GET(req: Request) {
+  if (!requireAdmin(req.headers.get("authorization"))) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+  }
+
   const data = readData()
   const students = data.students.map((s: any) => {
     const { password, ...rest } = s
