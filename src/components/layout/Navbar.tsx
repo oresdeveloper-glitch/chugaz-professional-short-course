@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter, usePathname } from "next/navigation"
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
 import { Menu, X, LogOut, LayoutDashboard } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { PremiumButton } from "@/components/ui/PremiumButton"
 import { getCurrentUser, logout as authLogout } from "@/lib/auth"
 
 const navLinks = [
@@ -85,25 +85,28 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-3">
               {user ? (
                 <>
-                  <Button variant="outline" size="md" className="font-button border-gray-300 dark:border-gray-600" asChild>
-                    <Link href={user.role === "admin" ? "/admin" : "/dashboard"}>
-                      <LayoutDashboard className="w-4 h-4 mr-2" />
-                      Dashboard
-                    </Link>
-                  </Button>
-                  <Button variant="ghost" size="md" className="font-button text-red-500 hover:text-red-600 hover:bg-red-50" onClick={handleLogout}>
-                    <LogOut className="w-4 h-4 mr-2" />
+                  <Link
+                    href={user.role === "admin" ? "/admin" : "/dashboard"}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-button border border-gray-300/50 dark:border-gray-600/50 bg-white/50 dark:bg-white/5 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-300 shadow-sm"
+                  >
+                    <LayoutDashboard className="w-4 h-4" />
+                    Dashboard
+                  </Link>
+                  <PremiumButton variant="glass" size="md" iconLeft={<LogOut className="w-4 h-4" />} onClick={handleLogout}>
                     Logout
-                  </Button>
+                  </PremiumButton>
                 </>
               ) : (
                 <>
-                  <Button variant="outline" size="md" className="font-button border-gray-300 dark:border-gray-600" asChild>
-                    <Link href="/login">Login</Link>
-                  </Button>
-                  <Button variant="gradient-gold" size="md" className="font-button text-white shadow-lg shadow-gold/25" asChild>
-                    <Link href="/register">Get Started</Link>
-                  </Button>
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-button border border-gray-300/50 dark:border-gray-600/50 bg-white/50 dark:bg-white/5 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-300 shadow-sm"
+                  >
+                    Login
+                  </Link>
+                  <PremiumButton variant="gradient-gold" size="md" onClick={() => router.push("/register")}>
+                    Get Started
+                  </PremiumButton>
                 </>
               )}
             </div>
@@ -141,25 +144,30 @@ export default function Navbar() {
                 <div className="pt-4 space-y-3">
                   {user ? (
                     <>
-                      <Button variant="outline" size="lg" className="w-full font-button border-gray-300 dark:border-gray-600" asChild>
-                        <Link href={user.role === "admin" ? "/admin" : "/dashboard"} onClick={() => setMobileMenuOpen(false)}>
-                          <LayoutDashboard className="w-4 h-4 mr-2" />
-                          Dashboard
-                        </Link>
-                      </Button>
-                      <Button variant="danger" size="lg" className="w-full font-button" onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>
-                        <LogOut className="w-4 h-4 mr-2" />
+                      <Link
+                        href={user.role === "admin" ? "/admin" : "/dashboard"}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-sm font-button border border-gray-300/50 dark:border-gray-600/50 bg-white/50 dark:bg-white/5 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-300 shadow-sm"
+                      >
+                        <LayoutDashboard className="w-4 h-4" />
+                        Dashboard
+                      </Link>
+                      <PremiumButton variant="gradient-primary" size="lg" className="w-full" iconLeft={<LogOut className="w-4 h-4" />} onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>
                         Logout
-                      </Button>
+                      </PremiumButton>
                     </>
                   ) : (
                     <>
-                      <Button variant="outline" size="lg" className="w-full font-button border-gray-300 dark:border-gray-600" asChild>
-                        <Link href="/login" onClick={() => setMobileMenuOpen(false)}>Login</Link>
-                      </Button>
-                      <Button variant="gradient-gold" size="lg" className="w-full font-button text-white shadow-lg shadow-gold/25" asChild>
-                        <Link href="/register" onClick={() => setMobileMenuOpen(false)}>Get Started</Link>
-                      </Button>
+                      <Link
+                        href="/login"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-sm font-button border border-gray-300/50 dark:border-gray-600/50 bg-white/50 dark:bg-white/5 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-300 shadow-sm"
+                      >
+                        Login
+                      </Link>
+                      <PremiumButton variant="gradient-gold" size="lg" className="w-full" onClick={() => { router.push("/register"); setMobileMenuOpen(false); }}>
+                        Get Started
+                      </PremiumButton>
                     </>
                   )}
                 </div>

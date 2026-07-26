@@ -4,14 +4,16 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import {
   MapPin, Phone, Mail, Clock, Send, MessageSquare,
-  Globe, Camera, ExternalLink, Music2
+  Globe, Camera, ExternalLink, Music2, User, AtSign, FileText
 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { api } from "@/lib/api"
+import GradientMesh from "@/components/ui/GradientMesh"
+import ParticleField from "@/components/ui/ParticleField"
+import { GlassCard, GlassCardHeader, GlassCardTitle, GlassCardContent } from "@/components/ui/GlassCard"
+import { PremiumInput } from "@/components/ui/PremiumInput"
+import { PremiumTextarea } from "@/components/ui/PremiumInput"
+import { PremiumButton } from "@/components/ui/PremiumButton"
+import ScrollReveal from "@/components/ui/ScrollReveal"
 
 const contactInfo = [
   {
@@ -78,8 +80,10 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero */}
-      <section className="relative bg-gradient-to-br from-[#0B1F4D] to-[#1a3a7a] py-16 md:py-28 px-4 overflow-hidden">
+      <GradientMesh className="-z-20" />
+      <ParticleField color="#F4B400" count={40} className="-z-10" />
+
+      <section className="relative bg-gradient-to-br from-[#0B1F4D]/90 to-[#1a3a7a]/90 py-16 md:py-28 px-4 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 25% 25%, white 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
         </div>
@@ -96,47 +100,42 @@ export default function ContactPage() {
         </motion.div>
       </section>
 
-      {/* Contact Info Cards */}
       <section className="py-12 md:py-16 px-4 -mt-10 relative z-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {contactInfo.map((info, i) => (
-              <motion.div
-                key={info.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card className="rounded-[20px] shadow-lg border-0 h-full">
-                  <CardContent className="p-4 md:p-6">
-                    <div className={`w-12 h-12 ${info.bg} rounded-[20px] flex items-center justify-center mb-4`}>
-                      <info.icon className={`w-6 h-6 ${info.color}`} />
-                    </div>
-                    <h3 className="font-heading font-bold text-[#0B1F4D] dark:text-white mb-2">{info.title}</h3>
-                    {info.details.map((detail, j) => (
-                      <p key={j} className="text-gray-600 dark:text-gray-400 text-sm">{detail}</p>
-                    ))}
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+        <ScrollReveal direction="up" distance={40}>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {contactInfo.map((info, i) => (
+                <motion.div
+                  key={info.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <GlassCard variant="elevated" padding="md" borderRadius="lg" className="h-full">
+                    <GlassCardContent>
+                      <div className={`w-12 h-12 ${info.bg} rounded-[20px] flex items-center justify-center mb-4`}>
+                        <info.icon className={`w-6 h-6 ${info.color}`} />
+                      </div>
+                      <h3 className="font-heading font-bold text-[#0B1F4D] dark:text-white mb-2">{info.title}</h3>
+                      {info.details.map((detail, j) => (
+                        <p key={j} className="text-gray-600 dark:text-gray-400 text-sm">{detail}</p>
+                      ))}
+                    </GlassCardContent>
+                  </GlassCard>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
-      {/* Map + Form */}
-      <section className="py-12 md:py-16 px-4 bg-gray-50 dark:bg-gray-900/50">
+      <section className="py-12 md:py-16 px-4 bg-gray-50/80 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Map */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <Card className="rounded-[20px] shadow-lg border-0 overflow-hidden h-full">
-                <CardContent className="p-0 h-full">
+            <ScrollReveal direction="left" distance={40}>
+              <GlassCard variant="default" padding="none" borderRadius="lg" hover={false} className="overflow-hidden h-full">
+                <GlassCardContent className="p-0 h-full">
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126916.44169418072!2d33.366666!3d-8.9!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19f0b1c0b6f1b2f1%3A0x1c2b3a4b5c6d7e8f!2sMbeya%2C%20Tanzania!5e0!3m2!1sen!2s!4v1"
                     width="100%"
@@ -148,122 +147,112 @@ export default function ContactPage() {
                     title="CHUGAZ Stationery Location"
                     className="border-0"
                   />
-                </CardContent>
-              </Card>
-            </motion.div>
+                </GlassCardContent>
+              </GlassCard>
+            </ScrollReveal>
 
-            {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <Card className="rounded-[20px] shadow-lg border-0">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-heading font-extrabold text-[#0B1F4D] dark:text-white">
+            <ScrollReveal direction="right" distance={40}>
+              <GlassCard variant="gold" padding="none" borderRadius="lg" className="overflow-hidden">
+                <GlassCardHeader className="p-6 pb-0">
+                  <GlassCardTitle as="h2" className="text-2xl">
                     Send Us a Message
-                  </CardTitle>
-                  <p className="text-gray-500 dark:text-gray-400">
+                  </GlassCardTitle>
+                  <p className="text-gray-500 dark:text-gray-400 mt-1">
                     We&apos;ll get back to you within 24 hours
                   </p>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label>Your Name</Label>
-                        <Input
-                          value={formData.name}
-                          onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
-                          placeholder="John Doe"
-                          className="rounded-[20px]"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <Label>Your Email</Label>
-                        <Input
-                          type="email"
-                          value={formData.email}
-                          onChange={e => setFormData(p => ({ ...p, email: e.target.value }))}
-                          placeholder="chugaz@example.com"
-                          className="rounded-[20px]"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <Label>Subject</Label>
-                      <Input
-                        value={formData.subject}
-                        onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))}
-                        placeholder="How can we help?"
-                        className="rounded-[20px]"
+                </GlassCardHeader>
+                <GlassCardContent className="p-6">
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="grid md:grid-cols-2 gap-5">
+                      <PremiumInput
+                        label="Your Name"
+                        iconLeft={<User className="w-4 h-4" />}
+                        value={formData.name}
+                        onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
+                        placeholder="John Doe"
+                        required
+                      />
+                      <PremiumInput
+                        label="Your Email"
+                        iconLeft={<AtSign className="w-4 h-4" />}
+                        type="email"
+                        value={formData.email}
+                        onChange={e => setFormData(p => ({ ...p, email: e.target.value }))}
+                        placeholder="chugaz@example.com"
                         required
                       />
                     </div>
-                    <div>
-                      <Label>Message</Label>
-                      <Textarea
-                        value={formData.message}
-                        onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
-                        placeholder="Write your message here to Chugaz..."
-                        className="rounded-[20px] min-h-[120px]"
-                        required
-                      />
-                    </div>
-                    <Button
+                    <PremiumInput
+                      label="Subject"
+                      iconLeft={<FileText className="w-4 h-4" />}
+                      value={formData.subject}
+                      onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))}
+                      placeholder="How can we help?"
+                      required
+                    />
+                    <PremiumTextarea
+                      label="Message"
+                      value={formData.message}
+                      onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
+                      placeholder="Write your message here to Chugaz..."
+                      required
+                      className="min-h-[120px]"
+                    />
+                    <PremiumButton
                       type="submit"
-                      disabled={submitting}
-                      className="w-full bg-[#F4B400] hover:bg-[#e5a800] text-[#0B1F4D] rounded-[20px] font-button font-semibold text-lg py-6 disabled:opacity-50"
+                      variant="gradient-gold"
+                      size="lg"
+                      fullWidth
+                      loading={submitting}
+                      iconRight={!submitting && !sent ? <Send className="w-4 h-4" /> : undefined}
                     >
                       {sent ? (
-                        <span className="flex items-center gap-2">Message Sent! <Send className="w-4 h-4" /></span>
+                        <span className="flex items-center gap-2">Message Sent!</span>
                       ) : (
-                        <span className="flex items-center gap-2">{submitting ? "Sending..." : "Send Message"} {!submitting && <Send className="w-4 h-4" />}</span>
+                        <span className="flex items-center gap-2">{submitting ? "Sending..." : "Send Message"}</span>
                       )}
-                    </Button>
+                    </PremiumButton>
                   </form>
-                </CardContent>
-              </Card>
-            </motion.div>
+                </GlassCardContent>
+              </GlassCard>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* Social Media */}
-      <section className="py-12 md:py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-2xl md:text-3xl font-heading font-extrabold text-[#0B1F4D] dark:text-white mb-4">
-              Follow Us on Social Media
-            </h2>
-            <p className="text-gray-500 dark:text-gray-400 mb-8">
-              Stay connected with CHUGAZ Stationery for updates, tips, and success stories
-            </p>
-            <div className="flex justify-center gap-3 md:gap-4 flex-wrap">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`w-12 h-12 md:w-14 md:h-14 rounded-[20px] bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 ${social.color} transition-all hover:scale-110 hover:shadow-lg`}
-                  title={social.label}
-                >
-                  <social.icon className="w-5 h-5 md:w-6 md:h-6" />
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        </div>
+      <section className="py-12 md:py-16 px-4 bg-white/80 backdrop-blur-sm">
+        <ScrollReveal direction="up" distance={40}>
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-2xl md:text-3xl font-heading font-extrabold text-[#0B1F4D] dark:text-white mb-4">
+                Follow Us on Social Media
+              </h2>
+              <p className="text-gray-500 dark:text-gray-400 mb-8">
+                Stay connected with CHUGAZ Stationery for updates, tips, and success stories
+              </p>
+              <div className="flex justify-center gap-3 md:gap-4 flex-wrap">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-12 h-12 md:w-14 md:h-14 rounded-[20px] bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-400 ${social.color} transition-all hover:scale-110 hover:shadow-lg`}
+                    title={social.label}
+                  >
+                    <social.icon className="w-5 h-5 md:w-6 md:h-6" />
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </ScrollReveal>
       </section>
 
-      {/* WhatsApp Floating Button */}
       <a
         href="https://wa.me/255718297342?text=Hello%20CHUGAZ%20Stationery!%20I%20would%20like%20to%20inquire%20about%20your%20products."
         target="_blank"

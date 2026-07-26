@@ -3,22 +3,32 @@ import fs from "fs"
 import path from "path"
 import os from "os"
 
-const isConfigured = !!(process.env.SMTP_USER && process.env.SMTP_PASS)
+const SMTP_USER = process.env.SMTP_USER?.trim() || ""
+const SMTP_PASS = process.env.SMTP_PASS?.trim() || ""
+const isConfigured = !!(SMTP_USER && SMTP_PASS)
 
 const transporter = isConfigured
   ? nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.gmail.com",
-      port: parseInt(process.env.SMTP_PORT || "587", 10),
-      secure: process.env.SMTP_SECURE === "true",
-      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+      host: process.env.SMTP_HOST?.trim() || "smtp.gmail.com",
+      port: parseInt(process.env.SMTP_PORT?.trim() || "587", 10),
+      secure: process.env.SMTP_SECURE?.trim() === "true",
+      auth: { user: SMTP_USER, pass: SMTP_PASS },
     })
   : null
 
-export async function sendResetCodeEmail(to: string, code: string): Promise<boolean> {
+const logFile = path.join(process.env.CHUGAZ_DATA_DIR || os.tmpdir(), "chugaz_email.log")
+
+function log(msg: string) {
+  try {
+    fs.appendFileSync(logFile, `[${new Date().toISOString()}] ${msg}\n`)
+  } catch {}
+}
+
+export async function sendResetCodeEmail(to: string, code: string): Promise<{ ok: boolean; error?: string }> {
   if (transporter) {
     try {
-      await transporter.sendMail({
-        from: `"Chugaz Stationery" <${process.env.SMTP_USER}>`,
+      const info = await transporter.sendMail({
+        from: `"Chugaz Stationery" <${SMTP_USER}>`,
         to,
         subject: "Password Reset Code - Chugaz Stationery",
         html: `
@@ -35,12 +45,38 @@ export async function sendResetCodeEmail(to: string, code: string): Promise<bool
           </div>
         `,
       })
-      return true
-    } catch { return false }
+      log(`Email sent to ${to}: ${info.messageId}`)
+      return { ok: true }
+    } catch (e: any) {
+      const msg = e?.response?.includes?.("534") ? "Gmail requires an App Password (not your regular password). Generate one at https://myaccount.google.com/apppasswords" :
+        e?.code === "EAUTH" ? "SMTP authentication failed. Check SMTP_USER and SMTP_PASS." :
+        e?.code === "ESOCKET" ? "Cannot connect to SMTP server. Check SMTP_HOST and SMTP_PORT." :
+        e?.message || "Unknown SMTP error"
+      log(`SMTP error for ${to}: ${msg}`)
+      return { ok: false, error: msg }
+    }
   }
   const tmpDir = process.env.CHUGAZ_DATA_DIR || os.tmpdir()
   fs.appendFileSync(path.join(tmpDir, "chugaz_reset_codes.log"), `[${new Date().toISOString()}] ${to} -> ${code}\n`)
-  return true
+  log(`Dev mode: code ${code} for ${to} written to reset_codes.log`)
+  return { ok: true }
+}
+
+export function testConnection(): Promise<{ ok: boolean; error?: string }> {
+  if (!transporter) {
+    return Promise.resolve({ ok: false, error: "SMTP not configured. Set SMTP_USER and SMTP_PASS in .env.local" })
+  }
+  return new Promise((resolve) => {
+    transporter.verify((err) => {
+      if (err) {
+        const msg = err.message?.includes?.("534") ? "Gmail requires an App Password. See .env.example" :
+          err.message || "SMTP verification failed"
+        resolve({ ok: false, error: msg })
+      } else {
+        resolve({ ok: true })
+      }
+    })
+  })
 }
 
 export { isConfigured }

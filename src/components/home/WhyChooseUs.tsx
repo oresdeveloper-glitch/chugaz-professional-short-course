@@ -1,124 +1,139 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
 import {
-  Award,
-  Wrench,
-  Clock,
-  Wallet,
-  ScrollText,
-  Briefcase,
-} from "lucide-react";
+  Award, Wrench, Clock, Wallet, ScrollText, Briefcase,
+  GraduationCap, Monitor, Users, Shield, Zap, Globe, ArrowRight
+} from "lucide-react"
+import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
+import ScrollReveal from "@/components/ui/ScrollReveal"
+import { PremiumButton } from "@/components/ui/PremiumButton"
 
 const features = [
   {
     icon: Award,
     title: "Expert Instructors",
-    description:
-      "Learn from certified professionals with years of industry experience in their respective fields.",
+    desc: "Learn from certified professionals with years of industry experience in their respective fields.",
   },
   {
     icon: Wrench,
     title: "Practical Training",
-    description:
-      "Get hands-on experience with real-world projects and modern equipment in our labs.",
+    desc: "Get hands-on experience with real-world projects and modern equipment in our state-of-the-art labs.",
   },
   {
     icon: Clock,
     title: "Flexible Schedule",
-    description:
-      "Choose from morning, afternoon, evening, and weekend classes that fit your busy lifestyle.",
+    desc: "Choose from morning, afternoon, evening, and weekend classes that fit your busy lifestyle.",
   },
   {
     icon: Wallet,
     title: "Affordable Fees",
-    description:
-      "Quality education at competitive prices with flexible payment plans to suit your budget.",
+    desc: "Quality education at competitive prices with flexible payment plans to suit your budget.",
   },
   {
     icon: ScrollText,
-    title: "Certificate",
-    description:
-      "Receive a recognized certificate upon completion to boost your career prospects.",
+    title: "Recognized Certificate",
+    desc: "Receive an internationally recognized certificate upon completion to boost your career.",
   },
   {
     icon: Briefcase,
     title: "Career Support",
-    description:
-      "Get guidance with job placements, resume building, and interview preparation.",
+    desc: "Get guidance with job placements, resume building, and interview preparation.",
   },
-];
+]
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" as const },
-  },
-};
+const stats = [
+  { value: "5000+", label: "Graduates" },
+  { value: "15+", label: "Courses" },
+  { value: "98%", label: "Satisfaction" },
+  { value: "100%", label: "Practical" },
+]
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative py-24 lg:py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0B1F4D]/3 via-transparent to-[#F4B400]/3" />
+      <div className="absolute left-[-6%] bottom-[-6%] h-64 w-64 rounded-full bg-[#0B1F4D]/25 blur-3xl" />
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-16 lg:mb-20"
+        >
+          <motion.span className="inline-block px-4 py-1.5 rounded-full bg-[#F4B400]/10 border border-[#F4B400]/30 text-[#F4B400] text-sm font-button font-semibold mb-6">
+            Why CHUGAZ
+          </motion.span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
+            Choose <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Excellence</span>
+          </h2>
+          <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
+            We are committed to providing the best learning experience that prepares you for real-world success.
+          </p>
+        </motion.div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16 lg:mb-20">
+          {features.map((feature, index) => (
+            <ScrollReveal key={feature.title} direction="up" distance={40} delay={index * 0.08}>
+              <GlassCard variant="elevated" hover padding="lg" borderRadius="2xl" className="group relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#F4B400]/3 via-transparent to-[#0B1F4D]/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#F4B400]/50 to-transparent transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
+                
+                <GlassCardContent className="relative z-10">
+                  <motion.div
+                    className="w-16 h-16 rounded-[24px] bg-gradient-to-br from-[#F4B400]/20 to-[#0B1F4D]/20 flex items-center justify-center mb-6 group-hover:bg-gradient-to-br group-hover:from-[#F4B400]/40 group-hover:to-[#0B1F4D]/40 group-hover:border-[#F4B400]/40 transition-all duration-500 border border-white/10"
+                    whileHover={{ scale: 1.1, rotate: 3, transition: { duration: 0.3 } }}
+                  >
+                    <feature.icon className="w-8 h-8 text-[#F4B400] drop-shadow-[0_4px_12px_rgba(244,180,0,0.4)]" />
+                  </motion.div>
+                  
+                  <h3 className="text-xl lg:text-2xl font-heading font-bold text-white mb-4">
+                    {feature.title}
+                  </h3>
+                  <p className="text-white/70 leading-relaxed">
+                    {feature.desc}
+                  </p>
+                </GlassCardContent>
+              </GlassCard>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+          {stats.map((stat, index) => (
+            <ScrollReveal key={stat.label} direction="up" distance={30} delay={0.2 + index * 0.06}>
+              <GlassCard variant="outlined" hover padding="md" borderRadius="xl" className="text-center group">
+                <GlassCardContent className="py-2">
+                  <motion.div
+                    className="text-4xl lg:text-5xl font-heading font-extrabold bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent"
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + index * 0.1, type: "spring", stiffness: 200 }}
+                  >
+                    {stat.value}
+                  </motion.div>
+                  <p className="text-white/60 text-sm font-medium mt-1">{stat.label}</p>
+                </GlassCardContent>
+              </GlassCard>
+            </ScrollReveal>
+          ))}
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          transition={{ duration: 0.7, delay: 0.6 }}
+          className="text-center mt-12 lg:mt-16"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-gold/10 text-gold text-sm font-button font-semibold mb-4 border border-gold/20">
-            Why Choose Us
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-primary mb-4">
-            Why Choose CHUGAZ Stationery?
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            We are committed to providing the best learning experience that
-            prepares you for real-world success.
-          </p>
-        </motion.div>
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {features.map((feature) => {
-            const Icon = feature.icon;
-            return (
-              <motion.div
-                key={feature.title}
-                variants={cardVariants}
-                className="group relative bg-white rounded-[20px] p-8 card-shadow border border-gray-100 hover:border-gold/30 transition-all duration-500 hover:-translate-y-2 hover:card-shadow-xl"
-              >
-                <div className="absolute top-0 left-0 right-0 h-1 bg-primary rounded-t-[20px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="w-14 h-14 rounded-full bg-primary/5 flex items-center justify-center mb-5 group-hover:bg-gold/10 transition-colors duration-500">
-                  <Icon className="w-7 h-7 text-primary group-hover:text-gold transition-colors duration-500" />
-                </div>
-                <h3 className="text-xl font-heading font-bold text-primary mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            );
-          })}
+          <PremiumButton variant="gradient-primary" size="lg" iconRight={<ArrowRight className="w-4 h-4" />}>
+            Explore All Programs
+          </PremiumButton>
         </motion.div>
       </div>
     </section>
-  );
+  )
 }

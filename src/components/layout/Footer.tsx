@@ -3,6 +3,8 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Mail, Phone, MapPin, ChevronRight } from "lucide-react"
+import GradientMesh from "@/components/ui/GradientMesh"
+import ParticleField from "@/components/ui/ParticleField"
 
 const quickLinks = [
   { name: "Home", href: "/" },
@@ -91,8 +93,9 @@ const itemVariants = {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0B1F4D] text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="relative bg-[#0B1F4D] text-white overflow-hidden">
+      <GradientMesh />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -101,8 +104,8 @@ export default function Footer() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 py-16"
         >
           <motion.div variants={itemVariants} className="space-y-6">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-[20px] bg-gradient-to-br from-gold to-gold-light flex items-center justify-center shadow-lg">
+            <Link href="/" className="flex items-center gap-2 group">
+              <div className="w-10 h-10 rounded-[20px] bg-gradient-to-br from-gold to-gold-light flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                 <span className="text-white font-heading font-extrabold text-sm">C</span>
               </div>
               <div className="flex flex-col">
@@ -127,7 +130,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="w-9 h-9 rounded-[20px] bg-white/10 flex items-center justify-center hover:bg-gold transition-colors duration-300 group"
+                  className="w-9 h-9 rounded-[20px] bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-gold hover:scale-110 transition-all duration-300 group border border-white/10 hover:border-gold/50"
                 >
                   <social.icon className="w-4 h-4 text-gray-300 group-hover:text-[#0B1F4D] transition-colors duration-300" />
                 </a>
@@ -173,9 +176,9 @@ export default function Footer() {
             <h3 className="text-lg font-heading font-bold text-gold">Contact Info</h3>
             <ul className="space-y-4">
               {contactInfo.map((item, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-[20px] bg-white/10 flex items-center justify-center shrink-0 mt-0.5">
-                    <item.icon className="w-4 h-4 text-gold" />
+                <li key={index} className="flex items-start gap-3 group">
+                  <div className="w-8 h-8 rounded-[20px] bg-white/10 backdrop-blur-sm flex items-center justify-center shrink-0 mt-0.5 border border-white/10 group-hover:bg-gold group-hover:border-gold/50 transition-all duration-300">
+                    <item.icon className="w-4 h-4 text-gold group-hover:text-[#0B1F4D] transition-colors duration-300" />
                   </div>
                   <span className="text-sm text-gray-300">{item.text}</span>
                 </li>

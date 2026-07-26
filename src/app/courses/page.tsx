@@ -6,24 +6,14 @@ import { Search, Clock, Wallet, ChevronRight, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
 import { courses, categories } from "@/data/courses"
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6 },
-}
-
-const staggerContainer = {
-  initial: {},
-  whileInView: { transition: { staggerChildren: 0.08 } },
-  viewport: { once: true },
-}
+import GradientMesh from "@/components/ui/GradientMesh"
+import ParticleField from "@/components/ui/ParticleField"
+import { PremiumInput } from "@/components/ui/PremiumInput"
+import { PremiumButton } from "@/components/ui/PremiumButton"
+import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
+import ScrollReveal from "@/components/ui/ScrollReveal"
 
 const formatFee = (fee: number, currency: string) => {
   return new Intl.NumberFormat("en-TZ", {
@@ -49,7 +39,9 @@ export default function CoursesPage() {
   const allCategories = ["All", ...categories.map((c) => c.name)]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      <GradientMesh />
+      <ParticleField className="-z-10" color="#F4B400" count={30} connectDistance={100} speed={0.5} />
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0B1F4D] via-[#0B1F4D] to-[#1a3a7a] py-16 lg:py-28">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
         <div className="container mx-auto px-4 relative z-10">
@@ -73,60 +65,48 @@ export default function CoursesPage() {
         </div>
       </section>
 
-      <section className="py-12 bg-white sticky top-20 z-20 border-b border-gray-100">
+      <section className="py-12 bg-white/80 backdrop-blur-sm sticky top-20 z-20 border-b border-gray-100">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between max-w-6xl mx-auto">
             <div className="flex-nowrap md:flex-wrap gap-2 justify-start md:justify-center overflow-x-auto md:overflow-visible flex">
               {allCategories.map((category) => (
-                <button
+                <PremiumButton
                   key={category}
+                  variant={activeCategory === category ? "gradient-primary" : "glass"}
+                  size="sm"
                   onClick={() => setActiveCategory(category)}
-                  className={cn(
-                    "px-4 py-2 md:px-5 md:py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300",
-                    activeCategory === category
-                      ? "bg-primary text-white shadow-md"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  )}
                 >
                   {category}
-                </button>
+                </PremiumButton>
               ))}
             </div>
             <div className="relative w-full md:w-72">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Search courses..."
+              <PremiumInput
+                label="Search courses..."
+                iconLeft={<Search className="w-4 h-4" />}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 rounded-xl border-gray-200"
               />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-12 bg-gray-50 min-h-screen">
+      <section className="py-12 bg-gray-50/80 backdrop-blur-sm min-h-screen">
         <div className="container mx-auto px-4">
           {filteredCourses.length === 0 ? (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
               <p className="text-gray-500 text-lg">No courses found matching your criteria.</p>
-              <Button variant="outline" className="mt-4" onClick={() => { setActiveCategory("All"); setSearchQuery("") }}>
+              <PremiumButton variant="outline-3d" className="mt-4" onClick={() => { setActiveCategory("All"); setSearchQuery("") }}>
                 Clear Filters
-              </Button>
+              </PremiumButton>
             </motion.div>
           ) : (
-            <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
-              variants={staggerContainer}
-              initial="initial"
-              animate="whileInView"
-              key={`${activeCategory}-${searchQuery}`}
-            >
-              {filteredCourses.map((course) => (
-                <motion.div key={course.id} variants={fadeInUp}>
-                  <Card className="group h-full overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-primary/5 flex flex-col">
-                    <div className="relative h-40 md:h-48 overflow-hidden">
+            <ScrollReveal direction="up" stagger={0.08}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                {filteredCourses.map((course) => (
+                  <GlassCard key={course.id} variant="elevated" className="group h-full overflow-hidden flex flex-col">
+                    <div className="relative h-40 md:h-48 overflow-hidden rounded-t-xl">
                       <Image
                         src={course.image}
                         alt={course.title}
@@ -138,7 +118,7 @@ export default function CoursesPage() {
                         <Badge variant="gold" className="shadow-md">{course.category}</Badge>
                       </div>
                     </div>
-                    <CardContent className="p-4 md:p-5 flex flex-col flex-1">
+                    <GlassCardContent className="p-4 md:p-5 flex flex-col flex-1">
                       <h3 className="text-lg font-bold text-primary mb-3 font-heading group-hover:text-gold transition-colors duration-300">
                         {course.title}
                       </h3>
@@ -157,21 +137,21 @@ export default function CoursesPage() {
                       </div>
                       <div className="flex gap-2">
                         <Link href="/register" className="flex-1">
-                          <Button variant="gradient-gold" size="sm" className="w-full">
-                            Register Now <ArrowRight className="ml-1.5 w-3.5 h-3.5" />
-                          </Button>
+                          <PremiumButton variant="gradient-gold" size="sm" fullWidth iconRight={<ArrowRight className="w-3.5 h-3.5" />}>
+                            Register Now
+                          </PremiumButton>
                         </Link>
                         <Link href={`/courses/${course.id}`}>
-                          <Button variant="outline" size="sm">
+                          <PremiumButton variant="glass" size="sm">
                             View Details
-                          </Button>
+                          </PremiumButton>
                         </Link>
                       </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
+                    </GlassCardContent>
+                  </GlassCard>
+                ))}
+              </div>
+            </ScrollReveal>
           )}
         </div>
       </section>

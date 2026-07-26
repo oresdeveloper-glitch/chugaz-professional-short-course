@@ -1,129 +1,146 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import Link from "next/link";
-import Image from "next/image";
-import { Clock, DollarSign, ArrowRight } from "lucide-react";
-import { getFeaturedCourses } from "@/data/courses";
-import type { Course } from "@/types";
+import { motion } from "framer-motion"
+import Link from "next/link"
+import Image from "next/image"
+import { Clock, DollarSign, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react"
+import { getFeaturedCourses } from "@/data/courses"
+import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
+import { PremiumButton } from "@/components/ui/PremiumButton"
+import ScrollReveal from "@/components/ui/ScrollReveal"
+import type { Course } from "@/types"
 
-const featuredCourses = getFeaturedCourses();
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" as const },
-  },
-};
-
-function CourseCard({ course }: { course: Course }) {
-  return (
-    <motion.div
-      variants={cardVariants}
-      className="group bg-white rounded-[20px] overflow-hidden card-shadow-lg hover:card-shadow-xl transition-all duration-500 hover:-translate-y-2 border border-gray-100"
-    >
-      <div className="relative h-52 overflow-hidden">
-        <Image
-          src={course.image}
-          alt={course.title}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-        <span className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-gold/90 text-primary text-xs font-button font-bold">
-          {course.category}
-        </span>
-      </div>
-      <div className="p-6">
-        <h3 className="text-xl font-heading font-bold text-primary mb-3 group-hover:text-gold transition-colors duration-300">
-          {course.title}
-        </h3>
-        <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
-          <span className="flex items-center gap-1.5">
-            <Clock className="w-4 h-4 text-gold" />
-            {course.duration}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <DollarSign className="w-4 h-4 text-gold" />
-            {course.currency} {course.fee.toLocaleString()}
-          </span>
-        </div>
-        <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-5">
-          {course.description}
-        </p>
-        <Link
-          href={`/courses/${course.id}`}
-          className="inline-flex items-center gap-2 text-primary font-button font-semibold text-sm group/link transition-colors hover:text-gold"
-        >
-          View Details
-          <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-        </Link>
-      </div>
-    </motion.div>
-  );
-}
+const featuredCourses = getFeaturedCourses()
 
 export default function CoursesSection() {
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative py-24 lg:py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0B1F4D]/5 via-transparent to-[#F4B400]/5" />
+      <div className="absolute right-[-8%] top-[12%] h-72 w-72 rounded-full bg-[#F4B400]/10 blur-3xl" />
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          transition={{ duration: 0.7 }}
+          className="text-center mb-16 lg:mb-20"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/5 text-primary text-sm font-button font-semibold mb-4 border border-primary/10">
-            Our Programs
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-primary mb-4">
-            Popular Courses
+          <motion.span className="inline-block px-4 py-1.5 rounded-full bg-[#F4B400]/10 border border-[#F4B400]/30 text-[#F4B400] text-sm font-button font-semibold mb-6">
+            <Sparkles className="w-3.5 h-3.5 inline mr-1.5" /> Featured Programs
+          </motion.span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
+            Courses Designed for <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Impact</span>
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Choose from our industry-aligned courses designed to equip you with
-            practical skills for the modern workplace.
+          <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
+            Industry-aligned curriculum with hands-on projects, expert instructors, and real-world applications.
           </p>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-        >
-          {featuredCourses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          {featuredCourses.map((course: Course, index: number) => (
+            <ScrollReveal
+              key={course.id}
+              direction="up"
+              distance={40}
+              delay={index * 0.1}
+              stagger={0.08}
+            >
+              <CourseCard course={course} index={index} />
+            </ScrollReveal>
           ))}
-        </motion.div>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
+          className="text-center mt-12 lg:mt-16"
         >
-          <Link
-            href="/courses"
-            className="group inline-flex items-center gap-2 px-8 py-4 rounded-[20px] border-2 border-primary text-primary font-button font-bold text-sm transition-all duration-300 hover:bg-primary hover:text-white hover:shadow-lg hover:-translate-y-0.5"
-          >
+          <PremiumButton variant="gradient-primary" size="lg" iconRight={<ArrowRight className="w-4 h-4" />}>
             View All Courses
-            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-          </Link>
+          </PremiumButton>
         </motion.div>
       </div>
     </section>
-  );
+  )
+}
+
+function CourseCard({ course, index }: { course: Course; index: number }) {
+  const categories: Record<string, { color: string; bg: string }> = {
+    "Programming Languages": { color: "text-blue-400", bg: "bg-blue-500/20" },
+    "Engineering & Design": { color: "text-purple-400", bg: "bg-purple-500/20" },
+    "Creative Skills": { color: "text-pink-400", bg: "bg-pink-500/20" },
+    "Computer Skills": { color: "text-green-400", bg: "bg-green-500/20" },
+  }
+  const cat = categories[course.category] || { color: "text-white/70", bg: "bg-white/10" }
+
+  return (
+    <GlassCard variant="elevated" hover padding="none" borderRadius="xl" className="group overflow-hidden h-full flex flex-col shadow-3d">
+      <div className="relative h-52 lg:h-56 overflow-hidden">
+        <Image
+          src={course.image}
+          alt={course.title}
+          fill
+          className="object-cover transition-all duration-700 group-hover:scale-110"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F4D]/80 via-transparent to-transparent" />
+        
+        <div className="absolute top-4 left-4 z-10">
+          <span className={`inline-block px-3 py-1.5 rounded-full ${cat.bg} ${cat.color} text-xs font-button font-bold backdrop-blur-sm border border-white/10`}>
+            {course.category}
+          </span>
+        </div>
+        
+        <div className="absolute bottom-4 left-4 right-4 z-10">
+          <div className="flex items-center gap-4 text-white/80 text-sm">
+            <span className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
+              <Clock className="w-3.5 h-3.5 text-[#F4B400]" />
+              {course.duration}
+            </span>
+            <span className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
+              <DollarSign className="w-3.5 h-3.5 text-[#F4B400]" />
+              {course.currency} {course.fee.toLocaleString()}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <GlassCardContent className="flex-1 flex flex-col p-6 lg:p-7">
+        <h3 className="text-xl lg:text-2xl font-heading font-bold text-white mb-3 group-hover:text-[#F4B400] transition-colors duration-300 line-clamp-2">
+          {course.title}
+        </h3>
+        <p className="text-white/60 text-sm leading-relaxed flex-1 mb-6 line-clamp-3">
+          {course.description}
+        </p>
+        
+        <div className="flex flex-wrap gap-2 mb-6" role="list" aria-label="Course highlights">
+          {course.highlights?.slice(0, 3).map((h: string, i: number) => (
+            <motion.span
+              key={i}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 + i * 0.1 }}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-white/70 text-xs"
+            >
+              <CheckCircle2 className="w-3 h-3 text-[#F4B400]" />
+              {h}
+            </motion.span>
+          ))}
+        </div>
+
+        <PremiumButton 
+          variant="glass-gold" 
+          size="md" 
+          fullWidth
+          iconRight={<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+        >
+          View Details
+        </PremiumButton>
+      </GlassCardContent>
+    </GlassCard>
+  )
 }

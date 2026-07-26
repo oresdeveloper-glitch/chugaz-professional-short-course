@@ -17,6 +17,7 @@ export interface Course {
     bio: string;
   };
   featured: boolean;
+  highlights?: string[];
 }
 
 export interface Student {

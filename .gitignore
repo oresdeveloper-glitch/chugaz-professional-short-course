@@ -20,6 +20,9 @@ yarn-debug.log*
 yarn-error.log*
 *.log
 
+# data (persistent storage, not tracked in git)
+data/
+
 # env files
 .env
 .env.local
@@ -42,8 +45,3 @@ next-env.d.ts
 backend/.env
 backend/storage/
 backend/public/storage/
-
-
-
-.vercel
-.env*

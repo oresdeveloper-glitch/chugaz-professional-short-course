@@ -1,0 +1,40 @@
+"use client"
+
+import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Separator } from "@/components/ui/separator"
+import type { DashboardTabProps } from "./types"
+
+export default function SettingsTab({ user, studentData }: DashboardTabProps) {
+  const initials = `${(user.firstName || "")[0] || ""}${(user.lastName || "")[0] || ""}` || user.email[0].toUpperCase()
+
+  return (
+    <div className="space-y-4 max-w-2xl">
+      <h3 className="text-xl font-heading font-bold text-[#0B1F4D] dark:text-white">Account Settings</h3>
+      <GlassCard variant="elevated" className="rounded-[20px] border-0 shadow-md">
+        <GlassCardContent className="p-6 space-y-4">
+          <div className="flex items-center gap-4">
+            <Avatar className="w-16 h-16 rounded-[20px]">
+              <AvatarFallback className="text-xl bg-[#F4B400] text-[#0B1F4D]">{initials}</AvatarFallback>
+            </Avatar>
+            <div>
+              <p className="font-semibold text-lg text-[#0B1F4D] dark:text-white">{user.firstName} {user.lastName}</p>
+              <p className="text-sm text-gray-500">{user.email}</p>
+            </div>
+          </div>
+          <Separator />
+          <div className="grid md:grid-cols-2 gap-4 text-sm">
+            <div><span className="text-gray-500">Registration No</span><p className="font-medium">{user.regNo}</p></div>
+            <div><span className="text-gray-500">Phone</span><p className="font-medium">{studentData.phone || "—"}</p></div>
+            <div><span className="text-gray-500">Gender</span><p className="font-medium capitalize">{studentData.gender || "—"}</p></div>
+            <div><span className="text-gray-500">Nationality</span><p className="font-medium">{studentData.nationality || "—"}</p></div>
+            <div><span className="text-gray-500">Occupation</span><p className="font-medium">{studentData.occupation || "—"}</p></div>
+            <div><span className="text-gray-500">Education Level</span><p className="font-medium">{studentData.educationLevel || "—"}</p></div>
+            <div><span className="text-gray-500">Region</span><p className="font-medium">{studentData.region || "—"}</p></div>
+            <div><span className="text-gray-500">District</span><p className="font-medium">{studentData.district || "—"}</p></div>
+          </div>
+        </GlassCardContent>
+      </GlassCard>
+    </div>
+  )
+}

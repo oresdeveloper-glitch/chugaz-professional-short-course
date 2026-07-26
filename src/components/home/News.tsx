@@ -1,140 +1,133 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, Calendar } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { newsItems } from "@/data/news";
-import type { NewsItem } from "@/types";
+import { motion } from "framer-motion"
+import Link from "next/link"
+import Image from "next/image"
+import { ArrowRight, Calendar, BookOpen, TrendingUp, Award } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { newsItems } from "@/data/news"
+import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
+import ScrollReveal from "@/components/ui/ScrollReveal"
+import { PremiumButton } from "@/components/ui/PremiumButton"
+import type { NewsItem } from "@/types"
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
-  },
-};
+const categoryIcons: Record<string, React.ElementType> = {
+  Courses: BookOpen,
+  Announcements: TrendingUp,
+  "Success Stories": Award,
+}
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" as const },
-  },
-};
+const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
+  Courses: { bg: "bg-blue-500/20", text: "text-blue-400", border: "border-blue-500/30" },
+  Announcements: { bg: "bg-purple-500/20", text: "text-purple-400", border: "border-purple-500/30" },
+  "Success Stories": { bg: "bg-green-500/20", text: "text-green-400", border: "border-green-500/30" },
+}
 
 function NewsCard({ item }: { item: NewsItem }) {
-  const date = new Date(item.date);
-  const formatted = date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
-  const categoryColors: Record<string, string> = {
-    Courses: "bg-blue-100 text-blue-700",
-    Announcements: "bg-purple-100 text-purple-700",
-    "Success Stories": "bg-green-100 text-green-700",
-  };
+  const date = new Date(item.date)
+  const formatted = date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+  const cat = categoryColors[item.category] || { bg: "bg-white/10", text: "text-white/70", border: "border-white/10" }
+  const CatIcon = categoryIcons[item.category] || BookOpen
 
   return (
-    <motion.div
-      variants={cardVariants}
-      className="group bg-white rounded-[20px] overflow-hidden card-shadow-lg hover:card-shadow-xl transition-all duration-500 hover:-translate-y-2 border border-gray-100"
-    >
-      <div className="relative h-48 overflow-hidden">
+    <GlassCard variant="elevated" hover padding="none" borderRadius="xl" className="group relative overflow-hidden flex flex-col h-full">
+      <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src={item.image}
           alt={item.title}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-110"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-        <span
-          className={cn(
-            "absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-button font-bold",
-            categoryColors[item.category] || "bg-gray-100 text-gray-700"
-          )}
-        >
-          {item.category}
-        </span>
-      </div>
-      <div className="p-6">
-        <div className="flex items-center gap-2 text-gray-400 text-xs mb-3">
-          <Calendar className="w-3.5 h-3.5" />
-          {formatted}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F4D]/80 via-transparent to-transparent" />
+        
+        <div className="absolute top-4 left-4 z-10">
+          <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-button font-bold ${cat.bg} ${cat.text} ${cat.border} backdrop-blur-sm`}>
+            <CatIcon className="w-3.5 h-3.5" />
+            {item.category}
+          </span>
         </div>
-        <h3 className="text-lg font-heading font-bold text-primary mb-3 group-hover:text-gold transition-colors duration-300 line-clamp-2">
+      </div>
+
+      <GlassCardContent className="flex-1 flex flex-col p-6 lg:p-7">
+        <div className="flex items-center gap-2 text-white/50 text-xs mb-4">
+          <Calendar className="w-3.5 h-3.5" />
+          <time dateTime={item.date}>{new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</time>
+        </div>
+        
+        <h3 className="text-lg lg:text-xl font-heading font-bold text-white mb-4 group-hover:text-[#F4B400] transition-colors duration-300 line-clamp-2">
           {item.title}
         </h3>
-        <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4">
+        
+        <p className="text-white/60 text-sm leading-relaxed flex-1 mb-6 line-clamp-3">
           {item.excerpt}
         </p>
-        <Link
-          href={`/news/${item.id}`}
-          className="inline-flex items-center gap-1.5 text-gold font-button font-semibold text-sm group/link"
+        
+        <PremiumButton 
+          variant="glass-gold" 
+          size="sm" 
+          fullWidth
+          iconRight={<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+          asChild
         >
-          Read More
-          <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-        </Link>
-      </div>
-    </motion.div>
-  );
+          <Link href={`/news/${item.id}`}>Read More</Link>
+        </PremiumButton>
+      </GlassCardContent>
+    </GlassCard>
+  )
 }
 
 export default function News() {
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative py-24 lg:py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0B1F4D]/3 via-transparent to-[#F4B400]/3" />
+      <div className="absolute bottom-[8%] right-[2%] h-64 w-64 rounded-full bg-[#F4B400]/10 blur-3xl" />
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          transition={{ duration: 0.7 }}
+          className="text-center mb-16 lg:mb-20"
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-primary/5 text-primary text-sm font-button font-semibold mb-4 border border-primary/10">
+          <motion.span className="inline-block px-4 py-1.5 rounded-full bg-[#F4B400]/10 border border-[#F4B400]/30 text-[#F4B400] text-sm font-button font-semibold mb-6">
             News & Updates
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-primary mb-4">
-            Latest News & Updates
+          </motion.span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
+            Latest <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Updates</span>
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Stay informed about the latest happenings, course offerings, and
-            success stories from CHUGAZ.
+          <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
+            Stay informed about the latest happenings, course offerings, and success stories from CHUGAZ.
           </p>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {newsItems.map((item) => (
-            <NewsCard key={item.id} item={item} />
+            <ScrollReveal
+              key={item.id}
+              direction="up"
+              distance={40}
+              delay={0.1}
+              stagger={0.08}
+            >
+              <NewsCard item={item} />
+            </ScrollReveal>
           ))}
-        </motion.div>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
+          className="text-center mt-12 lg:mt-16"
         >
-          <Link
-            href="/news"
-            className="group inline-flex items-center gap-2 px-8 py-4 rounded-[20px] bg-primary text-white font-button font-bold text-sm transition-all duration-300 hover:bg-primary-light hover:shadow-lg hover:-translate-y-0.5"
-          >
+          <PremiumButton variant="gradient-primary" size="lg" iconRight={<ArrowRight className="w-4 h-4" />}>
             View All News
-            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-          </Link>
+          </PremiumButton>
         </motion.div>
       </div>
     </section>
-  );
+  )
 }

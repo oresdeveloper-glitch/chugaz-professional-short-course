@@ -7,17 +7,19 @@ import {
   ChevronLeft, ChevronRight, Globe,
   Camera, Download, Home, Check,
   Wallet, Building, Clock, Sun, Moon, Smartphone,
-  Eye, EyeOff, Calendar
+  Eye, EyeOff, Calendar, Phone, MapPin, MapPinned,
+  Hash, Lock, UserRound, Earth, Briefcase
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent } from "@/components/ui/card"
+import { PremiumInput } from "@/components/ui/PremiumInput"
+import { PremiumButton } from "@/components/ui/PremiumButton"
+import { GlassCard } from "@/components/ui/GlassCard"
+import GradientMesh from "@/components/ui/GradientMesh"
+import ParticleField from "@/components/ui/ParticleField"
 import { Badge } from "@/components/ui/badge"
-
 import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
 import { courses } from "@/data/courses"
 import { api } from "@/lib/api"
 
@@ -53,6 +55,7 @@ export default function RegisterPage() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [serverError, setServerError] = useState("")
   const [website, setWebsite] = useState("")
+  const [submitting, setSubmitting] = useState(false)
 
   const updateForm = (field: string, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -107,8 +110,6 @@ export default function RegisterPage() {
   }
 
   const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 1))
-
-  const [submitting, setSubmitting] = useState(false)
 
   const handleSubmit = async () => {
     if (!validateStep(6)) return
@@ -331,64 +332,68 @@ export default function RegisterPage() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0B1F4D] to-[#1a3a7a] flex items-center justify-center p-4">
+      <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
+        <GradientMesh />
+        <ParticleField color="#F4B400" count={40} />
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="bg-white dark:bg-gray-900 rounded-[20px] p-8 md:p-12 max-w-lg w-full text-center shadow-2xl"
+          className="w-full max-w-lg z-10"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6"
-          >
-            <Check className="w-10 h-10 text-green-600" />
-          </motion.div>
-          <h1 className="text-3xl font-heading font-extrabold text-[#0B1F4D] dark:text-white mb-2">
-            Congratulations!
-          </h1>
-          <p className="text-gray-500 dark:text-gray-400 mb-6">
-            Thank you for registering with CHUGAZ Stationery
-          </p>
-          <div className="bg-[#F4B400]/10 rounded-[20px] p-6 mb-6 space-y-3">
-            <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Registration Number</p>
-              <p className="text-2xl font-heading font-extrabold text-[#F4B400] tracking-wider">
-                {registrationNumber}
-              </p>
+          <GlassCard variant="elevated" padding="xl" borderRadius="2xl" className="text-center">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6"
+            >
+              <Check className="w-10 h-10 text-green-400" />
+            </motion.div>
+            <h1 className="text-3xl font-heading font-extrabold text-white mb-2">
+              Congratulations!
+            </h1>
+            <p className="text-gray-400 mb-6">
+              Thank you for registering with CHUGAZ Stationery
+            </p>
+            <div className="bg-[#F4B400]/10 rounded-[20px] p-6 mb-6 space-y-3">
+              <div>
+                <p className="text-sm text-gray-400 mb-1">Registration Number</p>
+                <p className="text-2xl font-heading font-extrabold text-[#F4B400] tracking-wider">
+                  {registrationNumber}
+                </p>
+              </div>
+              <div className="border-t border-[#F4B400]/20 pt-3">
+                <p className="text-sm text-gray-400 mb-1">Payment Reference</p>
+                <p className="text-lg font-heading font-extrabold text-white tracking-wider font-mono">
+                  {paymentRef}
+                </p>
+              </div>
             </div>
-            <div className="border-t border-[#F4B400]/20 pt-3">
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Payment Reference</p>
-              <p className="text-lg font-heading font-extrabold text-[#0B1F4D] dark:text-white tracking-wider font-mono">
-                {paymentRef}
-              </p>
+            {formData.paymentMethod === "mobile" && (
+              <div className="bg-blue-500/10 border border-blue-500/20 rounded-[20px] p-4 mb-6 text-left">
+                <p className="text-sm text-blue-300 font-medium mb-2">
+                  Use this reference when making payment
+                </p>
+                <p className="text-xs text-blue-400">
+                  Send your payment via <strong>Vodacom M-Pesa</strong> to <strong>50360811</strong> (Agustino Emmanuel Wilian)
+                  and use <strong>{paymentRef}</strong> as your payment reference.
+                </p>
+              </div>
+            )}
+            <p className="text-gray-400 mb-8">
+              One of our instructors will contact you shortly at <strong className="text-white">{formData.email}</strong>
+            </p>
+            <div className="flex gap-4 justify-center">
+              <PremiumButton onClick={downloadReceipt} variant="gradient-gold" size="lg" iconLeft={<Download className="w-4 h-4" />}>
+                Download Receipt
+              </PremiumButton>
+              <Link href="/">
+                <PremiumButton variant="glass" size="lg" iconLeft={<Home className="w-4 h-4" />}>
+                  Back to Home
+                </PremiumButton>
+              </Link>
             </div>
-          </div>
-          {formData.paymentMethod === "mobile" && (
-            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-[20px] p-4 mb-6 text-left">
-              <p className="text-sm text-blue-700 dark:text-blue-300 font-medium mb-2">
-                Use this reference when making payment
-              </p>
-              <p className="text-xs text-blue-600 dark:text-blue-400">
-                Send your payment via <strong>Vodacom M-Pesa</strong> to <strong>50360811</strong> (Agustino Emmanuel Wilian)
-                and use <strong>{paymentRef}</strong> as your payment reference.
-              </p>
-            </div>
-          )}
-          <p className="text-gray-600 dark:text-gray-300 mb-8">
-            One of our instructors will contact you shortly at <strong>{formData.email}</strong>
-          </p>
-          <div className="flex gap-4 justify-center">
-            <Button onClick={downloadReceipt} className="bg-[#F4B400] hover:bg-[#e5a800] text-[#0B1F4D] font-button font-semibold rounded-[20px] px-8">
-              <Download className="w-4 h-4 mr-2" /> Download Receipt
-            </Button>
-            <Link href="/">
-              <Button variant="outline" className="rounded-[20px] px-8">
-                <Home className="w-4 h-4 mr-2" /> Back to Home
-              </Button>
-            </Link>
-          </div>
+          </GlassCard>
         </motion.div>
       </div>
     )
@@ -396,18 +401,23 @@ export default function RegisterPage() {
 
   const progressPercent = ((currentStep - 1) / (steps.length - 1)) * 100
 
+  const inputClass = "w-full bg-white/5 backdrop-blur-sm border-2 border-gray-200/50 dark:border-gray-700/50 rounded-[16px] px-5 py-3.5 text-white focus:outline-none focus:border-[#F4B400] focus:shadow-[0_0_0_4px_rgba(244,180,0,0.15)]"
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="relative min-h-screen py-12 px-4 overflow-hidden">
+      <GradientMesh />
+      <ParticleField color="#F4B400" count={40} />
+
+      <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-2xl md:text-4xl font-heading font-extrabold text-[#0B1F4D] dark:text-white mb-2">
+          <h1 className="text-2xl md:text-4xl font-heading font-extrabold text-white mb-2">
             Online Registration
           </h1>
-          <p className="text-gray-500 dark:text-gray-400">
+          <p className="text-gray-400">
             Complete all 6 steps to register for your courses
           </p>
           <p className="text-sm text-[#F4B400] font-semibold mt-1">
@@ -419,21 +429,19 @@ export default function RegisterPage() {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 px-6 py-3 rounded-[20px] mb-4 text-sm"
+            className="bg-red-500/10 border border-red-500/20 text-red-300 px-6 py-3 rounded-[20px] mb-4 text-sm"
           >
             {serverError}
           </motion.div>
         )}
 
-        <Card className="rounded-[20px] shadow-xl border-0">
-          {/* Honeypot - invisible to users */}
+        <GlassCard variant="elevated" padding="none" borderRadius="2xl">
           <div aria-hidden="true" className="absolute opacity-0 pointer-events-none" style={{ height: 0, overflow: "hidden" }}>
             <label>Website</label>
             <input tabIndex={-1} autoComplete="off" value={website} onChange={e => setWebsite(e.target.value)} />
           </div>
 
-          {/* Progress Bar */}
-          <div className="bg-[#0B1F4D] dark:bg-gray-900 p-4 md:p-8">
+          <div className="bg-[#060f27]/90 backdrop-blur-2xl p-4 md:p-8 rounded-t-[32px]">
             <div className="flex items-center justify-between mb-4">
               {steps.map((step, i) => (
                 <div key={step.id} className="flex items-center">
@@ -469,7 +477,7 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          <CardContent className="p-4 md:p-8">
+          <div className="p-4 md:p-8">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
@@ -478,86 +486,115 @@ export default function RegisterPage() {
                 exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* Step 1: Personal Info */}
                 {currentStep === 1 && (
                   <div>
-                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-[#0B1F4D] dark:text-white mb-6 flex items-center gap-3">
+                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white mb-6 flex items-center gap-3">
                       <User className="w-6 h-6 text-[#F4B400]" /> Personal Information
                     </h2>
                     <div className="grid md:grid-cols-2 gap-4">
+                      <PremiumInput
+                        label="First Name"
+                        iconLeft={<UserRound className="w-5 h-5" />}
+                        value={formData.firstName}
+                        onChange={e => updateForm("firstName", e.target.value)}
+                        placeholder="Enter first name"
+                        required
+                        error={errors.firstName}
+                      />
+                      <PremiumInput
+                        label="Middle Name"
+                        iconLeft={<UserRound className="w-5 h-5" />}
+                        value={formData.middleName}
+                        onChange={e => updateForm("middleName", e.target.value)}
+                        placeholder="Enter middle name"
+                      />
+                      <PremiumInput
+                        label="Last Name"
+                        iconLeft={<UserRound className="w-5 h-5" />}
+                        value={formData.lastName}
+                        onChange={e => updateForm("lastName", e.target.value)}
+                        placeholder="Enter last name"
+                        required
+                        error={errors.lastName}
+                      />
                       <div>
-                        <Label>First Name *</Label>
-                        <Input value={formData.firstName} onChange={e => updateForm("firstName", e.target.value)} className="rounded-[20px]" placeholder="Enter first name" />
-                        {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
-                      </div>
-                      <div>
-                        <Label>Middle Name</Label>
-                        <Input value={formData.middleName} onChange={e => updateForm("middleName", e.target.value)} className="rounded-[20px]" placeholder="Enter middle name" />
-                      </div>
-                      <div>
-                        <Label>Last Name *</Label>
-                        <Input value={formData.lastName} onChange={e => updateForm("lastName", e.target.value)} className="rounded-[20px]" placeholder="Enter last name" />
-                        {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
-                      </div>
-                      <div>
-                        <Label>Gender</Label>
-                        <select value={formData.gender} onChange={e => updateForm("gender", e.target.value)} className="w-full rounded-[20px] border border-input bg-background px-4 py-2 text-sm">
-                          <option value="">Select gender</option>
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
-                          <option value="other">Other</option>
+                        <label className="block text-sm text-gray-400 mb-2 font-medium">Gender</label>
+                        <select value={formData.gender} onChange={e => updateForm("gender", e.target.value)} className={inputClass}>
+                          <option value="" className="bg-[#0B1F4D]">Select gender</option>
+                          <option value="male" className="bg-[#0B1F4D]">Male</option>
+                          <option value="female" className="bg-[#0B1F4D]">Female</option>
+                          <option value="other" className="bg-[#0B1F4D]">Other</option>
                         </select>
                       </div>
+                      <PremiumInput
+                        label="Date of Birth"
+                        type="date"
+                        iconLeft={<Calendar className="w-5 h-5" />}
+                        value={formData.dateOfBirth}
+                        onChange={e => updateForm("dateOfBirth", e.target.value)}
+                      />
+                      <PremiumInput
+                        label="Nationality"
+                        iconLeft={<Earth className="w-5 h-5" />}
+                        value={formData.nationality}
+                        onChange={e => updateForm("nationality", e.target.value)}
+                        placeholder="e.g., Tanzanian"
+                      />
+                      <PremiumInput
+                        label="Occupation"
+                        iconLeft={<Briefcase className="w-5 h-5" />}
+                        value={formData.occupation}
+                        onChange={e => updateForm("occupation", e.target.value)}
+                        placeholder="e.g., Student"
+                      />
                       <div>
-                        <Label>Date of Birth</Label>
-                        <Input type="date" value={formData.dateOfBirth} onChange={e => updateForm("dateOfBirth", e.target.value)} className="rounded-[20px]" />
-                      </div>
-                      <div>
-                        <Label>Nationality</Label>
-                        <Input value={formData.nationality} onChange={e => updateForm("nationality", e.target.value)} className="rounded-[20px]" placeholder="e.g., Tanzanian" />
-                      </div>
-                      <div>
-                        <Label>Occupation</Label>
-                        <Input value={formData.occupation} onChange={e => updateForm("occupation", e.target.value)} className="rounded-[20px]" placeholder="e.g., Student" />
-                      </div>
-                      <div>
-                        <Label>Education Level</Label>
-                        <select value={formData.educationLevel} onChange={e => updateForm("educationLevel", e.target.value)} className="w-full rounded-[20px] border border-input bg-background px-4 py-2 text-sm">
-                          <option value="">Select education level</option>
-                          <option value="secondary">Secondary Education</option>
-                          <option value="certificate">Certificate</option>
-                          <option value="diploma">Diploma</option>
-                          <option value="bachelor">Bachelor&apos;s Degree</option>
-                          <option value="master">Master&apos;s Degree</option>
-                          <option value="phd">PhD</option>
-                          <option value="other">Other</option>
+                        <label className="block text-sm text-gray-400 mb-2 font-medium">Education Level</label>
+                        <select value={formData.educationLevel} onChange={e => updateForm("educationLevel", e.target.value)} className={inputClass}>
+                          <option value="" className="bg-[#0B1F4D]">Select education level</option>
+                          <option value="secondary" className="bg-[#0B1F4D]">Secondary Education</option>
+                          <option value="certificate" className="bg-[#0B1F4D]">Certificate</option>
+                          <option value="diploma" className="bg-[#0B1F4D]">Diploma</option>
+                          <option value="bachelor" className="bg-[#0B1F4D]">Bachelor&apos;s Degree</option>
+                          <option value="master" className="bg-[#0B1F4D]">Master&apos;s Degree</option>
+                          <option value="phd" className="bg-[#0B1F4D]">PhD</option>
+                          <option value="other" className="bg-[#0B1F4D]">Other</option>
                         </select>
                       </div>
-                      <div>
-                        <Label>Password *</Label>
-                        <div className="relative">
-                          <Input type={showPassword ? "text" : "password"} value={formData.password} onChange={e => updateForm("password", e.target.value)} className="rounded-[20px] pr-10" placeholder="Min 8 chars, upper + lower + number" />
-                          <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                          </button>
-                        </div>
-                        {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+                      <div className="relative">
+                        <PremiumInput
+                          label="Password"
+                          type={showPassword ? "text" : "password"}
+                          iconLeft={<Lock className="w-5 h-5" />}
+                          value={formData.password}
+                          onChange={e => updateForm("password", e.target.value)}
+                          placeholder="Min 8 chars, upper + lower + number"
+                          required
+                          error={errors.password}
+                        />
+                        <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors z-20">
+                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
                       </div>
-                      <div>
-                        <Label>Confirm Password *</Label>
-                        <div className="relative">
-                          <Input type={showConfirmPassword ? "text" : "password"} value={formData.confirmPassword} onChange={e => updateForm("confirmPassword", e.target.value)} className="rounded-[20px] pr-10" placeholder="Confirm password" />
-                          <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                            {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                          </button>
-                        </div>
-                        {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
+                      <div className="relative">
+                        <PremiumInput
+                          label="Confirm Password"
+                          type={showConfirmPassword ? "text" : "password"}
+                          iconLeft={<Lock className="w-5 h-5" />}
+                          value={formData.confirmPassword}
+                          onChange={e => updateForm("confirmPassword", e.target.value)}
+                          placeholder="Confirm password"
+                          required
+                          error={errors.confirmPassword}
+                        />
+                        <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors z-20">
+                          {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        </button>
                       </div>
                       <div className="md:col-span-2">
-                        <Label>Student Photo</Label>
-                        <div className="flex items-center gap-4 mt-1">
+                        <label className="block text-sm text-gray-400 mb-2 font-medium">Student Photo</label>
+                        <div className="flex items-center gap-4">
                           <label className="cursor-pointer">
-                            <div className="w-24 h-24 rounded-[20px] border-2 border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center hover:border-[#F4B400] transition-colors">
+                            <div className="w-24 h-24 rounded-[20px] border-2 border-dashed border-gray-500/50 flex items-center justify-center hover:border-[#F4B400] transition-colors bg-white/5">
                               {photoPreview ? (
                                 <Image src={photoPreview} alt="Preview" width={96} height={96} className="rounded-[20px] object-cover w-full h-full" />
                               ) : (
@@ -573,55 +610,79 @@ export default function RegisterPage() {
                   </div>
                 )}
 
-                {/* Step 2: Contact */}
                 {currentStep === 2 && (
                   <div>
-                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-[#0B1F4D] dark:text-white mb-6 flex items-center gap-3">
+                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white mb-6 flex items-center gap-3">
                       <Mail className="w-6 h-6 text-[#F4B400]" /> Contact Information
                     </h2>
                     <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label>Phone *</Label>
-                        <Input value={formData.phone} onChange={e => updateForm("phone", e.target.value)} className="rounded-[20px]" placeholder="+255 XXX XXX XXX" />
-                        {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
-                      </div>
-                      <div>
-                        <Label>WhatsApp</Label>
-                        <Input value={formData.whatsapp} onChange={e => updateForm("whatsapp", e.target.value)} className="rounded-[20px]" placeholder="+255 XXX XXX XXX" />
-                      </div>
-                      <div>
-                        <Label>Email *</Label>
-                        <Input type="email" value={formData.email} onChange={e => updateForm("email", e.target.value)} className="rounded-[20px]" placeholder="your@email.com" />
-                        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-                      </div>
-                      <div>
-                        <Label>Region</Label>
-                        <Input value={formData.region} onChange={e => updateForm("region", e.target.value)} className="rounded-[20px]" placeholder="e.g., Mbeya" />
-                      </div>
-                      <div>
-                        <Label>District</Label>
-                        <Input value={formData.district} onChange={e => updateForm("district", e.target.value)} className="rounded-[20px]" placeholder="Enter district" />
-                      </div>
-                      <div>
-                        <Label>Street</Label>
-                        <Input value={formData.street} onChange={e => updateForm("street", e.target.value)} className="rounded-[20px]" placeholder="Enter street" />
-                      </div>
+                      <PremiumInput
+                        label="Phone"
+                        iconLeft={<Phone className="w-5 h-5" />}
+                        value={formData.phone}
+                        onChange={e => updateForm("phone", e.target.value)}
+                        placeholder="+255 XXX XXX XXX"
+                        required
+                        error={errors.phone}
+                      />
+                      <PremiumInput
+                        label="WhatsApp"
+                        iconLeft={<Smartphone className="w-5 h-5" />}
+                        value={formData.whatsapp}
+                        onChange={e => updateForm("whatsapp", e.target.value)}
+                        placeholder="+255 XXX XXX XXX"
+                      />
+                      <PremiumInput
+                        label="Email"
+                        type="email"
+                        iconLeft={<Mail className="w-5 h-5" />}
+                        value={formData.email}
+                        onChange={e => updateForm("email", e.target.value)}
+                        placeholder="your@email.com"
+                        required
+                        error={errors.email}
+                      />
+                      <PremiumInput
+                        label="Region"
+                        iconLeft={<MapPin className="w-5 h-5" />}
+                        value={formData.region}
+                        onChange={e => updateForm("region", e.target.value)}
+                        placeholder="e.g., Mbeya"
+                      />
+                      <PremiumInput
+                        label="District"
+                        iconLeft={<MapPinned className="w-5 h-5" />}
+                        value={formData.district}
+                        onChange={e => updateForm("district", e.target.value)}
+                        placeholder="Enter district"
+                      />
+                      <PremiumInput
+                        label="Street"
+                        iconLeft={<MapPinned className="w-5 h-5" />}
+                        value={formData.street}
+                        onChange={e => updateForm("street", e.target.value)}
+                        placeholder="Enter street"
+                      />
                       <div className="md:col-span-2">
-                        <Label>Postal Address</Label>
-                        <Input value={formData.postalAddress} onChange={e => updateForm("postalAddress", e.target.value)} className="rounded-[20px]" placeholder="P.O. Box ..." />
+                        <PremiumInput
+                          label="Postal Address"
+                          iconLeft={<Hash className="w-5 h-5" />}
+                          value={formData.postalAddress}
+                          onChange={e => updateForm("postalAddress", e.target.value)}
+                          placeholder="P.O. Box ..."
+                        />
                       </div>
                     </div>
                   </div>
                 )}
 
-                {/* Step 3: Course Selection */}
                 {currentStep === 3 && (
                   <div>
-                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-[#0B1F4D] dark:text-white mb-2 flex items-center gap-3">
+                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white mb-2 flex items-center gap-3">
                       <BookOpen className="w-6 h-6 text-[#F4B400]" /> Course Selection
                     </h2>
-                    <p className="text-gray-500 dark:text-gray-400 mb-4">Select one or more courses you want to enroll in.</p>
-                    {errors.courses && <p className="text-red-500 text-sm mb-4">{errors.courses}</p>}
+                    <p className="text-gray-400 mb-4">Select one or more courses you want to enroll in.</p>
+                    {errors.courses && <p className="text-red-400 text-sm mb-4">{errors.courses}</p>}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {courses.map(course => (
                         <label
@@ -629,39 +690,39 @@ export default function RegisterPage() {
                           className={`flex items-center gap-3 p-4 rounded-[20px] border-2 cursor-pointer transition-all ${
                             selectedCourses.includes(course.id)
                               ? "border-[#F4B400] bg-[#F4B400]/5"
-                              : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
+                              : "border-white/10 hover:border-white/20 bg-white/5"
                           }`}
                         >
                           <Checkbox
                             checked={selectedCourses.includes(course.id)}
                             onCheckedChange={() => toggleCourse(course.id)}
+                            className="border-gray-500 data-[state=checked]:bg-[#F4B400] data-[state=checked]:border-[#F4B400]"
                           />
                           <div className="flex-1">
-                            <p className="font-semibold text-[#0B1F4D] dark:text-white">{course.title}</p>
-                            <p className="text-xs text-gray-500">{course.category}</p>
+                            <p className="font-semibold text-white">{course.title}</p>
+                            <p className="text-xs text-gray-400">{course.category}</p>
                           </div>
                           <p className="font-bold text-[#F4B400]">{course.fee.toLocaleString()} TZS</p>
                         </label>
                       ))}
                     </div>
                     {selectedCourses.length > 0 && (
-                      <div className="mt-6 p-4 bg-[#0B1F4D] dark:bg-gray-800 rounded-[20px] text-white flex justify-between items-center">
-                        <span>{selectedCourses.length} course(s) selected</span>
+                      <div className="mt-6 p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-[20px] flex justify-between items-center">
+                        <span className="text-gray-300">{selectedCourses.length} course(s) selected</span>
                         <span className="text-xl font-bold text-[#F4B400]">Total: {totalFee.toLocaleString()} TZS</span>
                       </div>
                     )}
                   </div>
                 )}
 
-                {/* Step 4: Training Mode */}
                 {currentStep === 4 && (
                   <div>
-                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-[#0B1F4D] dark:text-white mb-6 flex items-center gap-3">
+                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white mb-6 flex items-center gap-3">
                       <Clock className="w-6 h-6 text-[#F4B400]" /> Training Mode
                     </h2>
                     <div className="space-y-6">
                       <div>
-                        <Label className="text-lg mb-3 block">How would you like to attend?</Label>
+                        <label className="block text-gray-300 text-lg mb-3 font-medium">How would you like to attend?</label>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                           {["Physical", "Online"].map(mode => (
                             <button
@@ -670,16 +731,16 @@ export default function RegisterPage() {
                               className={`p-4 md:p-6 rounded-[20px] border-2 text-center transition-all ${
                                 formData.trainingMode === mode.toLowerCase()
                                   ? "border-[#F4B400] bg-[#F4B400]/5"
-                                  : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
+                                  : "border-white/10 hover:border-white/20 bg-white/5"
                               }`}
                             >
                               {mode === "Physical" ? (
-                                <Building className="w-8 h-8 mx-auto mb-2 text-[#0B1F4D] dark:text-white" />
+                                <Building className="w-8 h-8 mx-auto mb-2 text-white" />
                               ) : (
-                                <Globe className="w-8 h-8 mx-auto mb-2 text-[#0B1F4D] dark:text-white" />
+                                <Globe className="w-8 h-8 mx-auto mb-2 text-white" />
                               )}
-                              <p className="font-semibold">{mode}</p>
-                              <p className="text-sm text-gray-500">
+                              <p className="font-semibold text-white">{mode}</p>
+                              <p className="text-sm text-gray-400">
                                 {mode === "Physical" ? "Classes in Mbeya" : "From anywhere"}
                               </p>
                             </button>
@@ -687,7 +748,7 @@ export default function RegisterPage() {
                         </div>
                       </div>
                       <div>
-                        <Label className="text-lg mb-3 block">Preferred Time</Label>
+                        <label className="block text-gray-300 text-lg mb-3 font-medium">Preferred Time</label>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                           {[
                             { value: "morning", label: "Morning", icon: Sun },
@@ -701,11 +762,11 @@ export default function RegisterPage() {
                               className={`p-3 md:p-4 rounded-[20px] border-2 text-center transition-all ${
                                 formData.preferredTime === time.value
                                   ? "border-[#F4B400] bg-[#F4B400]/5"
-                                  : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
+                                  : "border-white/10 hover:border-white/20 bg-white/5"
                               }`}
                             >
-                              <time.icon className="w-5 h-5 md:w-6 md:h-6 mx-auto mb-1" />
-                              <p className="font-semibold text-sm">{time.label}</p>
+                              <time.icon className="w-5 h-5 md:w-6 md:h-6 mx-auto mb-1 text-white" />
+                              <p className="font-semibold text-sm text-white">{time.label}</p>
                             </button>
                           ))}
                         </div>
@@ -714,15 +775,14 @@ export default function RegisterPage() {
                   </div>
                 )}
 
-                {/* Step 5: Payment */}
                 {currentStep === 5 && (
                   <div>
-                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-[#0B1F4D] dark:text-white mb-6 flex items-center gap-3">
+                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white mb-6 flex items-center gap-3">
                       <CreditCard className="w-6 h-6 text-[#F4B400]" /> Payment
                     </h2>
                     <div className="space-y-6">
                       <div>
-                        <Label className="text-lg mb-3 block">Payment Method</Label>
+                        <label className="block text-gray-300 text-lg mb-3 font-medium">Payment Method</label>
                         <div className="grid grid-cols-3 gap-3">
                           {[
                             { value: "cash", label: "Cash", icon: Wallet },
@@ -735,52 +795,48 @@ export default function RegisterPage() {
                               className={`p-3 md:p-4 rounded-[20px] border-2 text-center transition-all ${
                                 formData.paymentMethod === method.value
                                   ? "border-[#F4B400] bg-[#F4B400]/5"
-                                  : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
+                                  : "border-white/10 hover:border-white/20 bg-white/5"
                               }`}
                             >
-                              <method.icon className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2" />
-                              <p className="font-semibold text-xs md:text-sm">{method.label}</p>
+                              <method.icon className="w-6 h-6 md:w-8 md:h-8 mx-auto mb-2 text-white" />
+                              <p className="font-semibold text-xs md:text-sm text-white">{method.label}</p>
                             </button>
                           ))}
                         </div>
                       </div>
 
                       {formData.paymentMethod === "mobile" && (
-                        <div>
-                          <Label className="text-lg mb-3 block">M-Pesa Transaction ID</Label>
-                          <Input
-                            value={formData.transactionId}
-                            onChange={e => updateForm("transactionId", e.target.value.replace(/\s/g, ""))}
-                            className="rounded-[20px] font-mono"
-                            placeholder="e.g. PBT78J4K9M"
-                            maxLength={30}
-                          />
-                          <p className="text-xs text-gray-400 mt-1">
-                            Enter the confirmation code from your M-Pesa message
-                          </p>
-                          {errors.transactionId && <p className="text-red-500 text-sm mt-1">{errors.transactionId}</p>}
-                        </div>
+                        <PremiumInput
+                          label="M-Pesa Transaction ID"
+                          iconLeft={<Hash className="w-5 h-5" />}
+                          value={formData.transactionId}
+                          onChange={e => updateForm("transactionId", e.target.value.replace(/\s/g, ""))}
+                          placeholder="e.g. PBT78J4K9M"
+                          maxLength={30}
+                          hint="Enter the confirmation code from your M-Pesa message"
+                          error={errors.transactionId}
+                        />
                       )}
 
-                      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-[20px] p-4 space-y-2">
-                        <p className="text-sm text-blue-700 dark:text-blue-300 font-medium">
+                      <div className="bg-blue-500/10 border border-blue-500/20 rounded-[20px] p-4 space-y-2">
+                        <p className="text-sm text-blue-300 font-medium">
                           Make your payment to the following account
                         </p>
-                        <div className="bg-white dark:bg-blue-900/40 rounded-[20px] p-4 space-y-2">
+                        <div className="bg-white/5 backdrop-blur-sm rounded-[20px] p-4 space-y-2">
                           <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600 dark:text-gray-400">Network</span>
-                            <span className="text-sm font-semibold text-[#0B1F4D] dark:text-white">VODACOM (M-Pesa)</span>
+                            <span className="text-sm text-gray-400">Network</span>
+                            <span className="text-sm font-semibold text-white">VODACOM (M-Pesa)</span>
                           </div>
                           <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600 dark:text-gray-400">Payment Number</span>
+                            <span className="text-sm text-gray-400">Payment Number</span>
                             <span className="text-lg font-bold text-[#F4B400] tracking-wider">50360811</span>
                           </div>
                           <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600 dark:text-gray-400">Account Name</span>
-                            <span className="text-sm font-semibold text-[#0B1F4D] dark:text-white">AGUSTINO EMMANUEL WILIAM</span>
+                            <span className="text-sm text-gray-400">Account Name</span>
+                            <span className="text-sm font-semibold text-white">AGUSTINO EMMANUEL WILIAM</span>
                           </div>
                         </div>
-                        <p className="text-xs text-blue-600 dark:text-blue-400">
+                        <p className="text-xs text-blue-400">
                           After payment, enter the M-Pesa confirmation code above. You can also pay in cash at our office.
                         </p>
                       </div>
@@ -788,33 +844,32 @@ export default function RegisterPage() {
                   </div>
                 )}
 
-                {/* Step 6: Declaration */}
                 {currentStep === 6 && (
                   <div>
-                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-[#0B1F4D] dark:text-white mb-6 flex items-center gap-3">
+                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white mb-6 flex items-center gap-3">
                       <CheckCircle2 className="w-6 h-6 text-[#F4B400]" /> Declaration
                     </h2>
                     <div className="space-y-4 mb-6">
-                      <h3 className="font-semibold text-lg">Summary</h3>
-                      <div className="grid md:grid-cols-2 gap-4 bg-gray-50 dark:bg-gray-800/50 rounded-[20px] p-6">
+                      <h3 className="font-semibold text-lg text-white">Summary</h3>
+                      <div className="grid md:grid-cols-2 gap-4 bg-white/5 rounded-[20px] p-6">
                         <div>
-                          <p className="text-sm text-gray-500">Name</p>
-                          <p className="font-medium">{formData.firstName} {formData.middleName} {formData.lastName}</p>
+                          <p className="text-sm text-gray-400">Name</p>
+                          <p className="font-medium text-white">{formData.firstName} {formData.middleName} {formData.lastName}</p>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-500">Email</p>
-                          <p className="font-medium">{formData.email}</p>
+                          <p className="text-sm text-gray-400">Email</p>
+                          <p className="font-medium text-white">{formData.email}</p>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-500">Phone</p>
-                          <p className="font-medium">{formData.phone}</p>
+                          <p className="text-sm text-gray-400">Phone</p>
+                          <p className="font-medium text-white">{formData.phone}</p>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-500">Training Mode</p>
-                          <p className="font-medium capitalize">{formData.trainingMode}</p>
+                          <p className="text-sm text-gray-400">Training Mode</p>
+                          <p className="font-medium capitalize text-white">{formData.trainingMode}</p>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-500">Selected Courses</p>
+                          <p className="text-sm text-gray-400">Selected Courses</p>
                           <div className="flex flex-wrap gap-1 mt-1">
                             {selectedCourses.map(id => {
                               const c = courses.find(c => c.id === id)
@@ -823,55 +878,59 @@ export default function RegisterPage() {
                           </div>
                         </div>
                         <div>
-                          <p className="text-sm text-gray-500">Total Fee</p>
+                          <p className="text-sm text-gray-400">Total Fee</p>
                           <p className="font-bold text-[#F4B400] text-lg">{totalFee.toLocaleString()} TZS</p>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-4 rounded-[20px] border border-gray-200 dark:border-gray-700">
+                    <div className="flex items-start gap-3 p-4 rounded-[20px] border border-white/10">
                       <Checkbox
                         checked={formData.declaration}
                         onCheckedChange={(checked) => updateForm("declaration", checked)}
+                        className="border-gray-500 data-[state=checked]:bg-[#F4B400] data-[state=checked]:border-[#F4B400]"
                       />
-                      <Label className="text-sm cursor-pointer">
+                      <Label className="text-sm cursor-pointer text-gray-300">
                         I confirm that all the information provided above is correct and complete to the best of my knowledge.
                       </Label>
                     </div>
-                    {errors.declaration && <p className="text-red-500 text-sm mt-2">{errors.declaration}</p>}
+                    {errors.declaration && <p className="text-red-400 text-sm mt-2">{errors.declaration}</p>}
                   </div>
                 )}
               </motion.div>
             </AnimatePresence>
 
-            {/* Navigation Buttons */}
-            <div className="flex flex-col md:flex-row justify-between gap-3 md:gap-0 mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-              <Button
-                variant="outline"
+            <div className="flex flex-col md:flex-row justify-between gap-3 md:gap-0 mt-8 pt-6 border-t border-white/10">
+              <PremiumButton
+                variant="glass"
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="rounded-[20px] px-6 w-full md:w-auto"
+                size="md"
+                iconLeft={<ChevronLeft className="w-4 h-4" />}
               >
-                <ChevronLeft className="w-4 h-4 mr-2" /> Previous
-              </Button>
+                Previous
+              </PremiumButton>
               {currentStep < 6 ? (
-                <Button
+                <PremiumButton
                   onClick={nextStep}
-                  className="bg-[#0B1F4D] hover:bg-[#1a3a7a] text-white rounded-[20px] px-8 font-button font-semibold w-full md:w-auto"
+                  variant="gradient-primary"
+                  size="md"
+                  iconRight={<ChevronRight className="w-4 h-4" />}
                 >
-                  Next <ChevronRight className="w-4 h-4 ml-2" />
-                </Button>
+                  Next
+                </PremiumButton>
               ) : (
-                <Button
+                <PremiumButton
                   onClick={handleSubmit}
-                  disabled={submitting}
-                  className="bg-[#F4B400] hover:bg-[#e5a800] text-[#0B1F4D] rounded-[20px] px-10 font-button font-semibold text-lg w-full md:w-auto"
+                  variant="gradient-gold"
+                  size="lg"
+                  loading={submitting}
                 >
                   {submitting ? "Submitting..." : "Register Now"}
-                </Button>
+                </PremiumButton>
               )}
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </GlassCard>
       </div>
     </div>
   )

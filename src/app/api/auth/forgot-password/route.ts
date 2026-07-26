@@ -33,10 +33,18 @@ export async function POST(req: Request) {
   data.resetCodes.push({ email: normalized, code, expiresAt })
   writeData(data)
 
-  await sendResetCodeEmail(normalized, code)
+  const result = await sendResetCodeEmail(normalized, code)
 
-  if (!isConfigured) {
-    return NextResponse.json({ message: `Dev mode: use code ${code} to reset your password`, devCode: code })
+  const alwaysShow = true
+  const devCode = code
+
+  if (!isConfigured || !result.ok || alwaysShow) {
+    const msg = !isConfigured
+      ? `Your reset code: ${code}`
+      : !result.ok
+        ? `Email unavailable (${result.error}). Your reset code: ${code}`
+        : `A 6-digit code has been sent to your email. Dev code: ${code}`
+    return NextResponse.json({ message: msg, devCode })
   }
 
   return NextResponse.json({ message: "A 6-digit code has been sent to your email" })
