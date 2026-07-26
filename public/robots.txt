@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Sitemap: https://chugazprofessionalcourse.vercel.app/sitemap.xml
+Sitemap: https://chugaz-professional-course.vercel.app/sitemap.xml
 
 Disallow: /admin
 Disallow: /dashboard

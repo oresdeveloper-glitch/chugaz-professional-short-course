@@ -46,11 +46,11 @@ export const metadata: Metadata = {
   authors: [{ name: "CHUGAZ STATIONERY" }],
   creator: "CHUGAZ STATIONERY",
   publisher: "CHUGAZ STATIONERY",
-  metadataBase: new URL("https://chugazstationery.com"),
+  metadataBase: new URL("https://chugaz-professional-course.vercel.app"),
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://chugazstationery.com",
+    url: "https://chugaz-professional-course.vercel.app",
     siteName: "CHUGAZ STATIONERY",
     title: "CHUGAZ STATIONERY | Professional ICT & Engineering Training Center",
     description:

@@ -31,7 +31,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Orresy",
       title: "Senior ICT Instructor",
-      image: "/images/Eng.ORRESY.png",
+      image: "/images/Eng.ORRESY.webp",
       bio: "Experienced ICT professional with over 10 years of teaching experience."
     },
     featured: true
@@ -99,7 +99,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Orresy",
       title: "Software Engineering Lead",
-      image: "/images/Eng.ORRESY.png",
+      image: "/images/Eng.ORRESY.webp",
       bio: "Full-stack developer and software engineering instructor."
     },
     featured: false
@@ -133,7 +133,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Godwin",
       title: "Python Developer & Instructor",
-      image: "/images/Eng.GODWIN.png",
+      image: "/images/Eng.GODWIN.webp",
       bio: "Python specialist with expertise in data science and automation."
     },
     featured: true
@@ -201,7 +201,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Orresy",
       title: "Full-Stack Developer",
-      image: "/images/Eng.ORRESY.png",
+      image: "/images/Eng.ORRESY.webp",
       bio: "Expert JavaScript developer and web technologies instructor."
     },
     featured: true
@@ -235,7 +235,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Godwin",
       title: "Web Design Instructor",
-      image: "/images/Eng.GODWIN.png",
+      image: "/images/Eng.GODWIN.webp",
       bio: "Creative web designer and frontend developer."
     },
     featured: true
@@ -303,7 +303,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Godwin",
       title: "Creative Design Director",
-      image: "/images/Eng.GODWIN.png",
+      image: "/images/Eng.GODWIN.webp",
       bio: "Professional graphic designer with agency experience."
     },
     featured: true
@@ -405,7 +405,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Orresy",
       title: "Mechanical Design Engineer",
-      image: "/images/Eng.ORRESY.png",
+      image: "/images/Eng.ORRESY.webp",
       bio: "Mechanical engineer with expertise in product design."
     },
     featured: true
@@ -439,7 +439,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Godwin",
       title: "Computer Skills Instructor",
-      image: "/images/Eng.GODWIN.png",
+      image: "/images/Eng.GODWIN.webp",
       bio: "Expert in computer applications and productivity tools."
     },
     featured: false
@@ -473,7 +473,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Orresy",
       title: "Data Analysis Instructor",
-      image: "/images/Eng.ORRESY.png",
+      image: "/images/Eng.ORRESY.webp",
       bio: "Data analytics expert and Excel specialist."
     },
     featured: false
@@ -507,7 +507,7 @@ export const courses: Course[] = [
     instructor: {
       name: "Eng. Godwin",
       title: "Presentation Skills Coach",
-      image: "/images/Eng.GODWIN.png",
+      image: "/images/Eng.GODWIN.webp",
       bio: "Expert in business communication and presentations."
     },
     featured: false
