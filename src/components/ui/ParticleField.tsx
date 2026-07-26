@@ -1,6 +1,15 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
+
+interface Particle {
+  x: number
+  y: number
+  vx: number
+  vy: number
+  radius: number
+  opacity: number
+}
 
 interface ParticleProps {
   className?: string
@@ -19,14 +28,7 @@ export default function ParticleField({
 }: ParticleProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number | null>(null)
-  const [particles, setParticles] = useState<Array<{
-    x: number
-    y: number
-    vx: number
-    vy: number
-    radius: number
-    opacity: number
-  }>>([])
+  const particlesRef = useRef<Particle[]>([])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -39,12 +41,11 @@ export default function ParticleField({
       const dpr = window.devicePixelRatio || 1
       canvas.width = canvas.offsetWidth * dpr
       canvas.height = canvas.offsetHeight * dpr
-      ctx?.scale(dpr, dpr)
+      ctx.scale(dpr, dpr)
     }
 
     const initParticles = () => {
-      if (!canvas) return
-      const newParticles = Array.from({ length: count }, () => ({
+      particlesRef.current = Array.from({ length: count }, () => ({
         x: Math.random() * canvas.offsetWidth,
         y: Math.random() * canvas.offsetHeight,
         vx: (Math.random() - 0.5) * speed,
@@ -52,7 +53,6 @@ export default function ParticleField({
         radius: 1 + Math.random() * 2,
         opacity: 0.1 + Math.random() * 0.4,
       }))
-      setParticles(newParticles)
     }
 
     resize()
@@ -60,38 +60,37 @@ export default function ParticleField({
     window.addEventListener("resize", () => { resize(); initParticles() })
 
     const animate = () => {
-      const ctx = canvas.getContext("2d")
       if (!ctx) return
 
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      particles.forEach((p, i) => {
-        p.x += p.vx
-        p.y += p.vy
+      const p = particlesRef.current
+      for (let i = 0; i < p.length; i++) {
+        p[i].x += p[i].vx
+        p[i].y += p[i].vy
 
-        if (p.x < 0 || p.x > canvas.offsetWidth) p.vx *= -1
-        if (p.y < 0 || p.y > canvas.offsetHeight) p.vy *= -1
+        if (p[i].x < 0 || p[i].x > canvas.offsetWidth) p[i].vx *= -1
+        if (p[i].y < 0 || p[i].y > canvas.offsetHeight) p[i].vy *= -1
 
         ctx.beginPath()
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(${hexToRgb(color)}, ${p.opacity})`
+        ctx.arc(p[i].x, p[i].y, p[i].radius, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(${hexToRgb(color)}, ${p[i].opacity})`
         ctx.fill()
 
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j]
-          const dx = p.x - p2.x
-          const dy = p.y - p2.y
+        for (let j = i + 1; j < p.length; j++) {
+          const dx = p[i].x - p[j].x
+          const dy = p[i].y - p[j].y
           const dist = Math.sqrt(dx * dx + dy * dy)
           if (dist < connectDistance) {
             ctx.beginPath()
-            ctx.moveTo(p.x, p.y)
-            ctx.lineTo(p2.x, p2.y)
+            ctx.moveTo(p[i].x, p[i].y)
+            ctx.lineTo(p[j].x, p[j].y)
             ctx.strokeStyle = `rgba(${hexToRgb(color)}, ${0.05 * (1 - dist / connectDistance)})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
         }
-      })
+      }
 
       animationRef.current = requestAnimationFrame(animate)
     }
@@ -100,9 +99,11 @@ export default function ParticleField({
 
     return () => {
       window.removeEventListener("resize", resize)
-      cancelAnimationFrame(animationRef.current!)
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current)
+      }
     }
-  }, [particles, count, color, connectDistance, speed])
+  }, [count, color, connectDistance, speed])
 
   return <canvas ref={canvasRef} className={`fixed inset-0 -z-10 ${className}`} aria-hidden="true" />
 }
