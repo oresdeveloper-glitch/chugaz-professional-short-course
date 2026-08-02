@@ -142,8 +142,8 @@ export default function CoursesPage() {
                           </PremiumButton>
                         </Link>
                         <Link href={`/courses/${course.id}`}>
-                          <PremiumButton variant="glass" size="sm">
-                            Details
+                          <PremiumButton variant="glass" size="sm" className="bg-white border-2 border-primary/20 text-primary hover:border-[#F4B400] hover:bg-white hover:text-primary">
+                            View Details
                           </PremiumButton>
                         </Link>
                       </div>

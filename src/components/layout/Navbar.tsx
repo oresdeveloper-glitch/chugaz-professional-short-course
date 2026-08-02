@@ -59,7 +59,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
 <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink min-w-0">
-              <div className="w-10 h-10 sm:w-48 sm:h-48 relative rounded-[20px] overflow-hidden flex-shrink-0">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 lg:w-14 lg:h-14 relative rounded-[20px] overflow-hidden flex-shrink-0">
                 <Image src="/images/chugaz-logo.png" alt="CHUGAZ" fill className="object-contain" />
               </div>
               <div className="flex flex-col min-w-0">
