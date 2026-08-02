@@ -1,7 +1,6 @@
 ﻿"use client"
 
 import { useState, useEffect } from "react"
-import dynamic from "next/dynamic"
 import {
   LayoutDashboard, Users, BookOpen, CreditCard,
   MessageSquare, Settings, LogOut, Menu, X,
@@ -15,19 +14,12 @@ import { isAuthenticated, isAdmin, logout, getAllStudents } from "@/lib/auth"
 import type { Student, AdminTab, SharedActions } from "./components/types"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
-
-const DashboardTab = dynamic(() => import("./components/DashboardTab"), {
-  loading: () => <div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" /></div>
-})
-const StudentsTab = dynamic(() => import("./components/StudentsTab"), {
-  loading: () => <div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" /></div>
-})
-const CoursesTab = dynamic(() => import("./components/CoursesTab"))
-const PaymentsTab = dynamic(() => import("./components/PaymentsTab"), {
-  loading: () => <div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" /></div>
-})
-const MessagesTab = dynamic(() => import("./components/MessagesTab"))
-const SettingsTab = dynamic(() => import("./components/SettingsTab"))
+import DashboardTab from "./components/DashboardTab"
+import StudentsTab from "./components/StudentsTab"
+import CoursesTab from "./components/CoursesTab"
+import PaymentsTab from "./components/PaymentsTab"
+import MessagesTab from "./components/MessagesTab"
+import SettingsTab from "./components/SettingsTab"
 
 const sidebarItems: { icon: any; label: string; tab: AdminTab }[] = [
   { icon: LayoutDashboard, label: "Dashboard", tab: "dashboard" },
@@ -129,7 +121,7 @@ export default function AdminDashboard() {
           </div>
           <nav className="flex-1 space-y-1">
             {sidebarItems.map((item) => (
-              <button key={item.tab} onClick={() => setActiveTab(item.tab)}
+              <button key={item.tab} type="button" onClick={() => setActiveTab(item.tab)}
                 className={cn("w-full flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-[20px] transition-all text-sm font-medium",
                   activeTab === item.tab ? "bg-[#0B1F4D] text-white" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
                 )}>

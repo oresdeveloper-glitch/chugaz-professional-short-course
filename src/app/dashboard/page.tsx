@@ -1,7 +1,6 @@
 ﻿"use client"
 
 import { useState, useEffect } from "react"
-import dynamic from "next/dynamic"
 import {
   LayoutDashboard, BookOpen, CreditCard, Download, Bell,
   Settings, LogOut, Menu, X, GraduationCap
@@ -14,16 +13,13 @@ import { getCurrentUser, getStudentData, logout, isAuthenticated } from "@/lib/a
 import { api } from "@/lib/api"
 import type { DashboardTab } from "./components/types"
 import { PremiumButton } from "@/components/ui/PremiumButton"
-import { GlassCard, GlassCardHeader, GlassCardTitle, GlassCardContent, GlassCardFooter } from "@/components/ui/GlassCard"
-
-const DashboardTabContent = dynamic(() => import("./components/DashboardTab"), {
-  loading: () => <div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" /></div>
-})
-const CoursesTab = dynamic(() => import("./components/CoursesTab"))
-const PaymentsTab = dynamic(() => import("./components/PaymentsTab"))
-const DownloadsTab = dynamic(() => import("./components/DownloadsTab"))
-const NotificationsTab = dynamic(() => import("./components/NotificationsTab"))
-const SettingsTab = dynamic(() => import("./components/SettingsTab"))
+import { GlassCard, GlassCardHeader, GlassCardTitle, GlassCardContent } from "@/components/ui/GlassCard"
+import DashboardTabContent from "./components/DashboardTab"
+import CoursesTab from "./components/CoursesTab"
+import PaymentsTab from "./components/PaymentsTab"
+import DownloadsTab from "./components/DownloadsTab"
+import NotificationsTab from "./components/NotificationsTab"
+import SettingsTab from "./components/SettingsTab"
 
 const sidebarItems: { icon: any; label: string; tab: DashboardTab }[] = [
   { icon: LayoutDashboard, label: "Dashboard", tab: "dashboard" },
@@ -63,7 +59,7 @@ export default function StudentDashboard() {
 
   const handleLogout = async () => { await logout(); router.push("/") }
 
-  if (!user || !studentData) {
+  if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" />
@@ -72,7 +68,8 @@ export default function StudentDashboard() {
   }
 
   const initials = `${(user.firstName || "")[0] || ""}${(user.lastName || "")[0] || ""}` || user.email[0].toUpperCase()
-  const sharedProps = { user, studentData, notifications, setNotifications, unreadCount, setUnreadCount, setActiveTab }
+  const safeStudent = studentData || { courses: [], status: "pending", phone: "", gender: "", nationality: "", occupation: "", educationLevel: "", region: "", district: "", paymentMethod: "", paymentStatus: "pending", paymentRef: "", transactionId: "", trainingMode: "", preferredTime: "" }
+  const sharedProps = { user, studentData: safeStudent, notifications, setNotifications, unreadCount, setUnreadCount, setActiveTab }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex">
@@ -95,8 +92,8 @@ export default function StudentDashboard() {
           </div>
           <nav className="flex-1 space-y-1">
             {sidebarItems.map((item) => (
-              <button key={item.tab} onClick={() => { setActiveTab(item.tab); setSidebarOpen(false) }} className={cn(
-                "w-full flex items-center gap-3 px-4 py-3 rounded-[20px] transition-all text-sm font-medium",
+              <button key={item.tab} type="button" onClick={() => { setActiveTab(item.tab); setSidebarOpen(false) }} className={cn(
+                "w-full flex items-center gap-3 px-4 py-3 rounded-[20px] transition-all text-sm font-medium cursor-pointer",
                 activeTab === item.tab ? "bg-[#0B1F4D] text-white" : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
               )}>
                 <item.icon className="w-5 h-5 flex-shrink-0" />
