@@ -67,6 +67,7 @@ export default function Hero() {
           <PremiumButton 
             variant="gradient-gold" 
             size="xl" 
+            asChild
             iconRight={<ArrowRight className="w-5 h-5" />}
           >
             <Link href="/register">Register Now</Link>
@@ -74,6 +75,7 @@ export default function Hero() {
           <PremiumButton 
             variant="glass" 
             size="xl" 
+            asChild
             iconRight={<ChevronRight className="w-5 h-5" />}
           >
             <Link href="/courses">Explore Courses</Link>
@@ -94,7 +96,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 text-white/50">
+        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 text-white/70">
           <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10">
             <div className="w-2.5 h-2.5 rounded-full bg-green-400 bg-[#F4B400]" />
             <span className="text-sm font-medium">Enrolling Now</span>
@@ -116,7 +118,7 @@ export default function Hero() {
         <div 
           className="mt-20 flex items-center justify-center gap-4"
         >
-          <span className="text-xs text-white/40 uppercase tracking-widest">Scroll to explore</span>
+          <span className="text-xs text-white/60 uppercase tracking-widest">Scroll to explore</span>
           <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
             <div className="w-1.5 h-1.5 rounded-full bg-white/60" />
           </div>

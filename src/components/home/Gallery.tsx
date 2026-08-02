@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { X, ChevronLeft, ChevronRight, Camera, Expand } from "lucide-react"
+import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { galleryImages } from "@/data/gallery"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
@@ -84,8 +85,8 @@ export default function Gallery() {
         <div
           className="text-center mt-12 lg:mt-16"
         >
-          <PremiumButton variant="glass-gold" size="lg" iconRight={<Expand className="w-4 h-4" />}>
-            View Full Gallery
+          <PremiumButton variant="glass-gold" size="lg" asChild iconRight={<Expand className="w-4 h-4" />}>
+            <Link href="/about">View Full Gallery</Link>
           </PremiumButton>
         </div>
       </div>
@@ -115,6 +116,7 @@ export default function Gallery() {
 
             <div
               className="relative max-w-5xl max-h-[85vh] w-full"
+              onClick={(e) => e.stopPropagation()}
             >
               <div className="relative aspect-video w-full rounded-[24px] overflow-hidden bg-gradient-to-br from-[#0B1F4D] to-[#060f27]">
                 <Image

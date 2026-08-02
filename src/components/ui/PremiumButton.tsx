@@ -1,6 +1,7 @@
 "use client"
 
 import { forwardRef, type ButtonHTMLAttributes } from "react"
+import { Slot } from "@radix-ui/react-slot"
 import { cn } from "@/lib/utils"
 
 interface PremiumButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onAnimationStart" | "onAnimationEnd" | "onAnimationIteration"> {
@@ -10,6 +11,7 @@ interface PremiumButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   iconLeft?: React.ReactNode
   iconRight?: React.ReactNode
   fullWidth?: boolean
+  asChild?: boolean
 }
 
 export const PremiumButton = forwardRef<HTMLButtonElement, PremiumButtonProps>(
@@ -22,6 +24,7 @@ export const PremiumButton = forwardRef<HTMLButtonElement, PremiumButtonProps>(
       iconLeft,
       iconRight,
       fullWidth = false,
+      asChild = false,
       disabled,
       children,
       ...props
@@ -46,8 +49,10 @@ export const PremiumButton = forwardRef<HTMLButtonElement, PremiumButtonProps>(
       xl: "px-10 py-5 text-xl min-h-[64px] gap-3 rounded-[24px]",
     }
 
+    const Comp = asChild ? Slot : "button"
+
     return (
-      <button
+      <Comp
         ref={ref}
         className={cn(baseStyles, variants[variant], sizes[size], fullWidth && "w-full", className)}
         disabled={disabled || loading}
@@ -65,7 +70,7 @@ export const PremiumButton = forwardRef<HTMLButtonElement, PremiumButtonProps>(
           <span>{children}</span>
           {!loading && iconRight && <span className="flex-shrink-0">{iconRight}</span>}
         </span>
-      </button>
+      </Comp>
     )
   }
 )

@@ -99,11 +99,11 @@ export default function AboutSection() {
             </div>
 
             <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <PremiumButton variant="gradient-primary" size="lg" iconRight={<ArrowRight className="w-4 h-4" />}>
-                Explore Our Story
+              <PremiumButton variant="gradient-primary" size="lg" asChild iconRight={<ArrowRight className="w-4 h-4" />}>
+                <Link href="/about">Explore Our Story</Link>
               </PremiumButton>
-              <PremiumButton variant="glass-gold" size="lg" iconLeft={<Target className="w-4 h-4" />}>
-                View Courses
+              <PremiumButton variant="glass-gold" size="lg" asChild iconLeft={<Target className="w-4 h-4" />}>
+                <Link href="/courses">View Courses</Link>
               </PremiumButton>
             </div>
           </div>

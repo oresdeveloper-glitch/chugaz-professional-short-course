@@ -33,6 +33,7 @@ export default function Testimonials() {
   const totalPages = Math.ceil(testimonials.length / perPage)
   const [currentPage, setCurrentPage] = useState(0)
   const [direction, setDirection] = useState(0)
+  const [paused, setPaused] = useState(false)
 
   const goNext = useCallback(() => {
     setDirection(1)
@@ -45,9 +46,12 @@ export default function Testimonials() {
   }, [totalPages])
 
   useEffect(() => {
+    if (paused) return
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (prefersReduced) return
     const interval = setInterval(goNext, 6000)
     return () => clearInterval(interval)
-  }, [goNext])
+  }, [goNext, paused])
 
   const visibleItems = testimonials.slice(currentPage * perPage, currentPage * perPage + perPage)
 
@@ -71,7 +75,15 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <div className="relative">
+        <div
+          className="relative"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocusCapture={() => setPaused(true)}
+          onBlurCapture={() => setPaused(false)}
+          aria-roledescription="carousel"
+          aria-label="Student testimonials"
+        >
           <div
               className={cn(
                 "grid gap-6 lg:gap-8",
@@ -79,6 +91,7 @@ export default function Testimonials() {
                 perPage === 2 && "grid-cols-1 sm:grid-cols-2",
                 perPage === 1 && "grid-cols-1"
               )}
+              aria-live="polite"
             >
               {visibleItems.map((testimonial) => (
                 <GlassCard key={testimonial.id} variant="elevated" hover padding="lg" borderRadius="2xl" className="relative overflow-hidden group">
@@ -160,14 +173,19 @@ export default function Testimonials() {
               <button
                 key={i}
                 onClick={() => { setDirection(i > currentPage ? 1 : -1); setCurrentPage(i) }}
-                className={cn(
-                  "w-2.5 h-2.5 rounded-full transition-all duration-300",
-                  i === currentPage
-                    ? "bg-[#F4B400] w-10 shadow-[0_0_12px_rgba(244,180,0,0.6)]"
-                    : "bg-white/20 hover:bg-white/30"
-                )}
+                className="group flex items-center justify-center py-3 px-1"
                 aria-label={`Go to page ${i + 1}`}
-              />
+                aria-current={i === currentPage ? "true" : undefined}
+              >
+                <span
+                  className={cn(
+                    "block h-2.5 w-2.5 rounded-full transition-all duration-300",
+                    i === currentPage
+                      ? "w-8 bg-[#F4B400] shadow-[0_0_12px_rgba(244,180,0,0.6)]"
+                      : "bg-white/20 group-hover:bg-white/40"
+                  )}
+                />
+              </button>
             ))}
           </div>
         </div>

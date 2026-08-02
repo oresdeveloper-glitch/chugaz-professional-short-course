@@ -4,6 +4,7 @@ import {
   Award, Wrench, Clock, Wallet, ScrollText, Briefcase,
   GraduationCap, Monitor, Users, Shield, Zap, Globe, ArrowRight
 } from "lucide-react"
+import Link from "next/link"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 import ScrollReveal from "@/components/ui/ScrollReveal"
 import { PremiumButton } from "@/components/ui/PremiumButton"
@@ -115,8 +116,8 @@ export default function WhyChooseUs() {
         <div
           className="text-center mt-12 lg:mt-16"
         >
-          <PremiumButton variant="gradient-primary" size="lg" iconRight={<ArrowRight className="w-4 h-4" />}>
-            Explore All Programs
+          <PremiumButton variant="gradient-primary" size="lg" asChild iconRight={<ArrowRight className="w-4 h-4" />}>
+            <Link href="/courses">Explore All Programs</Link>
           </PremiumButton>
         </div>
       </div>

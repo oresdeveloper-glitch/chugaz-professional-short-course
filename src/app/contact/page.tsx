@@ -63,16 +63,25 @@ export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" })
   const [sent, setSent] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState("")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitting(true)
+    setError("")
     try {
       await api.post("/contact", formData)
       setSent(true)
       setFormData({ name: "", email: "", subject: "", message: "" })
-    } catch {}
+    } catch (err) {
+      setError(err instanceof Error && err.message ? err.message : "Something went wrong. Please try again in a moment.")
+    }
     setSubmitting(false)
+  }
+
+  const updateField = (field: keyof typeof formData) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(p => ({ ...p, [field]: e.target.value }))
+    if (sent) setSent(false)
   }
 
   return (
@@ -155,12 +164,30 @@ export default function ContactPage() {
                 </GlassCardHeader>
                 <GlassCardContent className="p-6">
                   <form onSubmit={handleSubmit} className="space-y-5">
+                    <div aria-live="polite">
+                      {sent && (
+                        <div className="flex items-start gap-3 rounded-[16px] border border-green-300 dark:border-green-700 bg-green-50 dark:bg-green-900/20 p-4">
+                          <span className="text-green-600 font-medium text-sm flex items-center gap-2">
+                            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                            Message sent successfully! We&apos;ll get back to you within 24 hours.
+                          </span>
+                        </div>
+                      )}
+                      {error && !sent && (
+                        <div className="flex items-start gap-3 rounded-xl border border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/20 p-4">
+                          <span className="text-red-600 dark:text-red-300 text-sm flex items-start gap-2">
+                            <svg className="w-5 h-5 mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
+                            {error}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                     <div className="grid md:grid-cols-2 gap-5">
                       <PremiumInput
                         label="Your Name"
                         iconLeft={<User className="w-4 h-4" />}
                         value={formData.name}
-                        onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
+                        onChange={updateField("name")}
                         placeholder="John Doe"
                         required
                       />
@@ -169,7 +196,7 @@ export default function ContactPage() {
                         iconLeft={<AtSign className="w-4 h-4" />}
                         type="email"
                         value={formData.email}
-                        onChange={e => setFormData(p => ({ ...p, email: e.target.value }))}
+                        onChange={updateField("email")}
                         placeholder="chugaz@example.com"
                         required
                       />
@@ -178,14 +205,14 @@ export default function ContactPage() {
                       label="Subject"
                       iconLeft={<FileText className="w-4 h-4" />}
                       value={formData.subject}
-                      onChange={e => setFormData(p => ({ ...p, subject: e.target.value }))}
+                      onChange={updateField("subject")}
                       placeholder="How can we help?"
                       required
                     />
                     <PremiumTextarea
                       label="Message"
                       value={formData.message}
-                      onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
+                      onChange={updateField("message")}
                       placeholder="Write your message here to Chugaz..."
                       required
                       className="min-h-[120px]"

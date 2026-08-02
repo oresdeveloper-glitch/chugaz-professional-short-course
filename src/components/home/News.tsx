@@ -62,7 +62,7 @@ function NewsCard({ item }: { item: NewsItem }) {
           {item.excerpt}
         </p>
         
-        <Link href={`/news/${item.id}`} className="w-full">
+        <Link href="/courses" className="w-full">
           <PremiumButton
             variant="glass-gold"
             size="sm"
@@ -115,8 +115,8 @@ export default function News() {
         <div
           className="text-center mt-12 lg:mt-16"
         >
-          <PremiumButton variant="gradient-primary" size="lg" iconRight={<ArrowRight className="w-4 h-4" />}>
-            View All News
+          <PremiumButton variant="gradient-primary" size="lg" asChild iconRight={<ArrowRight className="w-4 h-4" />}>
+            <Link href="/courses">View Courses</Link>
           </PremiumButton>
         </div>
       </div>

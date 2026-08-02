@@ -49,8 +49,8 @@ export default function CoursesSection() {
         <div
           className="text-center mt-12 lg:mt-16"
         >
-          <PremiumButton variant="gradient-primary" size="lg" iconRight={<ArrowRight className="w-4 h-4" />}>
-            View All Courses
+          <PremiumButton variant="gradient-primary" size="lg" asChild iconRight={<ArrowRight className="w-4 h-4" />}>
+            <Link href="/courses">View All Courses</Link>
           </PremiumButton>
         </div>
       </div>
@@ -119,14 +119,16 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
           ))}
         </div>
 
-        <PremiumButton 
-          variant="glass-gold" 
-          size="md" 
-          fullWidth
-          iconRight={<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
-        >
-          View Details
-        </PremiumButton>
+        <Link href={`/courses/${course.id}`}>
+          <PremiumButton 
+            variant="glass-gold" 
+            size="md" 
+            fullWidth
+            iconRight={<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+          >
+            View Details
+          </PremiumButton>
+        </Link>
       </GlassCardContent>
     </GlassCard>
   )

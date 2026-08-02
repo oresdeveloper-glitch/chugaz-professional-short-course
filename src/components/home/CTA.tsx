@@ -1,6 +1,7 @@
 ﻿"use client"
 
 import { ArrowRight, Phone, GraduationCap, Sparkles, Shield, Users, Calendar } from "lucide-react"
+import Link from "next/link"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 
@@ -53,11 +54,11 @@ export default function CTA() {
         <div
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <PremiumButton variant="gradient-gold" size="xl" iconRight={<ArrowRight className="w-5 h-5" />}>
-            Register Now
+          <PremiumButton variant="gradient-gold" size="xl" asChild iconRight={<ArrowRight className="w-5 h-5" />}>
+            <Link href="/register">Register Now</Link>
           </PremiumButton>
-          <PremiumButton variant="glass" size="xl" iconLeft={<Phone className="w-5 h-5" />}>
-            Contact Us
+          <PremiumButton variant="glass" size="xl" asChild iconLeft={<Phone className="w-5 h-5" />}>
+            <Link href="/contact">Contact Us</Link>
           </PremiumButton>
         </div>
 
