@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
 import {
@@ -120,7 +120,7 @@ export default function ContactPage() {
                       </div>
                       <h3 className="font-heading font-bold text-[#0B1F4D] dark:text-white mb-2">{info.title}</h3>
                       {info.details.map((detail, j) => (
-                        <p key={j} className="text-gray-600 dark:text-gray-400 text-sm">{detail}</p>
+                        <p key={j} className="text-gray-700 dark:text-gray-400 text-sm">{detail}</p>
                       ))}
                     </GlassCardContent>
                   </GlassCard>

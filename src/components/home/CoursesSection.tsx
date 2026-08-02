@@ -27,7 +27,7 @@ export default function CoursesSection() {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             Courses Designed for <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Impact</span>
           </h2>
-          <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
+          <p className="text-white/90 max-w-3xl mx-auto text-lg leading-relaxed">
             Industry-aligned curriculum with hands-on projects, expert instructors, and real-world applications.
           </p>
         </div>
@@ -103,7 +103,7 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
         <h3 className="text-xl lg:text-2xl font-heading font-bold text-white mb-3 group-hover:text-[#F4B400] transition-colors duration-300 line-clamp-2">
           {course.title}
         </h3>
-        <p className="text-white/60 text-sm leading-relaxed flex-1 mb-6 line-clamp-3">
+        <p className="text-white/85 text-sm leading-relaxed flex-1 mb-6 line-clamp-3">
           {course.description}
         </p>
         

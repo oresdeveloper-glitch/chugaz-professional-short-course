@@ -70,7 +70,7 @@ export default function Testimonials() {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             What Our <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Graduates</span> Say
           </h2>
-          <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
+          <p className="text-white/90 max-w-3xl mx-auto text-lg leading-relaxed">
             Hear from our graduates about how CHUGAZ has transformed their careers and lives.
           </p>
         </div>
@@ -135,7 +135,7 @@ export default function Testimonials() {
                       </div>
                       <div>
                         <p className="font-heading font-bold text-white text-sm">{testimonial.name}</p>
-                        <p className="text-white/50 text-xs">{testimonial.title}</p>
+                        <p className="text-white/70 text-xs">{testimonial.title}</p>
                       </div>
                     </div>
                   </GlassCardContent>

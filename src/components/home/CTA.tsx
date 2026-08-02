@@ -24,7 +24,7 @@ export default function CTA() {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             Take the <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Next Step</span>
           </h2>
-          <p className="text-white/70 max-w-3xl mx-auto text-lg leading-relaxed">
+          <p className="text-white/85 max-w-3xl mx-auto text-lg leading-relaxed">
             Your future starts today. Whether you&apos;re ready to enroll or want to learn more, we&apos;re here to help.
           </p>
         </div>
@@ -44,7 +44,7 @@ export default function CTA() {
                 <GlassCardContent className="py-2">
                   <stat.icon className="w-8 h-8 mx-auto mb-3 text-[#F4B400] drop-shadow-[0_4px_12px_rgba(244,180,0,0.4)] group-hover:scale-110 transition-transform" />
                   <div className="text-3xl lg:text-4xl font-heading font-extrabold bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent mb-1">{stat.label}</div>
-                  <div className="text-white/60 text-sm">{stat.desc}</div>
+                  <div className="text-white/75 text-sm">{stat.desc}</div>
                 </GlassCardContent>
               </GlassCard>
             </div>
@@ -63,7 +63,7 @@ export default function CTA() {
         </div>
 
         <div
-          className="mt-12 flex flex-wrap items-center justify-center gap-6 text-white/50"
+          className="mt-12 flex flex-wrap items-center justify-center gap-6 text-white/70"
         >
           <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10">
             <Phone className="w-4 h-4 text-[#F4B400]" />

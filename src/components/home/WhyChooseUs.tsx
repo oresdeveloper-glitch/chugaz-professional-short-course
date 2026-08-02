@@ -65,7 +65,7 @@ export default function WhyChooseUs() {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             Choose <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Excellence</span>
           </h2>
-          <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
+          <p className="text-white/90 max-w-3xl mx-auto text-lg leading-relaxed">
             We are committed to providing the best learning experience that prepares you for real-world success.
           </p>
         </div>
@@ -87,7 +87,7 @@ export default function WhyChooseUs() {
                   <h3 className="text-xl lg:text-2xl font-heading font-bold text-white mb-4">
                     {feature.title}
                   </h3>
-                  <p className="text-white/70 leading-relaxed">
+                  <p className="text-white/85 leading-relaxed">
                     {feature.desc}
                   </p>
                 </GlassCardContent>
@@ -106,7 +106,7 @@ export default function WhyChooseUs() {
                   >
                     {stat.value}
                   </div>
-                  <p className="text-white/60 text-sm font-medium mt-1">{stat.label}</p>
+                  <p className="text-white/75 text-sm font-medium mt-1">{stat.label}</p>
                 </GlassCardContent>
               </GlassCard>
             </ScrollReveal>

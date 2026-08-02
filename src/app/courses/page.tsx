@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useMemo } from "react"
 import { Search, Clock, Wallet, ChevronRight, ArrowRight } from "lucide-react"
@@ -117,7 +117,7 @@ export default function CoursesPage() {
                       <h3 className="text-lg font-bold text-primary mb-3 font-heading group-hover:text-gold transition-colors duration-300">
                         {course.title}
                       </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-4 flex-1">
+                      <p className="text-gray-700 text-sm leading-relaxed line-clamp-2 mb-4 flex-1">
                         {course.description}
                       </p>
                       <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">

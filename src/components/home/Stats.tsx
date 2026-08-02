@@ -60,7 +60,7 @@ function StatCard({ stat }: { stat: StatItem }) {
           <AnimatedCounter target={stat.value} suffix={stat.suffix} />
           
           <p
-            className="text-white/70 font-medium mt-3 text-base sm:text-lg"
+            className="text-white/85 font-medium mt-3 text-base sm:text-lg"
           >
             {stat.label}
           </p>
@@ -89,7 +89,7 @@ export default function Stats() {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             CHUGAZ <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">by the Numbers</span>
           </h2>
-          <p className="text-white/60 max-w-2xl mx-auto text-lg leading-relaxed">
+          <p className="text-white/75 max-w-2xl mx-auto text-lg leading-relaxed">
             Our commitment to quality education has made us a trusted training center with thousands of successful graduates.
           </p>
         </div>

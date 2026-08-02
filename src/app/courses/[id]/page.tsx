@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useParams } from "next/navigation"
 import {
@@ -123,7 +123,7 @@ export default function CourseDetailPage() {
                 <GlassCard variant="elevated" className="p-6 md:p-8">
                   <GlassCardContent className="p-0">
                     <h2 className="text-2xl font-bold text-primary mb-4 font-heading">About This Course</h2>
-                    <p className="text-gray-600 leading-relaxed">{course.description}</p>
+                    <p className="text-gray-700 leading-relaxed">{course.description}</p>
                   </GlassCardContent>
                 </GlassCard>
               </ScrollReveal>
@@ -208,7 +208,7 @@ export default function CourseDetailPage() {
                     </div>
                   </div>
                   <GlassCardContent className="p-5">
-                    <p className="text-gray-600 text-sm leading-relaxed">{course.instructor.bio}</p>
+                    <p className="text-gray-700 text-sm leading-relaxed">{course.instructor.bio}</p>
                   </GlassCardContent>
                 </GlassCard>
               </ScrollReveal>

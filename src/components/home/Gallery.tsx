@@ -44,7 +44,7 @@ export default function Gallery() {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             Our <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Campus</span>
           </h2>
-          <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
+          <p className="text-white/90 max-w-3xl mx-auto text-lg leading-relaxed">
             Take a look inside our training center and see our modern learning environment.
           </p>
         </div>

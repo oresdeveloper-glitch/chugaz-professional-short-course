@@ -49,7 +49,7 @@ function NewsCard({ item }: { item: NewsItem }) {
       </div>
 
       <GlassCardContent className="flex-1 flex flex-col p-6 lg:p-7">
-        <div className="flex items-center gap-2 text-white/50 text-xs mb-4">
+        <div className="flex items-center gap-2 text-white/70 text-xs mb-4">
           <Calendar className="w-3.5 h-3.5" />
           <time dateTime={item.date}>{new Date(item.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</time>
         </div>
@@ -58,7 +58,7 @@ function NewsCard({ item }: { item: NewsItem }) {
           {item.title}
         </h3>
         
-        <p className="text-white/60 text-sm leading-relaxed flex-1 mb-6 line-clamp-3">
+        <p className="text-white/85 text-sm leading-relaxed flex-1 mb-6 line-clamp-3">
           {item.excerpt}
         </p>
         
@@ -93,7 +93,7 @@ export default function News() {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             Latest <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Updates</span>
           </h2>
-          <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
+          <p className="text-white/90 max-w-3xl mx-auto text-lg leading-relaxed">
             Stay informed about the latest happenings, course offerings, and success stories from CHUGAZ.
           </p>
         </div>

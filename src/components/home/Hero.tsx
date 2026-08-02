@@ -59,7 +59,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <p className="text-base sm:text-lg md:text-xl text-white/70 max-w-3xl mx-auto mb-12 leading-relaxed font-light">
+        <p className="text-base sm:text-lg md:text-xl text-white/85 max-w-3xl mx-auto mb-12 leading-relaxed font-light">
           Unlock your potential with industry-leading <span className="font-medium text-white">ICT & Engineering courses</span>. Hands-on training, expert instructors, and certification to accelerate your career.
         </p>
 
@@ -89,7 +89,7 @@ export default function Hero() {
                 <Sparkles className="h-6 w-6 text-[#F4B400]" />
               </div>
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/60">Why learners choose us</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/75">Why learners choose us</p>
                 <p className="text-base text-white/80">Hands-on training, elite mentors, and career-ready outcomes in one premium experience.</p>
               </div>
             </div>
@@ -118,7 +118,7 @@ export default function Hero() {
         <div 
           className="mt-20 flex items-center justify-center gap-4"
         >
-          <span className="text-xs text-white/60 uppercase tracking-widest">Scroll to explore</span>
+          <span className="text-xs text-white/75 uppercase tracking-widest">Scroll to explore</span>
           <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
             <div className="w-1.5 h-1.5 rounded-full bg-white/60" />
           </div>

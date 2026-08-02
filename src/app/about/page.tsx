@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { Target, Eye, Star, Lightbulb, Shield, Users, Heart, Zap, ChevronRight, Award, ArrowRight } from "lucide-react"
 import Link from "next/link"
@@ -69,7 +69,7 @@ export default function AboutPage() {
               </span>
             </h1>
             <p className="text-base md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
-              Discover the story behind CHUGAZ Stationery — a premier ICT and Engineering training center
+              Discover the story behind CHUGAZ Stationery â€” a premier ICT and Engineering training center
               dedicated to empowering minds and building futures in Mbeya, Tanzania.
             </p>
           </div>
@@ -87,7 +87,7 @@ export default function AboutPage() {
                       <Target className="w-7 h-7 text-gold" />
                     </div>
                     <h2 className="text-xl md:text-2xl font-bold text-primary mb-4 font-heading">Our Mission</h2>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-gray-700 leading-relaxed">
                       To provide high-quality, accessible ICT and Engineering education that empowers individuals with
                       practical skills, fosters innovation, and prepares our students for successful careers in
                       the rapidly evolving technological landscape.
@@ -102,7 +102,7 @@ export default function AboutPage() {
                       <Eye className="w-7 h-7 text-primary" />
                     </div>
                     <h2 className="text-xl md:text-2xl font-bold text-primary mb-4 font-heading">Our Vision</h2>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-gray-700 leading-relaxed">
                       To be the leading ICT and Engineering training center in Tanzania, recognized for excellence in
                       education, innovation in teaching methodologies, and producing highly skilled professionals who
                       drive technological advancement and economic growth.
@@ -121,7 +121,7 @@ export default function AboutPage() {
             <div className="text-center mb-8 md:mb-12"   >
               <Badge variant="gold" className="mb-4 px-4 py-1.5 text-sm">Core Values</Badge>
               <h2 className="text-2xl md:text-4xl font-bold text-primary mb-4 font-heading">What We Stand For</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
+              <p className="text-gray-700 max-w-2xl mx-auto">
                 Our core values guide everything we do, from curriculum design to student interaction.
               </p>
             </div>
@@ -134,7 +134,7 @@ export default function AboutPage() {
                         <value.icon className="w-6 h-6 text-primary group-hover:text-gold transition-colors duration-300" />
                       </div>
                       <h3 className="text-lg font-bold text-primary mb-2 font-heading">{value.title}</h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">{value.description}</p>
+                      <p className="text-gray-700 text-sm leading-relaxed">{value.description}</p>
                     </GlassCardContent>
                   </GlassCard>
                 </div>
@@ -151,7 +151,7 @@ export default function AboutPage() {
               <div >
                 <Badge variant="gold" className="mb-4 px-4 py-1.5 text-sm">Our History</Badge>
                 <h2 className="text-2xl md:text-4xl font-bold text-primary mb-6 font-heading">The CHUGAZ Story</h2>
-                <div className="space-y-4 text-gray-600 leading-relaxed">
+                <div className="space-y-4 text-gray-700 leading-relaxed">
                   <p>
                     CHUGAZ Stationery was founded with a vision to bridge the skills gap in Tanzania&apos;s ICT and Engineering
                     sectors. What began as a small training initiative has grown into one of Mbeya&apos;s most respected
@@ -195,7 +195,7 @@ export default function AboutPage() {
             <div className="text-center mb-8 md:mb-12"   >
               <Badge variant="gold" className="mb-4 px-4 py-1.5 text-sm">Our Objectives</Badge>
               <h2 className="text-2xl md:text-4xl font-bold text-primary mb-4 font-heading">What We Aim to Achieve</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
+              <p className="text-gray-700 max-w-2xl mx-auto">
                 Our objectives drive our commitment to excellence in education and student success.
               </p>
             </div>
@@ -223,7 +223,7 @@ export default function AboutPage() {
             <div className="text-center mb-8 md:mb-12"   >
               <Badge variant="gold" className="mb-4 px-4 py-1.5 text-sm">Our Team</Badge>
               <h2 className="text-2xl md:text-4xl font-bold text-primary mb-4 font-heading">Meet Our Trainers</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
+              <p className="text-gray-700 max-w-2xl mx-auto">
                 Our experienced instructors are industry professionals dedicated to your success.
               </p>
             </div>
@@ -243,7 +243,7 @@ export default function AboutPage() {
                     <div className="p-6">
                       <h3 className="text-lg font-bold text-primary mb-1 font-heading">{trainer.name}</h3>
                       <p className="text-sm text-gold font-medium mb-3">{trainer.title}</p>
-                      <p className="text-gray-600 text-sm leading-relaxed">{trainer.bio}</p>
+                      <p className="text-gray-700 text-sm leading-relaxed">{trainer.bio}</p>
                     </div>
                   </GlassCard>
                 </div>
@@ -259,7 +259,7 @@ export default function AboutPage() {
             <div className="text-center mb-8 md:mb-12"   >
               <Badge variant="gold" className="mb-4 px-4 py-1.5 text-sm">Gallery</Badge>
               <h2 className="text-2xl md:text-4xl font-bold text-primary mb-4 font-heading">Our Campus & Activities</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
+              <p className="text-gray-700 max-w-2xl mx-auto">
                 Take a glimpse into life at CHUGAZ Stationery.
               </p>
             </div>

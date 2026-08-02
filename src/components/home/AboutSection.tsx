@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import Link from "next/link"
 import Image from "next/image"
@@ -29,8 +29,8 @@ export default function AboutSection() {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             Empowering <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Futures</span> Through Skills
           </h2>
-          <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
-            Premier ICT and Engineering training center in Mbeya, Tanzania — bridging the skills gap with practical, job-ready programs.
+          <p className="text-white/90 max-w-3xl mx-auto text-lg leading-relaxed">
+            Premier ICT and Engineering training center in Mbeya, Tanzania â€” bridging the skills gap with practical, job-ready programs.
           </p>
         </div>
 
@@ -69,13 +69,13 @@ export default function AboutSection() {
               </div>
               <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-[16px] px-4 py-2">
                 <p className="text-white font-heading font-bold text-sm lg:text-base">98%</p>
-                <p className="text-white/60 text-xs lg:text-sm">Satisfaction Rate</p>
+                <p className="text-white/75 text-xs lg:text-sm">Satisfaction Rate</p>
               </div>
             </div>
           </div>
 
           <div>
-            <div className="section-shell rounded-[32px] p-8 lg:p-10 space-y-4 text-white/70 leading-relaxed">
+            <div className="section-shell rounded-[32px] p-8 lg:p-10 space-y-4 text-white/85 leading-relaxed">
               <p>
                 CHUGAZ Stationery is a premier ICT and Engineering training center based in Mbeya, Tanzania. We are dedicated to bridging the skills gap by providing high-quality, affordable professional courses that prepare students for the modern workforce.
               </p>
