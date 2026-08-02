@@ -8,7 +8,6 @@ import { PremiumInput } from "@/components/ui/PremiumInput"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardTitle } from "@/components/ui/GlassCard"
 import GradientMesh from "@/components/ui/GradientMesh"
-import ParticleField from "@/components/ui/ParticleField"
 import { api } from "@/lib/api"
 import { useRouter } from "next/navigation"
 
@@ -59,7 +58,6 @@ export default function ForgotPasswordPage() {
   return (
     <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
       <GradientMesh />
-      <ParticleField color="#F4B400" count={40} />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

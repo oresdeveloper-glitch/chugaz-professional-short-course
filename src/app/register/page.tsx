@@ -16,7 +16,6 @@ import { PremiumInput } from "@/components/ui/PremiumInput"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard } from "@/components/ui/GlassCard"
 import GradientMesh from "@/components/ui/GradientMesh"
-import ParticleField from "@/components/ui/ParticleField"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
@@ -334,7 +333,6 @@ export default function RegisterPage() {
     return (
       <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
         <GradientMesh />
-        <ParticleField color="#F4B400" count={40} />
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -406,7 +404,6 @@ export default function RegisterPage() {
   return (
     <div className="relative min-h-screen py-12 px-4 overflow-hidden">
       <GradientMesh />
-      <ParticleField color="#F4B400" count={40} />
 
       <div className="max-w-4xl mx-auto relative z-10">
         <motion.div

@@ -13,7 +13,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
 import { isAuthenticated, isAdmin, logout, getAllStudents } from "@/lib/auth"
 import type { Student, AdminTab, SharedActions } from "./components/types"
-import ParticleField from "@/components/ui/ParticleField"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 
@@ -108,7 +107,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex">
-      <ParticleField color="#F4B400" count={30} className="fixed inset-0 -z-10" />
       {sidebarOpen && <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
       <aside className={cn(

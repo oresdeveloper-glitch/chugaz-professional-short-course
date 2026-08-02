@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowRight, ChevronRight, Sparkles, Award, Users, BookOpen } from "lucide-react"
 import GradientMesh from "@/components/ui/GradientMesh"
-import ParticleField from "@/components/ui/ParticleField"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 
 const phrases = [
@@ -38,7 +37,6 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <GradientMesh colors={["#0B1F4D", "#1a3a7a", "#F4B400", "#ffc933", "#060f27"]} blur={100} speed={25} />
-      <ParticleField count={80} color="#F4B400" connectDistance={150} speed={0.4} />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="floating-orb absolute left-[8%] top-[18%] h-72 w-72 rounded-full bg-[#F4B400]/20" />
         <div className="floating-orb absolute bottom-[14%] right-[8%] h-80 w-80 rounded-full bg-[#1a3a7a]/40" />

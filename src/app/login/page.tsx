@@ -9,7 +9,6 @@ import { PremiumInput } from "@/components/ui/PremiumInput"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardHeader, GlassCardTitle, GlassCardContent } from "@/components/ui/GlassCard"
 import GradientMesh from "@/components/ui/GradientMesh"
-import ParticleField from "@/components/ui/ParticleField"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { login } from "@/lib/auth"
@@ -48,7 +47,6 @@ export default function LoginPage() {
   return (
     <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
       <GradientMesh />
-      <ParticleField color="#F4B400" count={40} />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

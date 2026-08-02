@@ -13,7 +13,6 @@ import { cn } from "@/lib/utils"
 import { getCurrentUser, getStudentData, logout, isAuthenticated } from "@/lib/auth"
 import { api } from "@/lib/api"
 import type { DashboardTab } from "./components/types"
-import ParticleField from "@/components/ui/ParticleField"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardHeader, GlassCardTitle, GlassCardContent, GlassCardFooter } from "@/components/ui/GlassCard"
 
@@ -77,7 +76,6 @@ export default function StudentDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex">
-      <ParticleField color="#F4B400" count={30} className="fixed inset-0 -z-10" />
       {sidebarOpen && <div className="fixed inset-0 bg-black/50 z-30 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
       <aside className={cn(

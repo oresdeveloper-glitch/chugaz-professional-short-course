@@ -4,7 +4,6 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowLeft, BookOpen } from "lucide-react"
 import GradientMesh from "@/components/ui/GradientMesh"
-import ParticleField from "@/components/ui/ParticleField"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 
@@ -12,7 +11,6 @@ export default function NotFound() {
   return (
     <div className="min-h-[80vh] relative flex items-center justify-center px-4 overflow-hidden bg-[#0B1F4D]">
       <GradientMesh />
-      <ParticleField color="#F4B400" count={30} />
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}

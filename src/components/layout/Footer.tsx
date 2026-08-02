@@ -4,7 +4,6 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { Mail, Phone, MapPin, ChevronRight } from "lucide-react"
 import GradientMesh from "@/components/ui/GradientMesh"
-import ParticleField from "@/components/ui/ParticleField"
 
 const quickLinks = [
   { name: "Home", href: "/" },

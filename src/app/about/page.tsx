@@ -7,9 +7,8 @@ import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { galleryImages } from "@/data/gallery"
 import GradientMesh from "@/components/ui/GradientMesh"
-import ParticleField from "@/components/ui/ParticleField"
-import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 import { PremiumButton } from "@/components/ui/PremiumButton"
+import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 import ScrollReveal from "@/components/ui/ScrollReveal"
 
 const fadeInUp = {
@@ -68,7 +67,6 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen">
       <GradientMesh className="-z-20" />
-      <ParticleField color="#F4B400" count={40} className="-z-10" />
 
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0B1F4D]/90 via-[#0B1F4D]/90 to-[#1a3a7a]/90 py-16 lg:py-28">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />

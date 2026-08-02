@@ -8,7 +8,6 @@ import {
 } from "lucide-react"
 import { api } from "@/lib/api"
 import GradientMesh from "@/components/ui/GradientMesh"
-import ParticleField from "@/components/ui/ParticleField"
 import { GlassCard, GlassCardHeader, GlassCardTitle, GlassCardContent } from "@/components/ui/GlassCard"
 import { PremiumInput } from "@/components/ui/PremiumInput"
 import { PremiumTextarea } from "@/components/ui/PremiumInput"
@@ -81,7 +80,6 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen">
       <GradientMesh className="-z-20" />
-      <ParticleField color="#F4B400" count={40} className="-z-10" />
 
       <section className="relative bg-gradient-to-br from-[#0B1F4D]/90 to-[#1a3a7a]/90 py-16 md:py-28 px-4 overflow-hidden">
         <div className="absolute inset-0 opacity-10">

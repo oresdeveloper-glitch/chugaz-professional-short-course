@@ -4,12 +4,10 @@ import { motion } from "framer-motion"
 import { ArrowRight, Phone, GraduationCap, Sparkles, Shield, Users, Calendar } from "lucide-react"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
-import ParticleField from "@/components/ui/ParticleField"
 
 export default function CTA() {
   return (
     <section className="relative py-24 lg:py-32 overflow-hidden">
-      <ParticleField count={50} color="#F4B400" connectDistance={120} speed={0.3} />
       <div className="absolute inset-0 bg-gradient-to-br from-[#0B1F4D]/60 via-transparent to-[#F4B400]/10" />
       <div className="absolute inset-0 grid-overlay opacity-20" />
       

@@ -19,7 +19,6 @@ import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { getCourseById } from "@/data/courses"
 import GradientMesh from "@/components/ui/GradientMesh"
-import ParticleField from "@/components/ui/ParticleField"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 import ScrollReveal from "@/components/ui/ScrollReveal"
@@ -55,7 +54,6 @@ export default function CourseDetailPage() {
   return (
     <div className="min-h-screen relative">
       <GradientMesh />
-      <ParticleField className="-z-10" color="#F4B400" count={30} connectDistance={100} speed={0.5} />
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
         <Image
           src={course.image}
