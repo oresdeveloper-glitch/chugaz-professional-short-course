@@ -1,14 +1,12 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { motion } from "framer-motion"
 import { Search, Clock, Wallet, ChevronRight, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { courses, categories } from "@/data/courses"
-import GradientMesh from "@/components/ui/GradientMesh"
 import { PremiumInput } from "@/components/ui/PremiumInput"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
@@ -39,11 +37,10 @@ export default function CoursesPage() {
 
   return (
     <div className="min-h-screen relative">
-      <GradientMesh />
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0B1F4D] via-[#0B1F4D] to-[#1a3a7a] py-16 lg:py-28">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-center max-w-3xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto">
             <div className="flex items-center justify-center gap-2 text-gold/80 text-sm mb-4">
               <Link href="/" className="hover:text-gold transition-colors">Home</Link>
               <ChevronRight className="w-4 h-4" />
@@ -59,7 +56,7 @@ export default function CoursesPage() {
               Choose from {courses.length}+ professional courses designed to equip you with in-demand skills
               for the modern workforce.
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -93,12 +90,12 @@ export default function CoursesPage() {
       <section className="py-12 bg-gray-50/80 backdrop-blur-sm min-h-screen">
         <div className="container mx-auto px-4">
           {filteredCourses.length === 0 ? (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
+            <div className="text-center py-20">
               <p className="text-gray-500 text-lg">No courses found matching your criteria.</p>
               <PremiumButton variant="outline-3d" className="mt-4" onClick={() => { setActiveCategory("All"); setSearchQuery("") }}>
                 Clear Filters
               </PremiumButton>
-            </motion.div>
+            </div>
           ) : (
             <ScrollReveal direction="up" stagger={0.08}>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">

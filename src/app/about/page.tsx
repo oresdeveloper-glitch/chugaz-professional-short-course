@@ -1,28 +1,13 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { Target, Eye, Star, Lightbulb, Shield, Users, Heart, Zap, ChevronRight, Award, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { galleryImages } from "@/data/gallery"
-import GradientMesh from "@/components/ui/GradientMesh"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 import ScrollReveal from "@/components/ui/ScrollReveal"
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.6 },
-}
-
-const staggerContainer = {
-  initial: {},
-  whileInView: { transition: { staggerChildren: 0.1 } },
-  viewport: { once: true },
-}
 
 const coreValues = [
   { icon: Star, title: "Excellence", description: "We strive for the highest standards in education and training delivery." },
@@ -66,12 +51,12 @@ const trainers = [
 export default function AboutPage() {
   return (
     <div className="min-h-screen">
-      <GradientMesh className="-z-20" />
+
 
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0B1F4D]/90 via-[#0B1F4D]/90 to-[#1a3a7a]/90 py-16 lg:py-28">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="text-center max-w-3xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto">
             <div className="flex items-center justify-center gap-2 text-gold/80 text-sm mb-4">
               <Link href="/" className="hover:text-gold transition-colors">Home</Link>
               <ChevronRight className="w-4 h-4" />
@@ -87,15 +72,15 @@ export default function AboutPage() {
               Discover the story behind CHUGAZ Stationery — a premier ICT and Engineering training center
               dedicated to empowering minds and building futures in Mbeya, Tanzania.
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       <section className="py-12 md:py-20 bg-white/80 backdrop-blur-sm">
         <ScrollReveal direction="up" distance={40}>
           <div className="container mx-auto px-4">
-            <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto" variants={staggerContainer} initial="initial" whileInView="whileInView">
-              <motion.div variants={fadeInUp}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"   >
+              <div >
                 <GlassCard variant="elevated" padding="lg" className="h-full group">
                   <GlassCardContent>
                     <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-light flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -109,8 +94,8 @@ export default function AboutPage() {
                     </p>
                   </GlassCardContent>
                 </GlassCard>
-              </motion.div>
-              <motion.div variants={fadeInUp}>
+              </div>
+              <div >
                 <GlassCard variant="elevated" padding="lg" className="h-full group">
                   <GlassCardContent>
                     <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gold to-gold-light flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -124,8 +109,8 @@ export default function AboutPage() {
                     </p>
                   </GlassCardContent>
                 </GlassCard>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </div>
         </ScrollReveal>
       </section>
@@ -133,16 +118,16 @@ export default function AboutPage() {
       <section className="py-12 md:py-20 bg-gray-50/80 backdrop-blur-sm">
         <ScrollReveal direction="up" distance={40}>
           <div className="container mx-auto px-4">
-            <motion.div className="text-center mb-8 md:mb-12" variants={fadeInUp} initial="initial" whileInView="whileInView">
+            <div className="text-center mb-8 md:mb-12"   >
               <Badge variant="gold" className="mb-4 px-4 py-1.5 text-sm">Core Values</Badge>
               <h2 className="text-2xl md:text-4xl font-bold text-primary mb-4 font-heading">What We Stand For</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
                 Our core values guide everything we do, from curriculum design to student interaction.
               </p>
-            </motion.div>
-            <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto" variants={staggerContainer} initial="initial" whileInView="whileInView">
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto"   >
               {coreValues.map((value, index) => (
-                <motion.div key={index} variants={fadeInUp}>
+                <div key={index} >
                   <GlassCard variant="default" padding="md" className="h-full group hover:border-gold/30">
                     <GlassCardContent>
                       <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
@@ -152,9 +137,9 @@ export default function AboutPage() {
                       <p className="text-gray-600 text-sm leading-relaxed">{value.description}</p>
                     </GlassCardContent>
                   </GlassCard>
-                </motion.div>
+                </div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </ScrollReveal>
       </section>
@@ -162,8 +147,8 @@ export default function AboutPage() {
       <section className="py-12 md:py-20 bg-white/80 backdrop-blur-sm">
         <ScrollReveal direction="left" distance={40}>
           <div className="container mx-auto px-4">
-            <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center max-w-5xl mx-auto" variants={staggerContainer} initial="initial" whileInView="whileInView">
-              <motion.div variants={fadeInUp}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center max-w-5xl mx-auto"   >
+              <div >
                 <Badge variant="gold" className="mb-4 px-4 py-1.5 text-sm">Our History</Badge>
                 <h2 className="text-2xl md:text-4xl font-bold text-primary mb-6 font-heading">The CHUGAZ Story</h2>
                 <div className="space-y-4 text-gray-600 leading-relaxed">
@@ -182,8 +167,8 @@ export default function AboutPage() {
                     creative skills, and computer applications, serving students from across the region.
                   </p>
                 </div>
-              </motion.div>
-              <motion.div variants={fadeInUp} className="relative">
+              </div>
+              <div className="relative">
                 <GlassCard variant="outlined" padding="none" borderRadius="lg" hover={false} className="overflow-hidden">
                   <div className="relative h-64 md:h-80">
                     <Image
@@ -198,8 +183,8 @@ export default function AboutPage() {
                   <p className="text-3xl font-bold text-primary">500+</p>
                   <p className="text-primary/80 text-sm font-medium">Students Trained</p>
                 </div>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </div>
         </ScrollReveal>
       </section>
@@ -207,16 +192,16 @@ export default function AboutPage() {
       <section className="py-12 md:py-20 bg-gray-50/80 backdrop-blur-sm">
         <ScrollReveal direction="up" distance={40}>
           <div className="container mx-auto px-4">
-            <motion.div className="text-center mb-8 md:mb-12" variants={fadeInUp} initial="initial" whileInView="whileInView">
+            <div className="text-center mb-8 md:mb-12"   >
               <Badge variant="gold" className="mb-4 px-4 py-1.5 text-sm">Our Objectives</Badge>
               <h2 className="text-2xl md:text-4xl font-bold text-primary mb-4 font-heading">What We Aim to Achieve</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
                 Our objectives drive our commitment to excellence in education and student success.
               </p>
-            </motion.div>
-            <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto" variants={staggerContainer} initial="initial" whileInView="whileInView">
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto"   >
               {objectives.map((objective, index) => (
-                <motion.div key={index} variants={fadeInUp}>
+                <div key={index} >
                   <GlassCard variant="default" padding="md" className="h-full group">
                     <GlassCardContent className="flex items-start gap-4">
                       <div className="w-10 h-10 rounded-full bg-green/10 flex items-center justify-center shrink-0 group-hover:bg-green transition-colors duration-300">
@@ -225,9 +210,9 @@ export default function AboutPage() {
                       <p className="text-gray-700 leading-relaxed pt-1">{objective}</p>
                     </GlassCardContent>
                   </GlassCard>
-                </motion.div>
+                </div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </ScrollReveal>
       </section>
@@ -235,16 +220,16 @@ export default function AboutPage() {
       <section className="py-12 md:py-20 bg-white/80 backdrop-blur-sm">
         <ScrollReveal direction="up" distance={40}>
           <div className="container mx-auto px-4">
-            <motion.div className="text-center mb-8 md:mb-12" variants={fadeInUp} initial="initial" whileInView="whileInView">
+            <div className="text-center mb-8 md:mb-12"   >
               <Badge variant="gold" className="mb-4 px-4 py-1.5 text-sm">Our Team</Badge>
               <h2 className="text-2xl md:text-4xl font-bold text-primary mb-4 font-heading">Meet Our Trainers</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
                 Our experienced instructors are industry professionals dedicated to your success.
               </p>
-            </motion.div>
-            <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto" variants={staggerContainer} initial="initial" whileInView="whileInView">
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto"   >
               {trainers.map((trainer, index) => (
-                <motion.div key={index} variants={fadeInUp}>
+                <div key={index} >
                   <GlassCard variant="elevated" padding="none" borderRadius="lg" className="h-full group overflow-hidden">
                     <div className="relative h-48 md:h-64 overflow-hidden">
                       <Image
@@ -261,9 +246,9 @@ export default function AboutPage() {
                       <p className="text-gray-600 text-sm leading-relaxed">{trainer.bio}</p>
                     </div>
                   </GlassCard>
-                </motion.div>
+                </div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </ScrollReveal>
       </section>
@@ -271,16 +256,16 @@ export default function AboutPage() {
       <section className="py-12 md:py-20 bg-gray-50/80 backdrop-blur-sm">
         <ScrollReveal direction="up" distance={40}>
           <div className="container mx-auto px-4">
-            <motion.div className="text-center mb-8 md:mb-12" variants={fadeInUp} initial="initial" whileInView="whileInView">
+            <div className="text-center mb-8 md:mb-12"   >
               <Badge variant="gold" className="mb-4 px-4 py-1.5 text-sm">Gallery</Badge>
               <h2 className="text-2xl md:text-4xl font-bold text-primary mb-4 font-heading">Our Campus & Activities</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
                 Take a glimpse into life at CHUGAZ Stationery.
               </p>
-            </motion.div>
-            <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto" variants={staggerContainer} initial="initial" whileInView="whileInView">
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto"   >
               {galleryImages.map((item) => (
-                <motion.div key={item.id} variants={fadeInUp}>
+                <div key={item.id} >
                   <GlassCard padding="none" borderRadius="lg" hover={false} className="group relative h-48 md:h-64 overflow-hidden cursor-pointer">
                     <Image
                       src={item.image}
@@ -295,9 +280,9 @@ export default function AboutPage() {
                       </div>
                     </div>
                   </GlassCard>
-                </motion.div>
+                </div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </ScrollReveal>
       </section>
@@ -305,7 +290,7 @@ export default function AboutPage() {
       <section className="py-12 md:py-16 bg-gradient-to-r from-primary to-primary-light">
         <ScrollReveal direction="up" distance={40}>
           <div className="container mx-auto px-4 text-center">
-            <motion.div variants={fadeInUp} initial="initial" whileInView="whileInView">
+            <div >
               <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 font-heading">Ready to Start Your Journey?</h2>
               <p className="text-white/80 mb-8 max-w-xl mx-auto">
                 Join hundreds of successful students who have transformed their careers at CHUGAZ Stationery.
@@ -315,7 +300,7 @@ export default function AboutPage() {
                   Apply Now
                 </PremiumButton>
               </Link>
-            </motion.div>
+            </div>
           </div>
         </ScrollReveal>
       </section>

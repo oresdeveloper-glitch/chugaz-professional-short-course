@@ -1,6 +1,5 @@
-"use client"
+﻿"use client"
 
-import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, Calendar, BookOpen, TrendingUp, Award } from "lucide-react"
@@ -63,15 +62,16 @@ function NewsCard({ item }: { item: NewsItem }) {
           {item.excerpt}
         </p>
         
-        <PremiumButton 
-          variant="glass-gold" 
-          size="sm" 
-          fullWidth
-          iconRight={<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
-          asChild
-        >
-          <Link href={`/news/${item.id}`}>Read More</Link>
-        </PremiumButton>
+        <Link href={`/news/${item.id}`} className="w-full">
+          <PremiumButton
+            variant="glass-gold"
+            size="sm"
+            fullWidth
+            iconRight={<ArrowRight className="group-hover:translate-x-1 transition-transform" />}
+          >
+            Read More
+          </PremiumButton>
+        </Link>
       </GlassCardContent>
     </GlassCard>
   )
@@ -84,23 +84,19 @@ export default function News() {
       <div className="absolute bottom-[8%] right-[2%] h-64 w-64 rounded-full bg-[#F4B400]/10 blur-3xl" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+        <div
           className="text-center mb-16 lg:mb-20"
         >
-          <motion.span className="inline-block px-4 py-1.5 rounded-full bg-[#F4B400]/10 border border-[#F4B400]/30 text-[#F4B400] text-sm font-button font-semibold mb-6">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#F4B400]/10 border border-[#F4B400]/30 text-[#F4B400] text-sm font-button font-semibold mb-6">
             News & Updates
-          </motion.span>
+          </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             Latest <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Updates</span>
           </h2>
           <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
             Stay informed about the latest happenings, course offerings, and success stories from CHUGAZ.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {newsItems.map((item) => (
@@ -116,17 +112,13 @@ export default function News() {
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+        <div
           className="text-center mt-12 lg:mt-16"
         >
           <PremiumButton variant="gradient-primary" size="lg" iconRight={<ArrowRight className="w-4 h-4" />}>
             View All News
           </PremiumButton>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

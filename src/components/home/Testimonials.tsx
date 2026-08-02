@@ -1,7 +1,6 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -58,33 +57,22 @@ export default function Testimonials() {
       <div className="absolute right-[5%] top-[10%] h-72 w-72 rounded-full bg-[#F4B400]/10 blur-3xl" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+        <div
           className="text-center mb-16 lg:mb-20"
         >
-          <motion.span className="inline-block px-4 py-1.5 rounded-full bg-[#F4B400]/10 border border-[#F4B400]/30 text-[#F4B400] text-sm font-button font-semibold mb-6">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#F4B400]/10 border border-[#F4B400]/30 text-[#F4B400] text-sm font-button font-semibold mb-6">
             Student Voices
-          </motion.span>
+          </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             What Our <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Graduates</span> Say
           </h2>
           <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
             Hear from our graduates about how CHUGAZ has transformed their careers and lives.
           </p>
-        </motion.div>
+        </div>
 
         <div className="relative">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={currentPage}
-              custom={direction}
-              initial={{ opacity: 0, x: direction > 0 ? 100 : -100, scale: 0.98 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: direction > 0 ? -100 : 100, scale: 0.98 }}
-              transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+          <div
               className={cn(
                 "grid gap-6 lg:gap-8",
                 perPage === 3 && "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
@@ -99,11 +87,7 @@ export default function Testimonials() {
                   <GlassCardContent className="relative z-10">
                     <Quote className="absolute top-6 right-6 w-10 h-10 text-[#F4B400]/10 group-hover:text-[#F4B400]/20 transition-colors duration-500" />
                     
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.2 }}
+                    <div
                       className="flex items-center gap-1.5 mb-5"
                     >
                       {Array.from({ length: 5 }).map((_, i) => (
@@ -117,23 +101,15 @@ export default function Testimonials() {
                           )}
                         />
                       ))}
-                    </motion.div>
+                    </div>
                     
-                    <motion.p
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.3 }}
+                    <p
                       className="text-white/80 text-base lg:text-lg leading-relaxed mb-7 italic"
                     >
                       &ldquo;{testimonial.content}&rdquo;
-                    </motion.p>
+                    </p>
                     
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.4 }}
+                    <div
                       className="flex items-center gap-4 pt-4 border-t border-white/10"
                     >
                       <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-[#F4B400]/30">
@@ -148,12 +124,11 @@ export default function Testimonials() {
                         <p className="font-heading font-bold text-white text-sm">{testimonial.name}</p>
                         <p className="text-white/50 text-xs">{testimonial.title}</p>
                       </div>
-                    </motion.div>
+                    </div>
                   </GlassCardContent>
                 </GlassCard>
               ))}
-            </motion.div>
-          </AnimatePresence>
+            </div>
 
           {totalPages > 1 && (
             <>
@@ -163,8 +138,6 @@ export default function Testimonials() {
                 className="absolute -left-6 top-1/2 -translate-y-1/2 w-12 h-12 p-0"
                 onClick={goPrev}
                 aria-label="Previous testimonial"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
               >
                 <ChevronLeft className="w-6 h-6 text-white" />
               </PremiumButton>
@@ -174,23 +147,17 @@ export default function Testimonials() {
                 className="absolute -right-6 top-1/2 -translate-y-1/2 w-12 h-12 p-0"
                 onClick={goNext}
                 aria-label="Next testimonial"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
               >
                 <ChevronRight className="w-6 h-6 text-white" />
               </PremiumButton>
             </>
           )}
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.8 }}
+          <div
             className="flex items-center justify-center gap-2 mt-12"
           >
             {Array.from({ length: totalPages }).map((_, i) => (
-              <motion.button
+              <button
                 key={i}
                 onClick={() => { setDirection(i > currentPage ? 1 : -1); setCurrentPage(i) }}
                 className={cn(
@@ -200,11 +167,9 @@ export default function Testimonials() {
                     : "bg-white/20 hover:bg-white/30"
                 )}
                 aria-label={`Go to page ${i + 1}`}
-                whileHover={{ scale: 1.3 }}
-                whileTap={{ scale: 0.9 }}
               />
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

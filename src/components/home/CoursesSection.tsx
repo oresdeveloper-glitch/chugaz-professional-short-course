@@ -1,6 +1,5 @@
-"use client"
+﻿"use client"
 
-import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import { Clock, DollarSign, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react"
@@ -19,23 +18,19 @@ export default function CoursesSection() {
       <div className="absolute right-[-8%] top-[12%] h-72 w-72 rounded-full bg-[#F4B400]/10 blur-3xl" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+        <div
           className="text-center mb-16 lg:mb-20"
         >
-          <motion.span className="inline-block px-4 py-1.5 rounded-full bg-[#F4B400]/10 border border-[#F4B400]/30 text-[#F4B400] text-sm font-button font-semibold mb-6">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#F4B400]/10 border border-[#F4B400]/30 text-[#F4B400] text-sm font-button font-semibold mb-6">
             <Sparkles className="w-3.5 h-3.5 inline mr-1.5" /> Featured Programs
-          </motion.span>
+          </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             Courses Designed for <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Impact</span>
           </h2>
           <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
             Industry-aligned curriculum with hands-on projects, expert instructors, and real-world applications.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {featuredCourses.map((course: Course, index: number) => (
@@ -51,17 +46,13 @@ export default function CoursesSection() {
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+        <div
           className="text-center mt-12 lg:mt-16"
         >
           <PremiumButton variant="gradient-primary" size="lg" iconRight={<ArrowRight className="w-4 h-4" />}>
             View All Courses
           </PremiumButton>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
@@ -118,17 +109,13 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
         
         <div className="flex flex-wrap gap-2 mb-6" role="list" aria-label="Course highlights">
           {course.highlights?.slice(0, 3).map((h: string, i: number) => (
-            <motion.span
+            <span
               key={i}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 + i * 0.1 }}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-white/70 text-xs"
             >
               <CheckCircle2 className="w-3 h-3 text-[#F4B400]" />
               {h}
-            </motion.span>
+            </span>
           ))}
         </div>
 

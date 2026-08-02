@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { Download, Award, FileText, User, ArrowUpRight } from "lucide-react"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 import { cn } from "@/lib/utils"
@@ -17,7 +16,7 @@ export default function DownloadsTab({ studentData }: DashboardTabProps) {
           { icon: FileText, label: "Course Materials", desc: "Download course materials", color: "text-purple-600", bg: "bg-purple-100" },
           { icon: User, label: "Student ID", desc: "Download your student ID card", color: "text-blue-600", bg: "bg-blue-100" },
         ].map((item, i) => (
-          <motion.div key={item.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
+          <div key={item.label}   >
             <GlassCard variant="elevated" className={cn("rounded-[20px] border-0 shadow-md", item.disabled && "opacity-50")}>
               <GlassCardContent className="p-6 flex items-center gap-4">
                 <div className={`w-12 h-12 ${item.bg} rounded-[20px] flex items-center justify-center flex-shrink-0`}>
@@ -30,7 +29,7 @@ export default function DownloadsTab({ studentData }: DashboardTabProps) {
                 <ArrowUpRight className="w-5 h-5 text-gray-400" />
               </GlassCardContent>
             </GlassCard>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>

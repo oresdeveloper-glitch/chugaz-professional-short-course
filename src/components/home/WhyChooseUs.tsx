@@ -1,6 +1,5 @@
-"use client"
+﻿"use client"
 
-import { motion } from "framer-motion"
 import {
   Award, Wrench, Clock, Wallet, ScrollText, Briefcase,
   GraduationCap, Monitor, Users, Shield, Zap, Globe, ArrowRight
@@ -56,23 +55,19 @@ export default function WhyChooseUs() {
       <div className="absolute left-[-6%] bottom-[-6%] h-64 w-64 rounded-full bg-[#0B1F4D]/25 blur-3xl" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+        <div
           className="text-center mb-16 lg:mb-20"
         >
-          <motion.span className="inline-block px-4 py-1.5 rounded-full bg-[#F4B400]/10 border border-[#F4B400]/30 text-[#F4B400] text-sm font-button font-semibold mb-6">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#F4B400]/10 border border-[#F4B400]/30 text-[#F4B400] text-sm font-button font-semibold mb-6">
             Why CHUGAZ
-          </motion.span>
+          </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             Choose <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Excellence</span>
           </h2>
           <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
             We are committed to providing the best learning experience that prepares you for real-world success.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16 lg:mb-20">
           {features.map((feature, index) => (
@@ -82,12 +77,11 @@ export default function WhyChooseUs() {
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#F4B400]/50 to-transparent transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
                 
                 <GlassCardContent className="relative z-10">
-                  <motion.div
+                  <div
                     className="w-16 h-16 rounded-[24px] bg-gradient-to-br from-[#F4B400]/20 to-[#0B1F4D]/20 flex items-center justify-center mb-6 group-hover:bg-gradient-to-br group-hover:from-[#F4B400]/40 group-hover:to-[#0B1F4D]/40 group-hover:border-[#F4B400]/40 transition-all duration-500 border border-white/10"
-                    whileHover={{ scale: 1.1, rotate: 3, transition: { duration: 0.3 } }}
                   >
                     <feature.icon className="w-8 h-8 text-[#F4B400] drop-shadow-[0_4px_12px_rgba(244,180,0,0.4)]" />
-                  </motion.div>
+                  </div>
                   
                   <h3 className="text-xl lg:text-2xl font-heading font-bold text-white mb-4">
                     {feature.title}
@@ -106,15 +100,11 @@ export default function WhyChooseUs() {
             <ScrollReveal key={stat.label} direction="up" distance={30} delay={0.2 + index * 0.06}>
               <GlassCard variant="outlined" hover padding="md" borderRadius="xl" className="text-center group">
                 <GlassCardContent className="py-2">
-                  <motion.div
+                  <div
                     className="text-4xl lg:text-5xl font-heading font-extrabold bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent"
-                    initial={{ scale: 0.5, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + index * 0.1, type: "spring", stiffness: 200 }}
                   >
                     {stat.value}
-                  </motion.div>
+                  </div>
                   <p className="text-white/60 text-sm font-medium mt-1">{stat.label}</p>
                 </GlassCardContent>
               </GlassCard>
@@ -122,17 +112,13 @@ export default function WhyChooseUs() {
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.6 }}
+        <div
           className="text-center mt-12 lg:mt-16"
         >
           <PremiumButton variant="gradient-primary" size="lg" iconRight={<ArrowRight className="w-4 h-4" />}>
             Explore All Programs
           </PremiumButton>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import dynamic from "next/dynamic"
@@ -17,7 +17,7 @@ import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardHeader, GlassCardTitle, GlassCardContent, GlassCardFooter } from "@/components/ui/GlassCard"
 
 const DashboardTabContent = dynamic(() => import("./components/DashboardTab"), {
-  loading: () => <div className="flex items-center justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" /></div>
+  loading: () => <div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" /></div>
 })
 const CoursesTab = dynamic(() => import("./components/CoursesTab"))
 const PaymentsTab = dynamic(() => import("./components/PaymentsTab"))
@@ -66,7 +66,7 @@ export default function StudentDashboard() {
   if (!user || !studentData) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" />
+        <div className="w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" />
       </div>
     )
   }

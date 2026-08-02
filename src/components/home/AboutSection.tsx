@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, CheckCircle2, Sparkles, Target } from "lucide-react"
@@ -23,32 +22,20 @@ export default function AboutSection() {
       <div className="absolute left-1/2 top-10 h-96 w-96 -translate-x-1/2 rounded-full bg-[#F4B400]/10 blur-3xl" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16 lg:mb-20"
-        >
-          <motion.span className="inline-block px-4 py-1.5 rounded-full bg-[#F4B400]/10 border border-[#F4B400]/30 text-[#F4B400] text-sm font-button font-semibold mb-6">
+        <div className="text-center mb-16 lg:mb-20">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#F4B400]/10 border border-[#F4B400]/30 text-[#F4B400] text-sm font-button font-semibold mb-6">
             <Sparkles className="w-3.5 h-3.5 inline mr-1.5" /> About CHUGAZ
-          </motion.span>
+          </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             Empowering <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Futures</span> Through Skills
           </h2>
           <p className="text-white/60 max-w-3xl mx-auto text-lg leading-relaxed">
             Premier ICT and Engineering training center in Mbeya, Tanzania — bridging the skills gap with practical, job-ready programs.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -60, scale: 0.98 }}
-            whileInView={{ opacity: 1, x: 0, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-            className="relative"
-          >
+          <div className="relative">
             <div className="relative aspect-[4/3] lg:aspect-[5/4]">
               <div className="absolute inset-0 bg-gradient-to-br from-[#0B1F4D] to-[#1a3a7a] rounded-[36px] shadow-3d" />
               <div className="absolute inset-4 bg-gradient-to-br from-[#0B1F4D] via-[#1a3a7a] to-[#060f27] rounded-[32px] overflow-hidden">
@@ -64,26 +51,19 @@ export default function AboutSection() {
               <div className="absolute inset-0 rounded-[32px] border border-white/10 pointer-events-none" />
             </div>
 
-            <motion.div
-              className="absolute -bottom-8 -right-8 lg:-bottom-10 lg:-right-10"
-              whileHover={{ scale: 1.05, y: -4, transition: { duration: 0.3 } }}
-            >
+            <div className="absolute -bottom-8 -right-8 lg:-bottom-10 lg:-right-10">
               <div className="relative bg-gradient-to-br from-[#F4B400] to-[#ffc933] rounded-[24px] p-6 lg:p-8 shadow-[0_20px_50px_rgba(244,180,0,0.3)]">
                 <div className="absolute inset-0 bg-gradient-to-br from-[#ffc933] to-[#F4B400] rounded-[24px] opacity-20 blur-xl" />
                 <div className="relative text-center">
-                  <motion.p className="text-4xl lg:text-5xl font-heading font-extrabold text-[#0B1F4D]" animate={{ scale: [1, 1.02, 1] }} transition={{ duration: 2, repeat: Infinity }}>
+                  <p className="text-4xl lg:text-5xl font-heading font-extrabold text-[#0B1F4D]">
                     10+
-                  </motion.p>
+                  </p>
                   <p className="text-[#0B1F4D]/80 text-sm lg:text-base font-medium mt-1">Years of Excellence</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="absolute -top-6 -left-6 lg:-top-8 lg:-left-8 flex items-center gap-3"
-              animate={{ x: [0, -5, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
+            <div className="absolute -top-6 -left-6 lg:-top-8 lg:-left-8 flex items-center gap-3">
               <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-[20px] bg-gradient-to-br from-[#198754] to-[#20a064] flex items-center justify-center shadow-[0_10px_30px_rgba(25,135,84,0.3)]">
                 <CheckCircle2 className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
               </div>
@@ -91,63 +71,42 @@ export default function AboutSection() {
                 <p className="text-white font-heading font-bold text-sm lg:text-base">98%</p>
                 <p className="text-white/60 text-xs lg:text-sm">Satisfaction Rate</p>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1], delay: 0.2 }}
-          >
+          <div>
             <div className="section-shell rounded-[32px] p-8 lg:p-10 space-y-4 text-white/70 leading-relaxed">
-              <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }}>
+              <p>
                 CHUGAZ Stationery is a premier ICT and Engineering training center based in Mbeya, Tanzania. We are dedicated to bridging the skills gap by providing high-quality, affordable professional courses that prepare students for the modern workforce.
-              </motion.p>
-              <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
+              </p>
+              <p>
                 Our programs are designed with input from industry experts to ensure that every student gains practical, job-ready skills. From computer basics to advanced programming and engineering design, we offer a comprehensive range of courses tailored to meet the demands of today's employers.
-              </motion.p>
+              </p>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="mt-6 grid gap-3 sm:grid-cols-2"
-            >
-              {highlights.map((item, i) => (
-                <motion.div
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              {highlights.map((item) => (
+                <div
                   key={item}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.35 + i * 0.08, duration: 0.4 }}
                   className="flex items-start gap-3 group rounded-[20px] border border-white/10 bg-white/5 p-4 backdrop-blur-sm"
                 >
-                  <motion.div
-                    className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-[#198754]/20 to-[#20a064]/20 border border-[#198754]/30 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300"
-                    whileHover={{ rotate: 5, scale: 1.1 }}
-                  >
+                  <div className="w-10 h-10 rounded-[14px] bg-gradient-to-br from-[#198754]/20 to-[#20a064]/20 border border-[#198754]/30 flex items-center justify-center shrink-0">
                     <CheckCircle2 className="w-5 h-5 text-[#198754]" />
-                  </motion.div>
+                  </div>
                   <span className="text-white/80 pt-1">{item}</span>
-                </motion.div>
+                </div>
               ))}
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.5 }}
-              className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4"
-            >
-              <PremiumButton variant="gradient-primary" size="lg" iconRight={<ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}>
+            <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <PremiumButton variant="gradient-primary" size="lg" iconRight={<ArrowRight className="w-4 h-4" />}>
                 Explore Our Story
               </PremiumButton>
               <PremiumButton variant="glass-gold" size="lg" iconLeft={<Target className="w-4 h-4" />}>
                 View Courses
               </PremiumButton>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

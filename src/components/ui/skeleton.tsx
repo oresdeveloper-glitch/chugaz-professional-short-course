@@ -1,4 +1,4 @@
-import * as React from "react"
+﻿import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const Skeleton = React.forwardRef<
@@ -9,7 +9,7 @@ const Skeleton = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "animate-pulse rounded-xl bg-gray-200 dark:bg-gray-700",
+        "rounded-xl bg-gray-200 dark:bg-gray-700",
         className
       )}
       {...props}

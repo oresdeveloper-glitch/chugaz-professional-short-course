@@ -1,6 +1,5 @@
-"use client"
+﻿"use client"
 
-import { motion } from "framer-motion"
 import {
   Users, UserPlus, CheckCircle2, TrendingUp, Clock,
   CreditCard, Eye, Bell, Trash2, XCircle, GraduationCap, Mail
@@ -34,7 +33,7 @@ export default function DashboardTab({ students, pendingStudents, approvedStuden
           { icon: TrendingUp, label: "Total Revenue", value: `TZS ${(approvedStudents.length * 200000).toLocaleString()}`, change: "+" + (approvedStudents.length * 200000).toLocaleString(), color: "text-purple-600", bg: "bg-purple-100 dark:bg-purple-900/20" },
           { icon: Clock, label: "Pending Payments", value: pendingStudents.length.toString(), change: pendingStudents.length > 0 ? "+" + pendingStudents.length : "0", color: "text-orange-600", bg: "bg-orange-100 dark:bg-orange-900/20" },
         ].map((stat, i) => (
-          <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
+          <div key={stat.label}>
             <GlassCard variant="elevated">
               <GlassCardContent className="p-4 md:p-5">
                 <div className="flex items-center justify-between mb-2 md:mb-3">
@@ -47,7 +46,7 @@ export default function DashboardTab({ students, pendingStudents, approvedStuden
                 <p className="text-xs md:text-sm text-gray-500">{stat.label}</p>
               </GlassCardContent>
             </GlassCard>
-          </motion.div>
+          </div>
         ))}
       </div>
 
@@ -82,7 +81,7 @@ export default function DashboardTab({ students, pendingStudents, approvedStuden
                   </thead>
                   <tbody>
                     {students.slice().reverse().map((s, i) => (
-                      <motion.tr key={s.regNo} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.02 }}
+                      <tr key={s.regNo}
                         className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
                       >
                         <td className="py-3 px-3 md:px-4 text-sm font-medium text-[#0B1F4D] dark:text-white whitespace-nowrap">{s.regNo}</td>
@@ -114,7 +113,7 @@ export default function DashboardTab({ students, pendingStudents, approvedStuden
                             <button onClick={() => deleteStudent(s.email)} className="p-1.5 md:p-1.5 bg-gray-100 dark:bg-gray-800 rounded-[10px] text-gray-600 hover:bg-gray-200 min-w-[32px] min-h-[32px] flex items-center justify-center" title="Delete"><Trash2 className="w-3.5 h-3.5 md:w-4 md:h-4" /></button>
                           </div>
                         </td>
-                      </motion.tr>
+                      </tr>
                     ))}
                   </tbody>
                 </table>

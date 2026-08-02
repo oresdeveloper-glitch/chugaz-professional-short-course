@@ -1,13 +1,11 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
 import { Mail, ArrowLeft, CheckCircle2, Key, Lock, Copy } from "lucide-react"
 import Link from "next/link"
 import { PremiumInput } from "@/components/ui/PremiumInput"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardTitle } from "@/components/ui/GlassCard"
-import GradientMesh from "@/components/ui/GradientMesh"
 import { api } from "@/lib/api"
 import { useRouter } from "next/navigation"
 
@@ -57,31 +55,29 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
-      <GradientMesh />
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+      <div
+        
+        
+        
         className="w-full max-w-md z-10"
       >
         <GlassCard variant="elevated" padding="lg" borderRadius="2xl">
-          <AnimatePresence mode="wait">
             {step === "done" ? (
-              <motion.div
+              <div
                 key="done"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
+                
+                
                 className="text-center"
               >
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                <div
+                  
+                  
+                  
                   className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4"
                 >
                   <CheckCircle2 className="w-10 h-10 text-green-400" />
-                </motion.div>
+                </div>
                 <GlassCardTitle as="h1" className="text-2xl text-white mb-2">Password Reset</GlassCardTitle>
                 <p className="text-gray-400 mb-6">Your password has been reset successfully.</p>
                 <Link href="/login">
@@ -89,13 +85,13 @@ export default function ForgotPasswordPage() {
                     Back to Login
                   </PremiumButton>
                 </Link>
-              </motion.div>
+              </div>
             ) : step === "code" ? (
-              <motion.div
+              <div
                 key="code"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+                
+                
+                
               >
                 <div className="flex items-center gap-3 mb-6">
                   <button onClick={() => setStep("email")} className="p-2 hover:bg-white/10 rounded-[10px] transition-colors">
@@ -133,13 +129,9 @@ export default function ForgotPasswordPage() {
                     minLength={8}
                   />
                   {error && (
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="text-red-400 text-sm"
-                    >
+                    <p className="text-red-400 text-sm">
                       {error}
-                    </motion.p>
+                    </p>
                   )}
                   <PremiumButton
                     type="submit"
@@ -152,13 +144,13 @@ export default function ForgotPasswordPage() {
                     {loading ? "Resetting..." : "Reset Password"}
                   </PremiumButton>
                 </form>
-              </motion.div>
+              </div>
             ) : (
-              <motion.div
+              <div
                 key="email"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+                
+                
+                
               >
                 <div className="flex items-center gap-3 mb-6">
                   <Link href="/login">
@@ -180,13 +172,9 @@ export default function ForgotPasswordPage() {
                     required
                   />
                   {error && (
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="text-red-400 text-sm"
-                    >
+                    <p className="text-red-400 text-sm">
                       {error}
-                    </motion.p>
+                    </p>
                   )}
                   <PremiumButton
                     type="submit"
@@ -198,11 +186,10 @@ export default function ForgotPasswordPage() {
                     {loading ? "Sending..." : "Send Reset Code"}
                   </PremiumButton>
                 </form>
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
         </GlassCard>
-      </motion.div>
+      </div>
     </div>
   )
 }

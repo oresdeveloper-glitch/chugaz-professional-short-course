@@ -1,10 +1,9 @@
-"use client"
+﻿"use client"
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardHeader, GlassCardTitle, GlassCardContent, GlassCardFooter } from "@/components/ui/GlassCard"
-import GradientMesh from "@/components/ui/GradientMesh"
 import { AlertTriangle, RefreshCw, ArrowLeft } from "lucide-react"
 
 export default function CoursesError({
@@ -19,7 +18,6 @@ export default function CoursesError({
 
   return (
     <div className="relative min-h-[60vh] flex items-center justify-center px-4 overflow-hidden">
-      <GradientMesh />
       <GlassCard variant="elevated" className="max-w-md w-full relative z-10">
         <GlassCardHeader className="text-center">
           <div className="w-20 h-20 rounded-full bg-destructive/10 flex items-center justify-center mx-auto mb-4">
@@ -33,10 +31,10 @@ export default function CoursesError({
           </p>
         </GlassCardContent>
         <GlassCardFooter className="flex justify-center gap-3">
-          <PremiumButton variant="glass" ripple iconLeft={<ArrowLeft className="w-4 h-4" />} onClick={() => router.push("/")}>
+          <PremiumButton variant="glass" iconLeft={<ArrowLeft className="w-4 h-4" />} onClick={() => router.push("/")}>
             Go Home
           </PremiumButton>
-          <PremiumButton variant="gradient-gold" ripple iconLeft={<RefreshCw className="w-4 h-4" />} onClick={reset}>
+          <PremiumButton variant="glass" iconLeft={<RefreshCw className="w-4 h-4" />} onClick={reset}>
             Try Again
           </PremiumButton>
         </GlassCardFooter>

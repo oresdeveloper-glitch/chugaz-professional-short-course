@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { BookOpen, Clock } from "lucide-react"
 import Link from "next/link"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
@@ -20,7 +19,7 @@ export default function CoursesTab({ studentData }: DashboardTabProps) {
           {studentData.courses.map((courseTitle: string, i: number) => {
             const course = courses.find(c => c.title === courseTitle)
             return (
-              <motion.div key={courseTitle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
+              <div key={courseTitle}   >
                 <GlassCard variant="elevated" className="rounded-[20px] border-0 shadow-md">
                   <GlassCardContent className="p-6">
                     <div className="flex items-start justify-between mb-4">
@@ -37,7 +36,7 @@ export default function CoursesTab({ studentData }: DashboardTabProps) {
                     </div>
                   </GlassCardContent>
                 </GlassCard>
-              </motion.div>
+              </div>
             )
           })}
         </div>

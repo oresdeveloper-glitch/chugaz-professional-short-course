@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 import { Bell } from "lucide-react"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 import { Badge } from "@/components/ui/badge"
@@ -25,7 +24,7 @@ export default function NotificationsTab({ notifications, setNotifications }: Da
         </GlassCard>
       ) : (
         notifications.map((n: any) => (
-          <motion.div key={n.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+          <div key={n.id}  >
             <GlassCard variant="elevated" className={cn("rounded-[20px] border-0 shadow-md", !n.read && "border-l-4 border-l-[#F4B400]")}>
               <GlassCardContent className="p-4 md:p-6">
                 <div className="flex items-start justify-between">
@@ -38,7 +37,7 @@ export default function NotificationsTab({ notifications, setNotifications }: Da
                 <p className="text-xs text-gray-400 mt-2">{new Date(n.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })}</p>
               </GlassCardContent>
             </GlassCard>
-          </motion.div>
+          </div>
         ))
       )}
     </div>

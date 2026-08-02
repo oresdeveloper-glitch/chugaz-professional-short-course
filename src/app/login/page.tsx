@@ -1,14 +1,12 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
-import { motion } from "framer-motion"
 import { Mail, Lock, Eye, EyeOff, ArrowRight, AlertCircle } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { PremiumInput } from "@/components/ui/PremiumInput"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardHeader, GlassCardTitle, GlassCardContent } from "@/components/ui/GlassCard"
-import GradientMesh from "@/components/ui/GradientMesh"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { login } from "@/lib/auth"
@@ -46,27 +44,20 @@ export default function LoginPage() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
-      <GradientMesh />
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+      <div
         className="w-full max-w-md z-10"
       >
         <GlassCard variant="elevated" padding="lg" borderRadius="2xl">
           <GlassCardHeader className="text-center mb-6">
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.4 }}
+            <div
               className="flex items-center justify-center gap-3 mb-4"
             >
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#F4B400] to-[#ffc933] flex items-center justify-center">
                 <span className="text-[#0B1F4D] font-bold text-lg">C</span>
               </div>
               <span className="text-xl font-bold text-white font-heading">CHUGAZ</span>
-            </motion.div>
+            </div>
             <GlassCardTitle as="h1" className="text-2xl md:text-3xl text-white mb-1">
               Welcome Back
             </GlassCardTitle>
@@ -105,14 +96,12 @@ export default function LoginPage() {
               </div>
 
               {error && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                <div
                   className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-[16px] text-red-400 text-sm"
                 >
                   <AlertCircle className="w-5 h-5 flex-shrink-0" />
                   <span>{error}</span>
-                </motion.div>
+                </div>
               )}
 
               <div className="flex items-center justify-between">
@@ -156,7 +145,7 @@ export default function LoginPage() {
             </form>
           </GlassCardContent>
         </GlassCard>
-      </motion.div>
+      </div>
     </div>
   )
 }

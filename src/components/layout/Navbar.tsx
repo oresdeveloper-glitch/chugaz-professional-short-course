@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { useRouter, usePathname } from "next/navigation"
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
 import { Menu, X, LogOut, LayoutDashboard } from "lucide-react"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { getCurrentUser, logout as authLogout } from "@/lib/auth"
@@ -23,12 +22,26 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [visible, setVisible] = useState(true)
   const lastScrollY = useRef(0)
-  const { scrollY } = useScroll()
 
   useEffect(() => {
     setUser(getCurrentUser())
     setMobileMenuOpen(false)
   }, [pathname])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const latest = window.scrollY
+      const direction = latest - lastScrollY.current
+      if (latest > 100 && direction > 0) {
+        setVisible(false)
+      } else if (direction < 0) {
+        setVisible(true)
+      }
+      lastScrollY.current = latest
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const handleLogout = async () => {
     await authLogout()
@@ -36,22 +49,10 @@ export default function Navbar() {
     router.push("/")
   }
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const direction = latest - lastScrollY.current
-    if (latest > 100 && direction > 0) {
-      setVisible(false)
-    } else if (direction < 0) {
-      setVisible(true)
-    }
-    lastScrollY.current = latest
-  })
-
   return (
-    <motion.header
-      initial={false}
-      animate={{ top: visible ? 0 : -120 }}
-      transition={{ duration: 0.3, ease: "easeInOut" as const }}
+    <header
       className="fixed top-0 left-0 right-0 z-50"
+      style={{ top: visible ? 0 : -120, transition: "top 0.3s ease-in-out" }}
     >
       <nav className="bg-white/80 dark:bg-[#0B1F4D]/80 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -121,61 +122,53 @@ export default function Navbar() {
           </div>
         </div>
 
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="lg:hidden border-t border-gray-100 dark:border-gray-800 bg-white/95 dark:bg-[#0B1F4D]/95 backdrop-blur-xl"
-            >
-              <div className="px-4 py-6 space-y-1">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="block px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gold hover:bg-gray-50 dark:hover:bg-white/5 rounded-xl transition-all"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-                <div className="pt-4 space-y-3">
-                  {user ? (
-                    <>
-                      <Link
-                        href={user.role === "admin" ? "/admin" : "/dashboard"}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-sm font-button border border-gray-300/50 dark:border-gray-600/50 bg-white/50 dark:bg-white/5 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-300 shadow-sm"
-                      >
-                        <LayoutDashboard className="w-4 h-4" />
-                        Dashboard
-                      </Link>
-                      <PremiumButton variant="gradient-primary" size="lg" className="w-full" iconLeft={<LogOut className="w-4 h-4" />} onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>
-                        Logout
-                      </PremiumButton>
-                    </>
-                  ) : (
-                    <>
-                      <Link
-                        href="/login"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-sm font-button border border-gray-300/50 dark:border-gray-600/50 bg-white/50 dark:bg-white/5 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-300 shadow-sm"
-                      >
-                        Login
-                      </Link>
-                      <PremiumButton variant="gradient-gold" size="lg" className="w-full" onClick={() => { router.push("/register"); setMobileMenuOpen(false); }}>
-                        Get Started
-                      </PremiumButton>
-                    </>
-                  )}
-                </div>
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t border-gray-100 dark:border-gray-800 bg-white/95 dark:bg-[#0B1F4D]/95 backdrop-blur-xl">
+            <div className="px-4 py-6 space-y-1">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gold hover:bg-gray-50 dark:hover:bg-white/5 rounded-xl transition-all"
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <div className="pt-4 space-y-3">
+                {user ? (
+                  <>
+                    <Link
+                      href={user.role === "admin" ? "/admin" : "/dashboard"}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-sm font-button border border-gray-300/50 dark:border-gray-600/50 bg-white/50 dark:bg-white/5 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-300 shadow-sm"
+                    >
+                      <LayoutDashboard className="w-4 h-4" />
+                      Dashboard
+                    </Link>
+                    <PremiumButton variant="gradient-primary" size="lg" className="w-full" iconLeft={<LogOut className="w-4 h-4" />} onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>
+                      Logout
+                    </PremiumButton>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/login"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-center gap-2 w-full px-5 py-3 rounded-xl text-sm font-button border border-gray-300/50 dark:border-gray-600/50 bg-white/50 dark:bg-white/5 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-300 shadow-sm"
+                    >
+                      Login
+                    </Link>
+                    <PremiumButton variant="gradient-gold" size="lg" className="w-full" onClick={() => { router.push("/register"); setMobileMenuOpen(false); }}>
+                      Get Started
+                    </PremiumButton>
+                  </>
+                )}
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+          </div>
+        )}
       </nav>
-    </motion.header>
+    </header>
   )
 }

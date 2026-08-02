@@ -1,13 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { motion } from "framer-motion"
 import {
   MapPin, Phone, Mail, Clock, Send, MessageSquare,
   Globe, Camera, ExternalLink, Music2, User, AtSign, FileText
 } from "lucide-react"
 import { api } from "@/lib/api"
-import GradientMesh from "@/components/ui/GradientMesh"
 import { GlassCard, GlassCardHeader, GlassCardTitle, GlassCardContent } from "@/components/ui/GlassCard"
 import { PremiumInput } from "@/components/ui/PremiumInput"
 import { PremiumTextarea } from "@/components/ui/PremiumInput"
@@ -79,23 +77,20 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen">
-      <GradientMesh className="-z-20" />
+
 
       <section className="relative bg-gradient-to-br from-[#0B1F4D]/90 to-[#1a3a7a]/90 py-16 md:py-28 px-4 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 25% 25%, white 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
         </div>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-4xl mx-auto text-center relative z-10"
+        <div className="max-w-4xl mx-auto text-center relative z-10"
         >
           <p className="text-[#F4B400] font-semibold mb-2">Get in Touch</p>
           <h1 className="text-3xl md:text-5xl font-heading font-extrabold text-white mb-4">Contact Us</h1>
           <p className="text-white/70 text-lg max-w-2xl mx-auto">
             Have questions? We&apos;d love to hear from you. Reach out to us through any of the channels below.
           </p>
-        </motion.div>
+        </div>
       </section>
 
       <section className="py-12 md:py-16 px-4 -mt-10 relative z-20">
@@ -103,12 +98,11 @@ export default function ContactPage() {
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {contactInfo.map((info, i) => (
-                <motion.div
-                  key={info.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  viewport={{ once: true }}
+                <div key={info.title}
+                  
+                  
+                  
+                  
                 >
                   <GlassCard variant="elevated" padding="md" borderRadius="lg" className="h-full">
                     <GlassCardContent>
@@ -121,7 +115,7 @@ export default function ContactPage() {
                       ))}
                     </GlassCardContent>
                   </GlassCard>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -221,11 +215,7 @@ export default function ContactPage() {
       <section className="py-12 md:py-16 px-4 bg-white/80 backdrop-blur-sm">
         <ScrollReveal direction="up" distance={40}>
           <div className="max-w-4xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
+            <div >
               <h2 className="text-2xl md:text-3xl font-heading font-extrabold text-[#0B1F4D] dark:text-white mb-4">
                 Follow Us on Social Media
               </h2>
@@ -246,7 +236,7 @@ export default function ContactPage() {
                   </a>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </ScrollReveal>
       </section>

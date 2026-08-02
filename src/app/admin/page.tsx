@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect } from "react"
 import dynamic from "next/dynamic"
@@ -17,14 +17,14 @@ import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 
 const DashboardTab = dynamic(() => import("./components/DashboardTab"), {
-  loading: () => <div className="flex items-center justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" /></div>
+  loading: () => <div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" /></div>
 })
 const StudentsTab = dynamic(() => import("./components/StudentsTab"), {
-  loading: () => <div className="flex items-center justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" /></div>
+  loading: () => <div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" /></div>
 })
 const CoursesTab = dynamic(() => import("./components/CoursesTab"))
 const PaymentsTab = dynamic(() => import("./components/PaymentsTab"), {
-  loading: () => <div className="flex items-center justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" /></div>
+  loading: () => <div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-[#F4B400] border-t-transparent rounded-full" /></div>
 })
 const MessagesTab = dynamic(() => import("./components/MessagesTab"))
 const SettingsTab = dynamic(() => import("./components/SettingsTab"))
@@ -148,7 +148,7 @@ export default function AdminDashboard() {
 
       <div className="flex-1 min-h-screen min-w-0">
         {toast && (
-          <GlassCard variant="dark" className="fixed top-4 right-4 z-[100] px-5 py-3 shadow-xl text-sm font-medium animate-in slide-in-from-top-2">
+          <GlassCard variant="dark" className="fixed top-4 right-4 z-[100] px-5 py-3 shadow-xl text-sm font-medium">
             <GlassCardContent className="p-0 text-white">{toast}</GlassCardContent>
           </GlassCard>
         )}

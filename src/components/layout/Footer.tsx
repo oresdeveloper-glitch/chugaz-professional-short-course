@@ -1,9 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { motion } from "framer-motion"
 import { Mail, Phone, MapPin, ChevronRight } from "lucide-react"
-import GradientMesh from "@/components/ui/GradientMesh"
 
 const quickLinks = [
   { name: "Home", href: "/" },
@@ -77,32 +75,12 @@ const socialLinks = [
   { icon: YouTubeIcon, href: "https://youtube.com/@chugazstationery", label: "YouTube" },
 ]
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-}
-
 export default function Footer() {
   return (
     <footer className="relative bg-[#0B1F4D] text-white overflow-hidden">
-      <GradientMesh />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 py-16"
-        >
-          <motion.div variants={itemVariants} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 py-16">
+          <div className="space-y-6">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="w-10 h-10 rounded-[20px] bg-gradient-to-br from-gold to-gold-light flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                 <span className="text-white font-heading font-extrabold text-sm">C</span>
@@ -135,9 +113,9 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemVariants} className="space-y-6">
+          <div className="space-y-6">
             <h3 className="text-lg font-heading font-bold text-gold">Quick Links</h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
@@ -152,9 +130,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemVariants} className="space-y-6">
+          <div className="space-y-6">
             <h3 className="text-lg font-heading font-bold text-gold">Popular Courses</h3>
             <ul className="space-y-3">
               {popularCourses.map((course) => (
@@ -169,9 +147,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemVariants} className="space-y-6">
+          <div className="space-y-6">
             <h3 className="text-lg font-heading font-bold text-gold">Contact Info</h3>
             <ul className="space-y-4">
               {contactInfo.map((item, index) => (
@@ -183,8 +161,8 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         <div className="border-t border-white/10 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">

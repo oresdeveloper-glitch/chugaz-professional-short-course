@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
 import {
   BookOpen, CheckCircle2, Award, Clock, Download,
   User, FileText
@@ -18,7 +17,7 @@ import type { DashboardTabProps } from "./types"
 export default function DashboardTab({ user, studentData, setActiveTab }: DashboardTabProps) {
   return (
     <>
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+      <div >
         <GlassCard variant="elevated" className="rounded-[20px] border-0 bg-gradient-to-br from-[#0B1F4D] to-[#1a3a7a] text-white overflow-hidden">
           <GlassCardContent className="p-6 md:p-8 relative">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#F4B400]/10 rounded-full -translate-y-1/2 translate-x-1/2" />
@@ -28,7 +27,7 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
             </div>
           </GlassCardContent>
         </GlassCard>
-      </motion.div>
+      </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
@@ -37,7 +36,7 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
           { icon: Award, label: "Training Mode", value: studentData.trainingMode || "N/A", color: "text-purple-600", bg: "bg-purple-100" },
           { icon: Clock, label: "Prefered Time", value: studentData.preferredTime || "N/A", color: "text-orange-600", bg: "bg-orange-100" },
         ].map((stat, i) => (
-          <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
+          <div key={stat.label}   >
             <GlassCard variant="elevated" className="rounded-[20px] border-0 shadow-md">
               <GlassCardContent className="p-4 md:p-6 flex items-center gap-4">
                 <div className={`w-10 h-10 md:w-12 md:h-12 ${stat.bg} rounded-[20px] flex items-center justify-center flex-shrink-0`}>
@@ -49,7 +48,7 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
                 </div>
               </GlassCardContent>
             </GlassCard>
-          </motion.div>
+          </div>
         ))}
       </div>
 
@@ -59,7 +58,7 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
           {studentData.courses?.length > 0 ? studentData.courses.map((courseTitle: string, i: number) => {
             const course = courses.find(c => c.title === courseTitle)
             return (
-              <motion.div key={courseTitle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
+              <div key={courseTitle}   >
                 <GlassCard variant="elevated" className="rounded-[20px] border-0 shadow-md">
                   <GlassCardContent className="p-4 md:p-6">
                     <div className="flex items-start justify-between mb-4">
@@ -80,7 +79,7 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
                     </div>
                   </GlassCardContent>
                 </GlassCard>
-              </motion.div>
+              </div>
             )
           }) : (
             <GlassCard variant="elevated" className="rounded-[20px] border-0 shadow-md">

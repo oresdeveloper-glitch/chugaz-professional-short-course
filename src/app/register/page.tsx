@@ -1,7 +1,6 @@
-"use client"
+﻿"use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
 import {
   User, Mail, BookOpen, CreditCard, CheckCircle2,
   ChevronLeft, ChevronRight, Globe,
@@ -15,7 +14,6 @@ import Image from "next/image"
 import { PremiumInput } from "@/components/ui/PremiumInput"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard } from "@/components/ui/GlassCard"
-import GradientMesh from "@/components/ui/GradientMesh"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
@@ -256,15 +254,15 @@ export default function RegisterPage() {
       </div>
       <div class="info-item">
         <label>Training Mode</label>
-        <p style="text-transform:capitalize">${formData.trainingMode || "—"}</p>
+        <p style="text-transform:capitalize">${formData.trainingMode || "â€”"}</p>
       </div>
       <div class="info-item">
         <label>Preferred Time</label>
-        <p style="text-transform:capitalize">${formData.preferredTime || "—"}</p>
+        <p style="text-transform:capitalize">${formData.preferredTime || "â€”"}</p>
       </div>
       <div class="info-item">
         <label>Payment Method</label>
-        <p style="text-transform:capitalize">${formData.paymentMethod || "—"}</p>
+        <p style="text-transform:capitalize">${formData.paymentMethod || "â€”"}</p>
       </div>
       <div class="info-item">
         <label>Payment Reference</label>
@@ -332,21 +330,20 @@ export default function RegisterPage() {
   if (submitted) {
     return (
       <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
-        <GradientMesh />
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
+        <div
+          
+          
           className="w-full max-w-lg z-10"
         >
           <GlassCard variant="elevated" padding="xl" borderRadius="2xl" className="text-center">
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+            <div
+              
+              
+              
               className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6"
             >
               <Check className="w-10 h-10 text-green-400" />
-            </motion.div>
+            </div>
             <h1 className="text-3xl font-heading font-extrabold text-white mb-2">
               Congratulations!
             </h1>
@@ -392,7 +389,7 @@ export default function RegisterPage() {
               </Link>
             </div>
           </GlassCard>
-        </motion.div>
+        </div>
       </div>
     )
   }
@@ -403,12 +400,11 @@ export default function RegisterPage() {
 
   return (
     <div className="relative min-h-screen py-12 px-4 overflow-hidden">
-      <GradientMesh />
 
       <div className="max-w-4xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+        <div
+          
+          
           className="text-center mb-8"
         >
           <h1 className="text-2xl md:text-4xl font-heading font-extrabold text-white mb-2">
@@ -420,16 +416,16 @@ export default function RegisterPage() {
           <p className="text-sm text-[#F4B400] font-semibold mt-1">
             Application Deadline: 31 August 2026
           </p>
-        </motion.div>
+        </div>
 
         {serverError && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
+          <div
+            
+            
             className="bg-red-500/10 border border-red-500/20 text-red-300 px-6 py-3 rounded-[20px] mb-4 text-sm"
           >
             {serverError}
-          </motion.div>
+          </div>
         )}
 
         <GlassCard variant="elevated" padding="none" borderRadius="2xl">
@@ -475,13 +471,12 @@ export default function RegisterPage() {
           </div>
 
           <div className="p-4 md:p-8">
-            <AnimatePresence mode="wait">
-              <motion.div
+              <div
                 key={currentStep}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.3 }}
+                
+                
+                
+                
               >
                 {currentStep === 1 && (
                   <div>
@@ -893,8 +888,7 @@ export default function RegisterPage() {
                     {errors.declaration && <p className="text-red-400 text-sm mt-2">{errors.declaration}</p>}
                   </div>
                 )}
-              </motion.div>
-            </AnimatePresence>
+              </div>
 
             <div className="flex flex-col md:flex-row justify-between gap-3 md:gap-0 mt-8 pt-6 border-t border-white/10">
               <PremiumButton

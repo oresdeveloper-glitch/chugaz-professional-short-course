@@ -1,7 +1,6 @@
 "use client"
 
 import { useParams } from "next/navigation"
-import { motion } from "framer-motion"
 import {
   Calendar,
   Wallet,
@@ -18,7 +17,6 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { getCourseById } from "@/data/courses"
-import GradientMesh from "@/components/ui/GradientMesh"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 import ScrollReveal from "@/components/ui/ScrollReveal"
@@ -53,7 +51,7 @@ export default function CourseDetailPage() {
 
   return (
     <div className="min-h-screen relative">
-      <GradientMesh />
+
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
         <Image
           src={course.image}
@@ -66,7 +64,7 @@ export default function CourseDetailPage() {
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
         <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
           <div className="container mx-auto">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <div >
               <Badge variant="gold" className="mb-4 shadow-md">{course.category}</Badge>
               <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 font-heading max-w-3xl">
                 {course.title}
@@ -74,18 +72,17 @@ export default function CourseDetailPage() {
               <p className="text-lg md:text-xl text-white/80 max-w-2xl">
                 {course.description}
               </p>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="py-8 bg-white/80 backdrop-blur-sm border-b border-gray-100">
         <div className="container mx-auto px-4">
-          <motion.div
-            className="flex flex-wrap items-center gap-6 md:gap-10 max-w-6xl mx-auto"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          <div className="flex flex-wrap items-center gap-6 md:gap-10 max-w-6xl mx-auto"
+            
+            
+            
           >
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
@@ -114,7 +111,7 @@ export default function CourseDetailPage() {
                 <p className="font-semibold text-primary text-sm">{course.category}</p>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 

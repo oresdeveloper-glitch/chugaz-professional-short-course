@@ -1,6 +1,6 @@
 "use client"
 
-import { forwardRef, useRef, type HTMLAttributes } from "react"
+import { forwardRef, type HTMLAttributes } from "react"
 import { cn } from "@/lib/utils"
 
 interface GlassCardProps extends HTMLAttributes<HTMLDivElement> {
@@ -8,8 +8,6 @@ interface GlassCardProps extends HTMLAttributes<HTMLDivElement> {
   hover?: boolean
   padding?: "none" | "sm" | "md" | "lg" | "xl"
   borderRadius?: "md" | "lg" | "xl" | "2xl" | "full"
-  tilt?: boolean
-  tiltDegree?: number
 }
 
 const paddings = {
@@ -37,40 +35,21 @@ const variants = {
 }
 
 export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
-  ({ className = "", variant = "default", hover = true, padding = "md", borderRadius = "lg", tilt = false, tiltDegree = 5, children, ...props }, ref) => {
-    const cardRef = useRef<HTMLDivElement>(null)
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!tilt || !cardRef.current) return
-      const rect = cardRef.current.getBoundingClientRect()
-      const x = (e.clientX - rect.left) / rect.width - 0.5
-      const y = (e.clientY - rect.top) / rect.height - 0.5
-      cardRef.current.style.transform = `perspective(800px) rotateY(${x * tiltDegree}deg) rotateX(${-y * tiltDegree}deg)`
-    }
-
-    const handleMouseLeave = () => {
-      if (!tilt || !cardRef.current) return
-      cardRef.current.style.transform = "perspective(800px) rotateY(0deg) rotateX(0deg)"
-    }
-
+  ({ className = "", variant = "default", hover = true, padding = "md", borderRadius = "lg", children, ...props }, ref) => {
     return (
       <div
-        ref={tilt ? cardRef : ref}
-        onMouseMove={tilt ? handleMouseMove : undefined}
-        onMouseLeave={tilt ? handleMouseLeave : undefined}
+        ref={ref}
         className={cn(
-          "relative overflow-hidden transition-all duration-300",
+          "relative overflow-hidden",
           variants[variant],
           paddings[padding],
           radii[borderRadius],
-          tilt && "cursor-pointer transition-transform will-change-transform",
-          hover && !tilt && "hover:shadow-[0_30px_80px_rgba(2,6,23,0.24)] hover:border-white/25 dark:hover:border-white/10 hover:-translate-y-2 hover:scale-[1.01]",
+          hover && "hover:shadow-[0_30px_80px_rgba(2,6,23,0.24)] hover:border-white/25 dark:hover:border-white/10 hover:-translate-y-2",
           className
         )}
         {...props}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
-        {tilt && <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />}
         <div className="relative z-10">{children}</div>
       </div>
     )
