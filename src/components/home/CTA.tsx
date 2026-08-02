@@ -24,7 +24,7 @@ export default function CTA() {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white mb-6">
             Take the <span className="bg-gradient-to-r from-[#F4B400] to-[#ffc933] bg-clip-text text-transparent">Next Step</span>
           </h2>
-          <p className="text-white/85 max-w-3xl mx-auto text-lg leading-relaxed">
+          <p className="text-[#F4B400] max-w-3xl mx-auto text-lg leading-relaxed">
             Your future starts today. Whether you&apos;re ready to enroll or want to learn more, we&apos;re here to help.
           </p>
         </div>

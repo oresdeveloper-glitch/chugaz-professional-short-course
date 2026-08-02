@@ -75,7 +75,7 @@ export default function AboutSection() {
           </div>
 
           <div>
-            <div className="section-shell rounded-[32px] p-8 lg:p-10 space-y-4 text-white/85 leading-relaxed">
+            <div className="section-shell rounded-[32px] p-8 lg:p-10 space-y-4 text-[#F4B400] leading-relaxed">
               <p>
                 CHUGAZ Stationery is a premier ICT and Engineering training center based in Mbeya, Tanzania. We are dedicated to bridging the skills gap by providing high-quality, affordable professional courses that prepare students for the modern workforce.
               </p>

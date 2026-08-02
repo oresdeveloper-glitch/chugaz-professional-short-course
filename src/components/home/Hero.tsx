@@ -59,7 +59,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <p className="text-base sm:text-lg md:text-xl text-white/85 max-w-3xl mx-auto mb-12 leading-relaxed font-light">
+        <p className="text-base sm:text-lg md:text-xl text-[#F4B400] max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
           Unlock your potential with industry-leading <span className="font-medium text-white">ICT & Engineering courses</span>. Hands-on training, expert instructors, and certification to accelerate your career.
         </p>
 
@@ -90,7 +90,7 @@ export default function Hero() {
               </div>
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/75">Why learners choose us</p>
-                <p className="text-base text-white/80">Hands-on training, elite mentors, and career-ready outcomes in one premium experience.</p>
+                <p className="text-base text-[#F4B400]">Hands-on training, elite mentors, and career-ready outcomes in one premium experience.</p>
               </div>
             </div>
           </div>

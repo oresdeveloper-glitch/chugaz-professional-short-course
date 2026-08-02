@@ -60,7 +60,7 @@ function StatCard({ stat }: { stat: StatItem }) {
           <AnimatedCounter target={stat.value} suffix={stat.suffix} />
           
           <p
-            className="text-white/85 font-medium mt-3 text-base sm:text-lg"
+            className="text-[#F4B400] font-medium mt-3 text-base sm:text-lg"
           >
             {stat.label}
           </p>

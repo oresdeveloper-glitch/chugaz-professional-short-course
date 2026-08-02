@@ -87,7 +87,7 @@ export default function WhyChooseUs() {
                   <h3 className="text-xl lg:text-2xl font-heading font-bold text-white mb-4">
                     {feature.title}
                   </h3>
-                  <p className="text-white/85 leading-relaxed">
+                  <p className="text-[#F4B400] leading-relaxed">
                     {feature.desc}
                   </p>
                 </GlassCardContent>

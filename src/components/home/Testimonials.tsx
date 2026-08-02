@@ -117,7 +117,7 @@ export default function Testimonials() {
                     </div>
                     
                     <p
-                      className="text-white/80 text-base lg:text-lg leading-relaxed mb-7 italic"
+                      className="text-[#F4B400] text-base lg:text-lg leading-relaxed mb-7 italic"
                     >
                       &ldquo;{testimonial.content}&rdquo;
                     </p>

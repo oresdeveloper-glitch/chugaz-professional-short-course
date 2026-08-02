@@ -58,7 +58,7 @@ function NewsCard({ item }: { item: NewsItem }) {
           {item.title}
         </h3>
         
-        <p className="text-white/85 text-sm leading-relaxed flex-1 mb-6 line-clamp-3">
+        <p className="text-[#F4B400] text-sm leading-relaxed flex-1 mb-6 line-clamp-3">
           {item.excerpt}
         </p>
         

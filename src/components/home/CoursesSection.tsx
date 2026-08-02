@@ -86,7 +86,7 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
         </div>
         
         <div className="absolute bottom-4 left-4 right-4 z-10">
-          <div className="flex items-center gap-4 text-white/80 text-sm">
+          <div className="flex items-center gap-4 text-[#F4B400] text-sm">
             <span className="flex items-center gap-1.5 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
               <Clock className="w-3.5 h-3.5 text-[#F4B400]" />
               {course.duration}
@@ -103,7 +103,7 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
         <h3 className="text-xl lg:text-2xl font-heading font-bold text-white mb-3 group-hover:text-[#F4B400] transition-colors duration-300 line-clamp-2">
           {course.title}
         </h3>
-        <p className="text-white/85 text-sm leading-relaxed flex-1 mb-6 line-clamp-3">
+        <p className="text-[#F4B400] text-sm leading-relaxed flex-1 mb-6 line-clamp-3">
           {course.description}
         </p>
         
