@@ -79,7 +79,7 @@ function NewsCard({ item }: { item: NewsItem }) {
 
 export default function News() {
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden">
+    <section className="relative py-24 lg:py-32 overflow-hidden bg-[#0B1F4D]">
       <div className="absolute inset-0 bg-gradient-to-br from-[#0B1F4D]/3 via-transparent to-[#F4B400]/3" />
       <div className="absolute bottom-[8%] right-[2%] h-64 w-64 rounded-full bg-[#F4B400]/10 blur-3xl" />
       

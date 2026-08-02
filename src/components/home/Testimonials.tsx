@@ -56,7 +56,7 @@ export default function Testimonials() {
   const visibleItems = testimonials.slice(currentPage * perPage, currentPage * perPage + perPage)
 
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden">
+    <section className="relative py-24 lg:py-32 overflow-hidden bg-[#0B1F4D]">
       <div className="absolute inset-0 bg-gradient-to-br from-[#0B1F4D]/3 via-transparent to-[#F4B400]/3" />
       <div className="absolute right-[5%] top-[10%] h-72 w-72 rounded-full bg-[#F4B400]/10 blur-3xl" />
       

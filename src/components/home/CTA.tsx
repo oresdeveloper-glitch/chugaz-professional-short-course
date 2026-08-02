@@ -7,7 +7,7 @@ import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 
 export default function CTA() {
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden">
+    <section className="relative py-24 lg:py-32 overflow-hidden bg-[#0B1F4D]">
       <div className="absolute inset-0 bg-gradient-to-br from-[#0B1F4D]/60 via-transparent to-[#F4B400]/10" />
       <div className="absolute inset-0 grid-overlay opacity-20" />
       

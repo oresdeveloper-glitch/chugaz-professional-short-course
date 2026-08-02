@@ -13,7 +13,7 @@ const featuredCourses = getFeaturedCourses()
 
 export default function CoursesSection() {
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden">
+    <section className="relative py-24 lg:py-32 overflow-hidden bg-[#0B1F4D]">
       <div className="absolute inset-0 bg-gradient-to-br from-[#0B1F4D]/5 via-transparent to-[#F4B400]/5" />
       <div className="absolute right-[-8%] top-[12%] h-72 w-72 rounded-full bg-[#F4B400]/10 blur-3xl" />
       

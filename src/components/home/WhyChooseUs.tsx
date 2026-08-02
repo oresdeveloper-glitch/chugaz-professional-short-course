@@ -51,7 +51,7 @@ const stats = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="relative py-24 lg:py-32 overflow-hidden">
+    <section className="relative py-24 lg:py-32 overflow-hidden bg-[#0B1F4D]">
       <div className="absolute inset-0 bg-gradient-to-br from-[#0B1F4D]/3 via-transparent to-[#F4B400]/3" />
       <div className="absolute left-[-6%] bottom-[-6%] h-64 w-64 rounded-full bg-[#0B1F4D]/25 blur-3xl" />
       
