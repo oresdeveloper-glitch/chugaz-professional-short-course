@@ -29,7 +29,7 @@ export const newsItems: NewsItem[] = [
     id: "4",
     title: "New Evening and Weekend Classes Now Available",
     excerpt: "We've introduced flexible scheduling options to accommodate working professionals and busy students.",
-    image: "https://images.unsplash.com/photo-1529543544282-ea669f6e0e73?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80",
     date: "2026-05-20",
     category: "Announcements"
   }
