@@ -23,7 +23,7 @@ export default function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0B1F4D]">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute left-[8%] top-[18%] h-72 w-72 rounded-full bg-[#F4B400]/20 blur-3xl" />
         <div className="absolute bottom-[14%] right-[8%] h-80 w-80 rounded-full bg-[#1a3a7a]/40 blur-3xl" />
