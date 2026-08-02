@@ -111,7 +111,7 @@ export default function StudentDashboard() {
       <div className="flex-1 min-h-screen">
         <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-white/10 px-4 md:px-8 py-3 md:py-4 flex items-center justify-between sticky top-0 z-20">
           <div className="flex items-center gap-4">
-            <PremiumButton variant="glass" size="sm" onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden min-w-[44px] min-h-[44px]">
+            <PremiumButton variant="glass" size="sm" onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden min-w-[44px] min-h-[44px] bg-white border-2 border-primary/20 text-primary hover:bg-white hover:text-primary">
               {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </PremiumButton>
             <h2 className="text-lg font-heading font-bold text-[#0B1F4D] dark:text-white">{sidebarItems.find(i => i.tab === activeTab)?.label || "Dashboard"}</h2>
