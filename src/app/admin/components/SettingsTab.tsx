@@ -25,7 +25,7 @@ export default function SettingsTab() {
         <div>
           <h3 className="font-semibold mb-2 text-sm md:text-base">Institution Info</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-            <div><label className="text-xs md:text-sm text-gray-500">Institution Name</label><p className="font-medium text-sm md:text-base">CHUGAZ STATIONERY</p></div>
+<div><label className="text-xs md:text-sm text-gray-500">Institution Name</label><p className="font-medium text-sm md:text-base">CHUGAZ ICT SERVICES OFFICE SUPPLIES</p></div>
             <div><label className="text-xs md:text-sm text-gray-500">Tagline</label><p className="font-medium text-sm md:text-base">Empowering Minds, Building Futures</p></div>
             <div><label className="text-xs md:text-sm text-gray-500">Location</label><p className="font-medium text-sm md:text-base">Mbeya, Tanzania</p></div>
             <div><label className="text-xs md:text-sm text-gray-500">Deadline</label><p className="font-medium text-sm md:text-base">31 August 2026</p></div>

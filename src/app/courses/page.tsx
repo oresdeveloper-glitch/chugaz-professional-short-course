@@ -38,6 +38,8 @@ export default function CoursesPage() {
   return (
     <div className="min-h-screen relative">
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0B1F4D] via-[#0B1F4D] to-[#1a3a7a] py-16 lg:py-28">
+        <div className="absolute top-[-10%] left-[-6%] h-96 w-96 rounded-full bg-[#F4B400]/10 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-[-12%] right-[-8%] h-[28rem] w-[28rem] rounded-full bg-[#1a3a7a]/50 blur-3xl pointer-events-none" />
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto">
@@ -60,24 +62,26 @@ export default function CoursesPage() {
         </div>
       </section>
 
-      <section className="py-12 bg-white/80 backdrop-blur-sm sticky top-20 z-20 border-b border-gray-100">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between max-w-6xl mx-auto">
-            <div className="flex-nowrap md:flex-wrap gap-2 justify-start md:justify-center overflow-x-auto md:overflow-visible flex">
+<section className="sticky top-20 z-30 bg-white/95 backdrop-blur-md border-b border-gray-200/80 shadow-sm">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex flex-col md:flex-row gap-3 items-center justify-between max-w-6xl mx-auto">
+            <div className="flex-nowrap md:flex-wrap gap-2 justify-start md:justify-center overflow-x-auto md:overflow-visible flex w-full md:w-auto pb-1 md:pb-0">
               {allCategories.map((category) => (
                 <PremiumButton
                   key={category}
                   variant={activeCategory === category ? "gradient-primary" : "glass"}
                   size="sm"
                   onClick={() => setActiveCategory(category)}
+                  className="whitespace-nowrap text-xs md:text-sm"
                 >
                   {category}
                 </PremiumButton>
               ))}
             </div>
-            <div className="relative w-full md:w-72">
+            <div className="relative w-full md:w-64 shrink-0">
               <PremiumInput
-                label="Search courses..."
+                label="Search courses"
+                placeholder="Search by title or topic"
                 iconLeft={<Search className="w-4 h-4" />}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -88,7 +92,7 @@ export default function CoursesPage() {
       </section>
 
       <section className="py-12 bg-gray-50/80 backdrop-blur-sm min-h-screen">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 text-primary">
           {filteredCourses.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-gray-500 text-lg">No courses found matching your criteria.</p>
@@ -101,6 +105,7 @@ export default function CoursesPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 {filteredCourses.map((course) => (
                   <GlassCard key={course.id} variant="elevated" className="group h-full overflow-hidden flex flex-col">
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#F4B400] to-[#ffc933] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20" />
                     <div className="relative h-40 md:h-48 overflow-hidden rounded-t-xl">
                       <Image
                         src={course.image}
@@ -120,7 +125,7 @@ export default function CoursesPage() {
                       <p className="text-gray-700 text-sm leading-relaxed line-clamp-2 mb-4 flex-1">
                         {course.description}
                       </p>
-                      <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                      <div className="flex items-center justify-between gap-4 text-sm text-gray-500 mb-4">
                         <div className="flex items-center gap-1.5">
                           <Clock className="w-4 h-4 text-gold" />
                           <span>{course.duration}</span>
@@ -138,7 +143,7 @@ export default function CoursesPage() {
                         </Link>
                         <Link href={`/courses/${course.id}`}>
                           <PremiumButton variant="glass" size="sm">
-                            View Details
+                            Details
                           </PremiumButton>
                         </Link>
                       </div>

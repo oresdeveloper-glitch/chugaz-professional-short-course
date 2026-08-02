@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter, usePathname } from "next/navigation"
 import { Menu, X, LogOut, LayoutDashboard } from "lucide-react"
 import { PremiumButton } from "@/components/ui/PremiumButton"
@@ -57,16 +58,16 @@ export default function Navbar() {
       <nav className="bg-white/80 dark:bg-[#0B1F4D]/80 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 rounded-[20px] bg-gradient-to-br from-gold to-gold-light flex items-center justify-center shadow-lg">
-                <span className="text-white font-heading font-extrabold text-sm">C</span>
+<Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink min-w-0">
+              <div className="w-10 h-10 sm:w-48 sm:h-48 relative rounded-[20px] overflow-hidden flex-shrink-0">
+                <Image src="/images/chugaz-logo.png" alt="CHUGAZ" fill className="object-contain" />
               </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-heading font-extrabold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent leading-tight">
+              <div className="flex flex-col min-w-0">
+                <span className="text-sm sm:text-xl font-heading font-extrabold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent leading-tight truncate">
                   CHUGAZ
                 </span>
-                <span className="text-[10px] font-heading font-semibold text-primary dark:text-gray-300 tracking-[0.2em] leading-tight hidden sm:block">
-                  STATIONERY
+                <span className="text-[6px] sm:text-[8px] font-heading font-semibold text-primary dark:text-gray-300 tracking-[0.1em] sm:tracking-[0.15em] leading-tight hidden sm:block truncate">
+                  ICT SERVICES OFFICE SUPPLIES
                 </span>
               </div>
             </Link>

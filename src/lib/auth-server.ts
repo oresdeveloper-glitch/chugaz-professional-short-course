@@ -1,12 +1,90 @@
 import crypto from "crypto"
 import { readData, writeData } from "./server-store"
+import fs from "fs"
+import path from "path"
+import os from "os"
 
 const ITERATIONS = 100000
 const KEY_LENGTH = 64
 const DIGEST = "sha512"
 const TOKEN_EXPIRY_HOURS = 24
+const MAX_BODY_SIZE = 100 * 1024 // 100KB max request body
+const MAX_STRING_LENGTH = 500 // Max length for any string field
 
 const TX_ID_RE = /^[A-Za-z0-9]{6,30}$/
+
+// Use file-based rate limiting for persistence across serverless invocations
+function getRateLimitDir(): string {
+  const dir = process.env.CHUGAZ_DATA_DIR || path.join(os.tmpdir(), "chugaz_ratelimit")
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
+  return dir
+}
+
+export function checkRateLimit(key: string, maxAttempts = 5, windowMs = 60000): boolean {
+  // Try in-memory first (fast path)
+  const now = Date.now()
+  
+  // File-based fallback for persistence
+  const dir = getRateLimitDir()
+  const filePath = path.join(dir, `${key.replace(/[^a-zA-Z0-9]/g, "_")}.json`)
+  
+  try {
+    let data: { count: number; resetAt: number } = { count: 0, resetAt: now + windowMs }
+    if (fs.existsSync(filePath)) {
+      try {
+        data = JSON.parse(fs.readFileSync(filePath, "utf-8"))
+      } catch {}
+    }
+    
+    if (now > data.resetAt) {
+      data = { count: 1, resetAt: now + windowMs }
+      fs.writeFileSync(filePath, JSON.stringify(data))
+      return true
+    }
+    
+    if (data.count >= maxAttempts) return false
+    data.count++
+    fs.writeFileSync(filePath, JSON.stringify(data))
+    return true
+  } catch {
+    // Fallback: allow if file system fails
+    return true
+  }
+}
+
+export function validateBodySize(body: any): boolean {
+  try {
+    const str = JSON.stringify(body)
+    return str.length <= MAX_BODY_SIZE
+  } catch {
+    return false
+  }
+}
+
+export function sanitizeInput(value: string): string {
+  if (!value) return value
+  // Strip HTML tags
+  let sanitized = value.replace(/<[^>]*>/g, "")
+  // Strip script tags and event handlers
+  sanitized = sanitized.replace(/[<>]/g, "")
+  // Limit length
+  sanitized = sanitized.slice(0, MAX_STRING_LENGTH)
+  return sanitized
+}
+
+export function sanitizeObject(obj: Record<string, any>): Record<string, any> {
+  const result: Record<string, any> = {}
+  for (const [key, value] of Object.entries(obj)) {
+    if (typeof value === "string") {
+      result[key] = sanitizeInput(value)
+    } else if (value === null || value === undefined) {
+      result[key] = value
+    } else {
+      result[key] = value
+    }
+  }
+  return result
+}
 
 export function generatePaymentRef(regNum: string): string {
   const raw = crypto.randomUUID().replace(/-/g, "").slice(0, 10).toUpperCase()
@@ -43,6 +121,7 @@ export function generateToken(type: "student" | "admin", userId: number): string
     userId,
     expiresAt,
     createdAt: Date.now(),
+    lastActivity: Date.now(),
   })
   writeData(data)
 
@@ -59,6 +138,9 @@ export function verifyToken(token: string): { type: string; userId: number } | n
     writeData(data)
     return null
   }
+  // Update last activity
+  entry.lastActivity = Date.now()
+  writeData(data)
   return { type: entry.type, userId: entry.userId }
 }
 
@@ -77,16 +159,11 @@ export function cleanExpiredTokens(): void {
   if (data.tokens.length !== before) writeData(data)
 }
 
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
+export function generateCSRFToken(): string {
+  return crypto.randomBytes(32).toString("hex")
+}
 
-export function checkRateLimit(key: string, maxAttempts = 5, windowMs = 60000): boolean {
-  const now = Date.now()
-  const entry = rateLimitMap.get(key)
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(key, { count: 1, resetAt: now + windowMs })
-    return true
-  }
-  if (entry.count >= maxAttempts) return false
-  entry.count++
-  return true
+export function validateCSRFToken(token: string, stored: string): boolean {
+  if (!token || !stored) return false
+  return crypto.timingSafeEqual(Buffer.from(token), Buffer.from(stored))
 }

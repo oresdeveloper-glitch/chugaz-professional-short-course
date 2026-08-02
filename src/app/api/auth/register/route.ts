@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { readData, writeData, getNextRegNumber } from "@/lib/server-store"
-import { hashPassword, checkRateLimit, generatePaymentRef, validateTransactionId } from "@/lib/auth-server"
+import { hashPassword, checkRateLimit, generatePaymentRef, validateTransactionId, sanitizeObject, sanitizeInput, validateBodySize } from "@/lib/auth-server"
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PHONE_RE = /^\+?[\d\s\-()]{7,15}$/
@@ -15,6 +15,14 @@ export async function POST(req: Request) {
 
   let body: any
   try { body = await req.json() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
+
+  // Validate request body size
+  if (!validateBodySize(body)) {
+    return NextResponse.json({ message: "Request body too large" }, { status: 413 })
+  }
+
+  // Sanitize all string inputs
+  body = sanitizeObject(body)
 
   if (body.website && body.website.trim()) {
     return NextResponse.json({ message: "Bot detected" }, { status: 400 })
@@ -95,9 +103,9 @@ export async function POST(req: Request) {
   const student = {
     id: Date.now(),
     registration_number: regNum,
-    first_name,
-    middle_name,
-    last_name,
+    first_name: sanitizeInput(first_name),
+    middle_name: middle_name ? sanitizeInput(middle_name) : null,
+    last_name: sanitizeInput(last_name),
     email,
     phone,
     whatsapp,

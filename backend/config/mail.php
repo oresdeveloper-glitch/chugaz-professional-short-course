@@ -14,6 +14,6 @@ return [
     ],
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS','noreply@chugazstationery.com'),
-        'name' => env('MAIL_FROM_NAME','CHUGAZ Stationery'),
+        'name' => env('MAIL_FROM_NAME','CHUGAZ ICT SERVICES OFFICE SUPPLIES'),
     ],
 ];

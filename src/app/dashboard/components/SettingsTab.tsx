@@ -23,15 +23,15 @@ export default function SettingsTab({ user, studentData }: DashboardTabProps) {
             </div>
           </div>
           <Separator />
-          <div className="grid md:grid-cols-2 gap-4 text-sm">
-            <div><span className="text-gray-500">Registration No</span><p className="font-medium">{user.regNo}</p></div>
-            <div><span className="text-gray-500">Phone</span><p className="font-medium">{studentData.phone || "—"}</p></div>
-            <div><span className="text-gray-500">Gender</span><p className="font-medium capitalize">{studentData.gender || "—"}</p></div>
-            <div><span className="text-gray-500">Nationality</span><p className="font-medium">{studentData.nationality || "—"}</p></div>
-            <div><span className="text-gray-500">Occupation</span><p className="font-medium">{studentData.occupation || "—"}</p></div>
-            <div><span className="text-gray-500">Education Level</span><p className="font-medium">{studentData.educationLevel || "—"}</p></div>
-            <div><span className="text-gray-500">Region</span><p className="font-medium">{studentData.region || "—"}</p></div>
-            <div><span className="text-gray-500">District</span><p className="font-medium">{studentData.district || "—"}</p></div>
+<div className="grid md:grid-cols-2 gap-4 text-sm">
+            <div><span className="text-gray-600 dark:text-gray-400">Registration No</span><p className="font-medium">{user.regNo}</p></div>
+            <div><span className="text-gray-600 dark:text-gray-400">Phone</span><p className="font-medium">{studentData.phone || "—"}</p></div>
+            <div><span className="text-gray-600 dark:text-gray-400">Gender</span><p className="font-medium capitalize">{studentData.gender || "—"}</p></div>
+            <div><span className="text-gray-600 dark:text-gray-400">Nationality</span><p className="font-medium">{studentData.nationality || "—"}</p></div>
+            <div><span className="text-gray-600 dark:text-gray-400">Occupation</span><p className="font-medium">{studentData.occupation || "—"}</p></div>
+            <div><span className="text-gray-600 dark:text-gray-400">Education Level</span><p className="font-medium">{studentData.educationLevel || "—"}</p></div>
+            <div><span className="text-gray-600 dark:text-gray-400">Region</span><p className="font-medium">{studentData.region || "—"}</p></div>
+            <div><span className="text-gray-600 dark:text-gray-400">District</span><p className="font-medium">{studentData.district || "—"}</p></div>
           </div>
         </GlassCardContent>
       </GlassCard>

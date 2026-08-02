@@ -69,7 +69,7 @@ export default function AboutPage() {
               </span>
             </h1>
             <p className="text-base md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
-              Discover the story behind CHUGAZ Stationery â€” a premier ICT and Engineering training center
+              Discover the story behind CHUGAZ ICT SERVICES OFFICE SUPPLIES â€” a premier ICT and Engineering training center
               dedicated to empowering minds and building futures in Mbeya, Tanzania.
             </p>
           </div>
@@ -153,7 +153,7 @@ export default function AboutPage() {
                 <h2 className="text-2xl md:text-4xl font-bold text-primary mb-6 font-heading">The CHUGAZ Story</h2>
                 <div className="space-y-4 text-gray-700 leading-relaxed">
                   <p>
-                    CHUGAZ Stationery was founded with a vision to bridge the skills gap in Tanzania&apos;s ICT and Engineering
+                    CHUGAZ ICT SERVICES OFFICE SUPPLIES was founded with a vision to bridge the skills gap in Tanzania&apos;s ICT and Engineering
                     sectors. What began as a small training initiative has grown into one of Mbeya&apos;s most respected
                     professional training centers.
                   </p>
@@ -163,7 +163,7 @@ export default function AboutPage() {
                     hands-on education remains at the heart of everything we do.
                   </p>
                   <p>
-                    Today, CHUGAZ Stationery offers 15+ professional courses spanning programming, engineering design,
+                    Today, CHUGAZ ICT SERVICES OFFICE SUPPLIES offers 15+ professional courses spanning programming, engineering design,
                     creative skills, and computer applications, serving students from across the region.
                   </p>
                 </div>
@@ -173,7 +173,7 @@ export default function AboutPage() {
                   <div className="relative h-64 md:h-80">
                     <Image
                       src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&q=80"
-                      alt="CHUGAZ Stationery"
+                      alt="CHUGAZ ICT SERVICES OFFICE SUPPLIES"
                       fill
                       className="object-cover"
                     />
@@ -260,7 +260,7 @@ export default function AboutPage() {
               <Badge variant="gold" className="mb-4 px-4 py-1.5 text-sm">Gallery</Badge>
               <h2 className="text-2xl md:text-4xl font-bold text-primary mb-4 font-heading">Our Campus & Activities</h2>
               <p className="text-gray-700 max-w-2xl mx-auto">
-                Take a glimpse into life at CHUGAZ Stationery.
+                Take a glimpse into life at CHUGAZ ICT SERVICES OFFICE SUPPLIES.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto"   >
@@ -293,7 +293,7 @@ export default function AboutPage() {
             <div >
               <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 font-heading">Ready to Start Your Journey?</h2>
               <p className="text-white/80 mb-8 max-w-xl mx-auto">
-                Join hundreds of successful students who have transformed their careers at CHUGAZ Stationery.
+                Join hundreds of successful students who have transformed their careers at CHUGAZ ICT SERVICES OFFICE SUPPLIES.
               </p>
               <Link href="/register">
                 <PremiumButton variant="gradient-gold" size="xl" iconRight={<ArrowRight className="w-5 h-5" />}>

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { readData, writeData } from "@/lib/server-store"
-import { checkRateLimit } from "@/lib/auth-server"
+import { checkRateLimit, sanitizeInput, validateBodySize } from "@/lib/auth-server"
 
 export async function POST(req: Request) {
   const ip = req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip") || "unknown"
@@ -10,6 +10,11 @@ export async function POST(req: Request) {
 
   let body: any
   try { body = await req.json() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
+  
+  if (!validateBodySize(body)) {
+    return NextResponse.json({ message: "Message too large" }, { status: 413 })
+  }
+
   const { name, email, subject, message } = body
 
   if (!name?.trim() || !email?.trim() || !message?.trim()) {
@@ -19,10 +24,10 @@ export async function POST(req: Request) {
   const data = readData()
   data.messages.push({
     id: Date.now(),
-    name: name.trim(),
+    name: sanitizeInput(name.trim()),
     email: email.trim(),
-    subject: subject?.trim() || null,
-    message: message.trim(),
+    subject: subject ? sanitizeInput(subject.trim()) : null,
+    message: sanitizeInput(message.trim()),
     created_at: new Date().toISOString(),
   })
   writeData(data)

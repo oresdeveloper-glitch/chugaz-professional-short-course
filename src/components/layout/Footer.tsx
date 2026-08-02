@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Mail, Phone, MapPin, ChevronRight } from "lucide-react"
 
 const quickLinks = [
@@ -81,16 +82,16 @@ export default function Footer() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 py-16">
           <div className="space-y-6">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 rounded-[20px] bg-gradient-to-br from-gold to-gold-light flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <span className="text-white font-heading font-extrabold text-sm">C</span>
+<Link href="/" className="flex items-center gap-2 sm:gap-3 group">
+              <div className="w-12 h-12 sm:w-24 sm:h-24 lg:w-48 lg:h-48 relative rounded-[20px] overflow-hidden flex-shrink-0">
+                <Image src="/images/chugaz-logo.png" alt="CHUGAZ" fill className="object-contain" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-heading font-extrabold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent leading-tight">
+                <span className="text-base sm:text-lg lg:text-xl font-heading font-extrabold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent leading-tight">
                   CHUGAZ
                 </span>
-                <span className="text-[10px] font-heading font-semibold text-gray-400 tracking-[0.2em] leading-tight">
-                  STATIONERY
+                <span className="text-[7px] sm:text-[8px] font-heading font-semibold text-gray-400 tracking-[0.1em] sm:tracking-[0.15em] leading-tight">
+                  ICT SERVICES OFFICE SUPPLIES
                 </span>
               </div>
             </Link>
@@ -167,7 +168,7 @@ export default function Footer() {
         <div className="border-t border-white/10 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-gray-400">
-              &copy; {new Date().getFullYear()} CHUGAZ STATIONERY. All rights reserved.
+              &copy; {new Date().getFullYear()} CHUGAZ ICT SERVICES OFFICE SUPPLIES. All rights reserved.
             </p>
             <p className="text-sm text-gold font-heading font-semibold">
               Empowering Minds, Building Futures

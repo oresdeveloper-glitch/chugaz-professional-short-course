@@ -2,7 +2,7 @@
 
 return [
 
-    'name' => env('APP_NAME', 'CHUGAZ_Stationery'),
+    'name' => env('APP_NAME', 'CHUGAZ_ICT_SERVICES_OFFICE_SUPPLIES'),
 
     'env' => env('APP_ENV', 'production'),
 

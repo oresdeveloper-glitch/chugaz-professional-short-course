@@ -31,7 +31,7 @@ export const PremiumButton = forwardRef<HTMLButtonElement, PremiumButtonProps>(
     },
     ref
   ) => {
-    const baseStyles = "relative overflow-hidden inline-flex items-center justify-center font-button font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-50 disabled:pointer-events-none select-none"
+const baseStyles = "relative overflow-hidden inline-flex items-center justify-center font-button font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-50 disabled:pointer-events-none select-none touch-manipulation"
 
     const variants = {
       "gradient-primary": "bg-gradient-to-r from-[#0B1F4D] to-[#1a3a7a] text-white shadow-[0_10px_30px_rgba(11,31,77,0.35)] hover:shadow-[0_16px_40px_rgba(11,31,77,0.45)] hover:from-[#1a3a7a] hover:to-[#0B1F4D]",
@@ -49,11 +49,12 @@ export const PremiumButton = forwardRef<HTMLButtonElement, PremiumButtonProps>(
       xl: "px-10 py-5 text-xl min-h-[64px] gap-3 rounded-[24px]",
     }
 
-    const Comp = asChild ? Slot : "button"
+const Comp = asChild ? Slot : "button"
 
     return (
       <Comp
         ref={ref}
+        type={asChild ? undefined : "button"}
         className={cn(baseStyles, variants[variant], sizes[size], fullWidth && "w-full", className)}
         disabled={disabled || loading}
         aria-busy={loading}

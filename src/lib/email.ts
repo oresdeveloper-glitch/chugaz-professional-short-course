@@ -28,14 +28,14 @@ export async function sendResetCodeEmail(to: string, code: string): Promise<{ ok
   if (transporter) {
     try {
       const info = await transporter.sendMail({
-        from: `"Chugaz Stationery" <${SMTP_USER}>`,
+        from: `"Chugaz ICT Services Office Supplies" <${SMTP_USER}>`,
         to,
-        subject: "Password Reset Code - Chugaz Stationery",
+        subject: "Password Reset Code - Chugaz ICT Services Office Supplies",
         html: `
           <div style="font-family:Arial,sans-serif;max-width:480px;margin:0 auto;padding:24px;background:#fff;border-radius:12px;border:1px solid #e5e7eb">
             <div style="text-align:center;margin-bottom:24px">
               <h1 style="color:#0B1F4D;font-size:24px;margin:0">Password Reset</h1>
-              <p style="color:#6b7280;font-size:14px;margin:8px 0 0">Chugaz Stationery</p>
+              <p style="color:#6b7280;font-size:14px;margin:8px 0 0">Chugaz ICT Services Office Supplies</p>
             </div>
             <p style="color:#374151;font-size:14px;line-height:1.6">Use the code below to reset your password. It expires in 15 minutes.</p>
             <div style="text-align:center;margin:24px 0;padding:16px;background:#f3f4f6;border-radius:8px">

@@ -173,12 +173,12 @@ export default function CourseDetailPage() {
                         {course.modules.map((module, index) => (
                           <div
                             key={index}
-                            className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 hover:bg-primary/5 transition-colors duration-300"
+                            className="group flex items-center gap-4 p-4 rounded-xl bg-gray-50 hover:bg-primary/5 transition-colors duration-300"
                           >
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-gold-light flex items-center justify-center text-primary font-bold text-sm shrink-0">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-gold-light flex items-center justify-center text-primary font-bold text-sm shrink-0 shadow-[0_4px_12px_rgba(244,180,0,0.3)]">
                               {index + 1}
                             </div>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-3 flex-1">
                               <BookOpen className="w-4 h-4 text-primary shrink-0" />
                               <span className="text-gray-700 font-medium">{module}</span>
                             </div>
@@ -214,10 +214,12 @@ export default function CourseDetailPage() {
               </ScrollReveal>
 
               <ScrollReveal direction="right">
-                <GlassCard variant="gold" className="p-6">
+                <GlassCard variant="gold" className="p-6 overflow-hidden">
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#F4B400] to-[#ffc933]" />
                   <GlassCardContent className="p-0 text-center">
-                    <p className="text-3xl font-bold text-primary font-heading">{formatFee(course.fee, course.currency)}</p>
-                    <p className="text-gray-500 text-sm mb-6">Full Course Fee</p>
+                    <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500 mb-2">Full Course Fee</p>
+                    <p className="text-4xl font-bold text-primary font-heading mb-1">{formatFee(course.fee, course.currency)}</p>
+                    <p className="text-gray-500 text-sm mb-6">One-time payment · Certificate included</p>
                     <Link href="/register">
                       <PremiumButton variant="gradient-gold" size="lg" fullWidth iconRight={<ArrowRight className="w-4 h-4" />}>
                         Enroll Now

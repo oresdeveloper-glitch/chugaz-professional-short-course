@@ -54,7 +54,7 @@ function getMessage(reason: string, student: any): string {
   const name = `${student.first_name} ${student.last_name}`
   const messages: Record<string, string> = {
     payment: `Dear ${name}, this is a reminder to complete your payment for the registered courses. Please use your payment reference when sending M-Pesa.`,
-    registration: `Dear ${name}, thank you for registering with CHUGAZ Stationery. Please check your registration status and complete any pending steps.`,
+    registration: `Dear ${name}, thank you for registering with CHUGAZ ICT SERVICES OFFICE SUPPLIES. Please check your registration status and complete any pending steps.`,
     document: `Dear ${name}, please submit the required documents (passport photo, academic certificates) to complete your registration.`,
     general: `Dear ${name}, please check your student portal for important updates regarding your courses.`,
   }

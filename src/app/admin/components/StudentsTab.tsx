@@ -29,7 +29,7 @@ export default function StudentsTab({ students, searchQuery, setSearchQuery, fil
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4">
           <GlassCardTitle className="text-base md:text-lg font-heading font-bold text-[#0B1F4D] dark:text-white">All Students ({students.length})</GlassCardTitle>
           <div className="flex flex-col sm:flex-row gap-3">
-            <PremiumInput label="Search" placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
+            <PremiumInput label="Search" placeholder="Search by name or reg no." value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
               iconLeft={<Search className="w-4 h-4" />} className="rounded-[20px] w-full sm:w-48 md:w-64 min-h-[44px]" />
             <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="rounded-[20px] border border-input bg-background px-3 md:px-4 py-2 text-sm min-h-[44px] w-full sm:w-auto">
               <option value="all">All</option>

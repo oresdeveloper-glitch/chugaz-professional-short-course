@@ -6,7 +6,7 @@ export const testimonials: Testimonial[] = [
     name: "Sarah Johnson",
     title: "Computer Science Student",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
-    content: "CHUGAZ Stationery transformed my career. The Python course was incredibly well-structured and the instructors are world-class. I went from a complete beginner to building my own applications.",
+    content: "CHUGAZ ICT SERVICES OFFICE SUPPLIES transformed my career. The Python course was incredibly well-structured and the instructors are world-class. I went from a complete beginner to building my own applications.",
     rating: 5
   },
   {

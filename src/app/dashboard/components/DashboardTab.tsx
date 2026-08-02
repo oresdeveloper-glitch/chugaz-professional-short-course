@@ -96,23 +96,23 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
           <h3 className="text-xl font-heading font-bold text-[#0B1F4D] dark:text-white">Quick Info</h3>
           <GlassCard variant="elevated" className="rounded-[20px] border-0 shadow-md">
             <GlassCardContent className="p-4 md:p-6 space-y-4">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Name</span>
+<div className="flex justify-between text-sm">
+                <span className="text-gray-600 dark:text-gray-400">Name</span>
                 <span className="font-medium">{user.firstName} {user.lastName}</span>
               </div>
               <Separator />
               <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Email</span>
+                <span className="text-gray-600 dark:text-gray-400">Email</span>
                 <span className="font-medium truncate ml-2">{user.email}</span>
               </div>
               <Separator />
               <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Reg No.</span>
+                <span className="text-gray-600 dark:text-gray-400">Reg No.</span>
                 <span className="font-medium">{user.regNo}</span>
               </div>
               <Separator />
               <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Status</span>
+                <span className="text-gray-600 dark:text-gray-400">Status</span>
                 <Badge className={cn("rounded-[20px]", studentData.status === "approved" ? "bg-green-100 text-green-700" : "bg-yellow-100 text-yellow-700")}>{studentData.status}</Badge>
               </div>
             </GlassCardContent>

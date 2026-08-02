@@ -119,8 +119,8 @@ export default function ContactPage() {
                         <info.icon className={`w-6 h-6 ${info.color}`} />
                       </div>
                       <h3 className="font-heading font-bold text-[#0B1F4D] dark:text-white mb-2">{info.title}</h3>
-                      {info.details.map((detail, j) => (
-                        <p key={j} className="text-gray-700 dark:text-gray-400 text-sm">{detail}</p>
+{info.details.map((detail, j) => (
+                        <p key={j} className="text-gray-700 dark:text-gray-300 text-sm">{detail}</p>
                       ))}
                     </GlassCardContent>
                   </GlassCard>
@@ -145,7 +145,7 @@ export default function ContactPage() {
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="CHUGAZ Stationery Location"
+                    title="CHUGAZ ICT SERVICES OFFICE SUPPLIES Location"
                     className="border-0"
                   />
                 </GlassCardContent>
@@ -188,7 +188,7 @@ export default function ContactPage() {
                         iconLeft={<User className="w-4 h-4" />}
                         value={formData.name}
                         onChange={updateField("name")}
-                        placeholder="John Doe"
+                        placeholder="Tell us your name"
                         required
                       />
                       <PremiumInput
@@ -197,7 +197,7 @@ export default function ContactPage() {
                         type="email"
                         value={formData.email}
                         onChange={updateField("email")}
-                        placeholder="chugaz@example.com"
+                        placeholder="Your email address"
                         required
                       />
                     </div>
@@ -206,14 +206,14 @@ export default function ContactPage() {
                       iconLeft={<FileText className="w-4 h-4" />}
                       value={formData.subject}
                       onChange={updateField("subject")}
-                      placeholder="How can we help?"
+                      placeholder="What would you like help with?"
                       required
                     />
                     <PremiumTextarea
                       label="Message"
                       value={formData.message}
                       onChange={updateField("message")}
-                      placeholder="Write your message here to Chugaz..."
+                      placeholder="Share your message with CHUGAZ..."
                       required
                       className="min-h-[120px]"
                     />
@@ -247,7 +247,7 @@ export default function ContactPage() {
                 Follow Us on Social Media
               </h2>
               <p className="text-gray-500 dark:text-gray-400 mb-8">
-                Stay connected with CHUGAZ Stationery for updates, tips, and success stories
+                Stay connected with CHUGAZ ICT SERVICES OFFICE SUPPLIES for updates, tips, and success stories
               </p>
               <div className="flex justify-center gap-3 md:gap-4 flex-wrap">
                 {socialLinks.map((social) => (
@@ -269,7 +269,7 @@ export default function ContactPage() {
       </section>
 
       <a
-        href="https://wa.me/255718297342?text=Hello%20CHUGAZ%20Stationery!%20I%20would%20like%20to%20inquire%20about%20your%20products."
+        href="https://wa.me/255718297342?text=Hello%20CHUGAZ%20ICT%20SERVICES%20OFFICE%20SUPPLIES!%20I%20would%20like%20to%20inquire%20about%20your%20products."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center shadow-xl hover:bg-green-600 transition-all hover:scale-110 z-50"

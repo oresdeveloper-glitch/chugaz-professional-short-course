@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server"
 import { readData, writeData } from "@/lib/server-store"
-import { verifyPassword, generateToken, hashPassword, checkRateLimit } from "@/lib/auth-server"
+import { verifyPassword, generateToken, hashPassword, checkRateLimit, sanitizeInput, validateBodySize } from "@/lib/auth-server"
 
 export async function POST(req: Request) {
   let body: any
   try { body = await req.json() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
+  
+  // Validate request body size
+  if (!validateBodySize(body)) {
+    return NextResponse.json({ message: "Request body too large" }, { status: 413 })
+  }
+
   const { email, password } = body
 
   if (!email || !password) {

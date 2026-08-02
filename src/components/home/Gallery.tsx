@@ -54,8 +54,8 @@ export default function Gallery() {
             <div
               key={item.id}
             >
-              <GlassCard variant="outlined" hover padding="none" borderRadius="xl" className="group relative cursor-pointer overflow-hidden aspect-[4/3] md:aspect-[5/4] lg:aspect-[4/3]" onClick={() => setSelectedIndex(index)}>
-                <div className="relative w-full h-full overflow-hidden">
+<GlassCard variant="outlined" hover padding="none" borderRadius="xl" className="group relative cursor-pointer overflow-hidden aspect-[4/3] md:aspect-[5/4] lg:aspect-[4/3]" onClick={() => setSelectedIndex(index)}>
+                <div className="absolute inset-0 overflow-hidden">
                   <Image
                     src={item.image}
                     alt={item.caption}

@@ -1,7 +1,7 @@
 ﻿"use client"
 
 import { useState } from "react"
-import { Mail, ArrowLeft, CheckCircle2, Key, Lock, Copy } from "lucide-react"
+import { Mail, ArrowLeft, CheckCircle2, Key, Lock, Copy, AtSign, ShieldCheck } from "lucide-react"
 import Link from "next/link"
 import { PremiumInput } from "@/components/ui/PremiumInput"
 import { PremiumButton } from "@/components/ui/PremiumButton"
@@ -54,7 +54,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
+<div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(244,180,0,0.12),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(129,140,248,0.10),transparent_40%),linear-gradient(135deg,#0B1F4D_0%,#1a3a7a_50%,#0B1F4D_100%)]">
 
       <div
         
@@ -79,7 +79,7 @@ export default function ForgotPasswordPage() {
                   <CheckCircle2 className="w-10 h-10 text-green-400" />
                 </div>
                 <GlassCardTitle as="h1" className="text-2xl text-white mb-2">Password Reset</GlassCardTitle>
-                <p className="text-gray-400 mb-6">Your password has been reset successfully.</p>
+<p className="text-gray-300 mb-6">Your password has been reset successfully.</p>
                 <Link href="/login">
                   <PremiumButton variant="gradient-gold" size="lg" iconLeft={<ArrowLeft className="w-4 h-4" />}>
                     Back to Login
@@ -94,8 +94,8 @@ export default function ForgotPasswordPage() {
                 
               >
                 <div className="flex items-center gap-3 mb-6">
-                  <button onClick={() => setStep("email")} className="p-2 hover:bg-white/10 rounded-[10px] transition-colors">
-                    <ArrowLeft className="w-4 h-4 text-gray-400" />
+<button onClick={() => setStep("email")} className="p-2 hover:bg-white/10 rounded-[10px] transition-colors">
+                    <ArrowLeft className="w-4 h-4 text-gray-300" />
                   </button>
                   <GlassCardTitle as="h1" className="text-2xl text-white">Reset Password</GlassCardTitle>
                 </div>
@@ -121,10 +121,10 @@ export default function ForgotPasswordPage() {
                   <PremiumInput
                     label="New Password"
                     type="password"
-                    iconLeft={<Lock className="w-5 h-5" />}
+                    iconLeft={<ShieldCheck className="w-5 h-5" />}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    placeholder="Min. 8 characters"
+                    placeholder="Create a strong new password"
                     required
                     minLength={8}
                   />
@@ -160,15 +160,15 @@ export default function ForgotPasswordPage() {
                   </Link>
                   <GlassCardTitle as="h1" className="text-2xl text-white">Forgot Password</GlassCardTitle>
                 </div>
-                <p className="text-gray-400 mb-6">Enter your email and we&apos;ll send you a 6-digit reset code.</p>
+<p className="text-gray-300 mb-6">Enter your email and we&apos;ll send you a 6-digit reset code.</p>
                 <form onSubmit={handleSendCode} className="space-y-4">
                   <PremiumInput
                     label="Email Address"
                     type="email"
-                    iconLeft={<Mail className="w-5 h-5" />}
+                    iconLeft={<AtSign className="w-5 h-5" />}
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    placeholder="you@example.com"
+                    placeholder="Enter your registered email"
                     required
                   />
                   {error && (

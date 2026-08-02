@@ -27,11 +27,11 @@ const radii = {
 }
 
 const variants = {
-  default: "bg-white/10 dark:bg-white/5 backdrop-blur-2xl border border-white/15 dark:border-white/10 shadow-[0_18px_50px_rgba(2,6,23,0.16),inset_0_1px_0_rgba(255,255,255,0.16)]",
-  elevated: "bg-white/15 dark:bg-white/8 backdrop-blur-[24px] border border-white/20 dark:border-white/10 shadow-[0_25px_70px_rgba(2,6,23,0.22),_0_10px_25px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.15)]",
-  outlined: "bg-transparent border-2 border-white/20 dark:border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.08)]",
-  gold: "bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-[#F4B400]/30 shadow-[0_10px_35px_rgba(244,180,0,0.16),_0_0_0_1px_rgba(244,180,0,0.12)]",
-  dark: "bg-[#060f27]/80 dark:bg-[#060f27]/90 backdrop-blur-2xl border border-[#1a3a7a]/50 shadow-[0_18px_50px_rgba(0,0,0,0.3)]",
+  default: "bg-white/80 dark:bg-slate-900/70 backdrop-blur-2xl border border-white/70 dark:border-white/10 shadow-[0_20px_60px_rgba(15,23,42,0.12),inset_0_1px_0_rgba(255,255,255,0.65)]",
+  elevated: "bg-white/90 dark:bg-slate-900/70 backdrop-blur-[24px] border border-white/80 dark:border-white/10 shadow-[0_28px_80px_rgba(15,23,42,0.16),_0_10px_24px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.7)]",
+  outlined: "bg-white/70 border-2 border-slate-200/80 shadow-[0_10px_30px_rgba(15,23,42,0.08)]",
+  gold: "bg-white/85 dark:bg-slate-900/70 backdrop-blur-xl border border-[#F4B400]/30 shadow-[0_14px_40px_rgba(244,180,0,0.16),_0_0_0_1px_rgba(244,180,0,0.14)]",
+  dark: "bg-[#07162f]/90 dark:bg-[#060f27]/95 backdrop-blur-2xl border border-[#1a3a7a]/50 shadow-[0_18px_50px_rgba(0,0,0,0.26)]",
 }
 
 export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(

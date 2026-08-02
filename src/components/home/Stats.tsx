@@ -52,7 +52,7 @@ function StatCard({ stat }: { stat: StatItem }) {
         
         <GlassCardContent className="relative z-10 text-center">
           <div
-            className="w-18 h-18 mx-auto mb-6 rounded-[24px] bg-gradient-to-br from-[#F4B400]/20 to-[#0B1F4D]/20 flex items-center justify-center border border-[#F4B400]/30"
+className="w-12 h-12 sm:w-14 sm:h-14 lg:w-18 lg:h-18 mx-auto mb-6 rounded-[24px] bg-gradient-to-br from-[#F4B400]/20 to-[#0B1F4D]/20 flex items-center justify-center border border-[#F4B400]/30"
           >
             <Icon className="w-9 h-9 text-[#F4B400] drop-shadow-[0_4px_12px_rgba(244,180,0,0.4)]" />
           </div>

@@ -39,6 +39,15 @@ const initialFormData = {
   declaration: false,
 }
 
+const stepDescriptions: Record<number, string> = {
+  1: "Tell us who you are and create a secure account password.",
+  2: "Share your contact details so we can reach you easily.",
+  3: "Choose the short course(s) that match your goals.",
+  4: "Pick your preferred learning mode and schedule.",
+  5: "Select a payment method and confirm your transaction details.",
+  6: "Review your information carefully before submitting your form.",
+}
+
 export default function RegisterPage() {
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState(initialFormData)
@@ -93,12 +102,22 @@ export default function RegisterPage() {
     if (step === 3) {
       if (selectedCourses.length === 0) newErrors.courses = "Select at least one course"
     }
+    if (step === 4) {
+      if (!formData.trainingMode) newErrors.trainingMode = "Select a learning mode"
+      if (!formData.preferredTime) newErrors.preferredTime = "Select a preferred time"
+    }
+    if (step === 5) {
+      if (!formData.paymentMethod) newErrors.paymentMethod = "Select a payment method"
+      if (formData.paymentMethod === "mobile" && !formData.transactionId.trim()) newErrors.transactionId = "Enter the transaction ID"
+    }
     if (step === 6) {
       if (!formData.declaration) newErrors.declaration = "Please confirm"
     }
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
+
+// Navigation is purely button-driven — no auto-advance
 
   const nextStep = () => {
     if (validateStep(currentStep)) {
@@ -217,7 +236,7 @@ export default function RegisterPage() {
   <div class="header">
     <div class="header-top">
       <div>
-        <h1>CHUGAZ <span>Stationery</span></h1>
+        <h1>CHUGAZ <span>ICT Services Office Supplies</span></h1>
         <p class="tagline">Professional Short Course Registration</p>
       </div>
       <div class="receipt-badge">RECEIPT</div>
@@ -301,7 +320,7 @@ export default function RegisterPage() {
     <div class="footer-grid">
       <div class="footer-item">
         <label>Institution</label>
-        <p>CHUGAZ Stationery<br>Mbeya, Tanzania</p>
+        <p>CHUGAZ ICT Services Office Supplies<br>Mbeya, Tanzania</p>
       </div>
       <div class="footer-item">
         <label>Contact</label>
@@ -310,7 +329,7 @@ export default function RegisterPage() {
     </div>
     <div class="footer-bottom">
       This is a computer-generated receipt. No signature is required.<br>
-      &copy; ${new Date().getFullYear()} CHUGAZ Stationery. All rights reserved.
+      &copy; ${new Date().getFullYear()} CHUGAZ ICT Services Office Supplies. All rights reserved.
     </div>
   </div>
 </div>
@@ -329,26 +348,19 @@ export default function RegisterPage() {
 
   if (submitted) {
     return (
-      <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
-        <div
-          
-          
-          className="w-full max-w-lg z-10"
-        >
-          <GlassCard variant="elevated" padding="xl" borderRadius="2xl" className="text-center">
-            <div
-              
-              
-              
-              className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6"
-            >
+      <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-[#0B1F4D]">
+        <div className="absolute top-[-10%] left-[-6%] h-96 w-96 rounded-full bg-[#F4B400]/10 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-[-12%] right-[-8%] h-[28rem] w-[28rem] rounded-full bg-[#1a3a7a]/50 blur-3xl pointer-events-none" />
+        <div className="w-full max-w-lg z-10">
+          <GlassCard variant="elevated" padding="xl" borderRadius="2xl" className="text-center border border-white/10 bg-gradient-to-br from-[#08153b]/95 via-[#0b1f4d]/95 to-[#08153b]/95 shadow-[0_30px_100px_-35px_rgba(0,0,0,0.8)]">
+            <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
               <Check className="w-10 h-10 text-green-400" />
             </div>
             <h1 className="text-3xl font-heading font-extrabold text-white mb-2">
               Congratulations!
             </h1>
             <p className="text-gray-400 mb-6">
-              Thank you for registering with CHUGAZ Stationery
+              Thank you for registering with CHUGAZ ICT Services Office Supplies
             </p>
             <div className="bg-[#F4B400]/10 rounded-[20px] p-6 mb-6 space-y-3">
               <div>
@@ -396,100 +408,158 @@ export default function RegisterPage() {
 
   const progressPercent = ((currentStep - 1) / (steps.length - 1)) * 100
 
-  const inputClass = "w-full bg-white/5 backdrop-blur-sm border-2 border-gray-200/50 dark:border-gray-700/50 rounded-[16px] px-5 py-3.5 text-white focus:outline-none focus:border-[#F4B400] focus:shadow-[0_0_0_4px_rgba(244,180,0,0.15)]"
+  const inputClass = "w-full bg-[#071538] backdrop-blur-sm border border-white/10 rounded-[16px] px-5 py-3.5 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#F4B400] focus:ring-4 focus:ring-[#F4B400]/15 transition-all"
 
   return (
-    <div className="relative min-h-screen py-12 px-4 overflow-hidden">
+<div className="relative min-h-screen py-8 md:py-12 px-4 overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(244,180,0,0.12),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(129,140,248,0.10),transparent_40%),linear-gradient(135deg,#0B1F4D_0%,#1a3a7a_50%,#0B1F4D_100%)]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,180,0,0.15),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(129,140,248,0.12),transparent_40%),radial-gradient(circle_at_center,rgba(255,255,255,0.04),transparent_60%)]" />
 
-      <div className="max-w-4xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="grid lg:grid-cols-[1.15fr_0.7fr] gap-6 mb-6">
+          <GlassCard variant="elevated" padding="xl" borderRadius="2xl" className="border border-white/10 bg-gradient-to-br from-[#08153b]/95 via-[#0b1f4d]/95 to-[#08153b]/95 shadow-[0_30px_100px_-35px_rgba(0,0,0,0.8)]">
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#F4B400]/30 bg-[#F4B400]/10 px-3 py-1 text-sm font-semibold text-[#F4B400]">
+                <CheckCircle2 className="w-4 h-4" /> Fast online registration
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-gray-300">
+                <Calendar className="w-4 h-4 text-gray-400" /> Deadline: 31 August 2026
+              </span>
+            </div>
+<h1 className="text-3xl md:text-4xl font-heading font-extrabold text-[#F4B400] mb-3">
+              Join CHUGAZ ICT Services Office Supplies
+            </h1>
+            <p className="text-base md:text-lg text-gray-200 leading-7 max-w-2xl">
+              Register in just a few minutes, select your preferred courses, and complete payment securely with a smooth guided process.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              {[
+                "6-step guided form",
+                "Flexible learning options",
+                "Digital registration receipt",
+              ].map(item => (
+                <span key={item} className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-gray-300">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </GlassCard>
+
+          <GlassCard variant="elevated" padding="xl" borderRadius="2xl" className="border border-white/10 bg-white/5 backdrop-blur-xl">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+<p className="text-sm font-semibold uppercase tracking-[0.25em] text-gray-200">Registration summary</p>
+                <h2 className="text-xl font-heading font-bold text-[#F4B400]">Your progress</h2>
+              </div>
+              <div className="rounded-full border border-[#F4B400]/30 bg-[#F4B400]/10 px-3 py-1 text-sm font-semibold text-[#F4B400]">
+                Step {currentStep}/6
+              </div>
+            </div>
+            <div className="space-y-3 text-sm">
+              <div className="flex items-center justify-between rounded-[16px] border border-white/10 bg-[#0B1F4D]/60 px-3 py-3">
+<span className="text-gray-200">Current step</span>
+                <span className="font-semibold text-white">{steps[currentStep - 1].title}</span>
+              </div>
+              <div className="flex items-center justify-between rounded-[16px] border border-white/10 bg-[#0B1F4D]/60 px-3 py-3">
+                <span className="text-gray-200">Selected courses</span>
+                <span className="font-semibold text-white">{selectedCourses.length}</span>
+              </div>
+              <div className="flex items-center justify-between rounded-[16px] border border-white/10 bg-[#0B1F4D]/60 px-3 py-3">
+                <span className="text-gray-400">Estimated fee</span>
+                <span className="font-semibold text-[#F4B400]">{totalFee.toLocaleString()} TZS</span>
+              </div>
+              <div className="rounded-[16px] border border-white/10 bg-white/5 p-3 text-sm text-gray-300">
+                {stepDescriptions[currentStep]}
+              </div>
+              {selectedCourses.length > 0 && (
+                <div className="rounded-[16px] border border-white/10 bg-white/5 p-3">
+                  <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-gray-500">Selected courses</p>
+                  <div className="space-y-2">
+                    {selectedCourses.map(id => {
+                      const course = courses.find(c => c.id === id)
+                      return course ? (
+                        <div key={id} className="flex items-center justify-between text-sm text-gray-200">
+                          <span>{course.title}</span>
+                          <span className="text-[#F4B400]">{course.fee.toLocaleString()} TZS</span>
+                        </div>
+                      ) : null
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          </GlassCard>
+        </div>
+
         <div
-          
-          
-          className="text-center mb-8"
+          className="text-center mb-6"
         >
-          <h1 className="text-2xl md:text-4xl font-heading font-extrabold text-white mb-2">
+          <h2 className="text-2xl md:text-3xl font-heading font-extrabold text-white mb-2">
             Online Registration
-          </h1>
-          <p className="text-gray-400">
+          </h2>
+          <p className="text-gray-200">
             Complete all 6 steps to register for your courses
-          </p>
-          <p className="text-sm text-[#F4B400] font-semibold mt-1">
-            Application Deadline: 31 August 2026
           </p>
         </div>
 
         {serverError && (
-          <div
-            
-            
-            className="bg-red-500/10 border border-red-500/20 text-red-300 px-6 py-3 rounded-[20px] mb-4 text-sm"
-          >
+          <div className="bg-red-500/10 border border-red-500/20 text-red-300 px-6 py-3 rounded-[20px] mb-4 text-sm">
             {serverError}
           </div>
         )}
 
-        <GlassCard variant="elevated" padding="none" borderRadius="2xl">
+        <GlassCard variant="elevated" padding="none" borderRadius="2xl" className="overflow-hidden border border-white/10 bg-[#0B1F4D] shadow-[0_30px_100px_-35px_rgba(0,0,0,0.8)]">
           <div aria-hidden="true" className="absolute opacity-0 pointer-events-none" style={{ height: 0, overflow: "hidden" }}>
             <label>Website</label>
             <input tabIndex={-1} autoComplete="off" value={website} onChange={e => setWebsite(e.target.value)} />
           </div>
 
-          <div className="bg-[#060f27]/90 backdrop-blur-2xl p-4 md:p-8 rounded-t-[32px]">
-            <div className="flex items-center justify-between mb-4">
-              {steps.map((step, i) => (
-                <div key={step.id} className="flex items-center">
-                  <div className="flex flex-col items-center">
-                    <div
-                      className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-xs md:text-sm font-bold transition-all duration-300 ${
-                        currentStep > step.id
-                          ? "bg-[#F4B400] text-[#0B1F4D]"
-                          : currentStep === step.id
-                          ? "bg-[#F4B400] text-[#0B1F4D] ring-4 ring-[#F4B400]/30"
-                          : "bg-white/10 text-white/50"
-                      }`}
-                    >
-                      {currentStep > step.id ? <Check className="w-4 h-4 md:w-5 md:h-5" /> : step.id}
+          <div className="bg-[linear-gradient(135deg,rgba(6,15,39,0.98),rgba(11,31,77,0.92))] backdrop-blur-2xl p-4 md:p-8 rounded-t-[32px] border-b border-white/10">
+            <div className="flex items-center justify-between mb-5 gap-2">
+              {steps.map((step, i) => {
+                const isActive = currentStep === step.id
+                const isCompleted = currentStep > step.id
+                return (
+                  <div key={step.id} className="flex items-center flex-1 min-w-0">
+                    <div className="flex flex-col items-center w-full">
+                      <div className={`relative flex items-center justify-center w-9 h-9 md:w-11 md:h-11 rounded-full border-2 transition-all duration-300 ${isCompleted ? "border-[#F4B400] bg-[#F4B400] text-[#0B1F4D] shadow-[0_0_0_6px_rgba(244,180,0,0.16)]" : isActive ? "border-[#F4B400] bg-[#F4B400]/15 text-[#F4B400] shadow-[0_0_0_6px_rgba(244,180,0,0.12)]" : "border-white/15 bg-white/5 text-white/60"}`}>
+                        {isCompleted ? <Check className="w-4 h-4 md:w-5 md:h-5" /> : <step.icon className="w-4 h-4 md:w-5 md:h-5" />}
+                      </div>
+                      <span className={`mt-2 text-[10px] md:text-xs font-semibold text-center hidden md:block ${isActive || isCompleted ? "text-white" : "text-white/60"}`}>
+                        {step.title}
+                      </span>
                     </div>
-                    <span className="text-[10px] md:text-xs mt-1 hidden md:block text-white/70 font-medium">
-                      {step.title}
-                    </span>
+                    {i < steps.length - 1 && (
+                      <div className={`hidden sm:block h-[2px] flex-1 mx-2 rounded-full transition-all duration-300 ${currentStep > step.id ? "bg-[#F4B400]" : "bg-white/10"}`} />
+                    )}
                   </div>
-                  {i < steps.length - 1 && (
-                    <div className={`h-1 w-6 md:w-16 mx-1 md:mx-2 rounded-full transition-all duration-300 ${
-                      currentStep > step.id ? "bg-[#F4B400]" : "bg-white/10"
-                    }`} />
-                  )}
-                </div>
-              ))}
+                )
+              })}
             </div>
-            <div className="w-full bg-white/10 rounded-full h-2">
+            <div className="relative h-2 w-full rounded-full bg-white/10 overflow-hidden">
               <div
-                className="bg-[#F4B400] h-2 rounded-full transition-all duration-500"
+                className="absolute left-0 top-0 h-full rounded-full bg-[linear-gradient(90deg,#F4B400_0%,#ffd96a_100%)] transition-all duration-500"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
           </div>
 
           <div className="p-4 md:p-8">
-              <div
-                key={currentStep}
-                
-                
-                
-                
-              >
+              <div key={currentStep}>
                 {currentStep === 1 && (
                   <div>
-                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white mb-6 flex items-center gap-3">
-                      <User className="w-6 h-6 text-[#F4B400]" /> Personal Information
-                    </h2>
+                    <div className="mb-6 rounded-[20px] border border-[#F4B400]/20 bg-[#F4B400]/10 px-4 py-4 md:px-5">
+                      <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white flex items-center gap-3">
+                        <User className="w-6 h-6 text-[#F4B400]" /> Personal Information
+                      </h2>
+                      <p className="mt-2 text-sm text-gray-300">Create your profile and set up your secure account details.</p>
+                    </div>
                     <div className="grid md:grid-cols-2 gap-4">
                       <PremiumInput
                         label="First Name"
                         iconLeft={<UserRound className="w-5 h-5" />}
                         value={formData.firstName}
                         onChange={e => updateForm("firstName", e.target.value)}
-                        placeholder="Enter first name"
+                        placeholder="e.g. Amina"
                         required
                         error={errors.firstName}
                       />
@@ -498,19 +568,19 @@ export default function RegisterPage() {
                         iconLeft={<UserRound className="w-5 h-5" />}
                         value={formData.middleName}
                         onChange={e => updateForm("middleName", e.target.value)}
-                        placeholder="Enter middle name"
+                        placeholder="Optional"
                       />
                       <PremiumInput
                         label="Last Name"
                         iconLeft={<UserRound className="w-5 h-5" />}
                         value={formData.lastName}
                         onChange={e => updateForm("lastName", e.target.value)}
-                        placeholder="Enter last name"
+                        placeholder="e.g. Hassan"
                         required
                         error={errors.lastName}
                       />
-                      <div>
-                        <label className="block text-sm text-gray-400 mb-2 font-medium">Gender</label>
+<div>
+                        <label className="block text-sm text-gray-300 mb-2 font-medium">Gender</label>
                         <select value={formData.gender} onChange={e => updateForm("gender", e.target.value)} className={inputClass}>
                           <option value="" className="bg-[#0B1F4D]">Select gender</option>
                           <option value="male" className="bg-[#0B1F4D]">Male</option>
@@ -539,8 +609,8 @@ export default function RegisterPage() {
                         onChange={e => updateForm("occupation", e.target.value)}
                         placeholder="e.g., Student"
                       />
-                      <div>
-                        <label className="block text-sm text-gray-400 mb-2 font-medium">Education Level</label>
+<div>
+                        <label className="block text-sm text-gray-300 mb-2 font-medium">Education Level</label>
                         <select value={formData.educationLevel} onChange={e => updateForm("educationLevel", e.target.value)} className={inputClass}>
                           <option value="" className="bg-[#0B1F4D]">Select education level</option>
                           <option value="secondary" className="bg-[#0B1F4D]">Secondary Education</option>
@@ -559,7 +629,7 @@ export default function RegisterPage() {
                           iconLeft={<Lock className="w-5 h-5" />}
                           value={formData.password}
                           onChange={e => updateForm("password", e.target.value)}
-                          placeholder="Min 8 chars, upper + lower + number"
+                          placeholder="Use 8+ chars with upper, lower, and a number"
                           required
                           error={errors.password}
                         />
@@ -574,7 +644,7 @@ export default function RegisterPage() {
                           iconLeft={<Lock className="w-5 h-5" />}
                           value={formData.confirmPassword}
                           onChange={e => updateForm("confirmPassword", e.target.value)}
-                          placeholder="Confirm password"
+                          placeholder="Re-enter your password"
                           required
                           error={errors.confirmPassword}
                         />
@@ -583,7 +653,7 @@ export default function RegisterPage() {
                         </button>
                       </div>
                       <div className="md:col-span-2">
-                        <label className="block text-sm text-gray-400 mb-2 font-medium">Student Photo</label>
+<label className="block text-sm text-gray-300 mb-2 font-medium">Student Photo</label>
                         <div className="flex items-center gap-4">
                           <label className="cursor-pointer">
                             <div className="w-24 h-24 rounded-[20px] border-2 border-dashed border-gray-500/50 flex items-center justify-center hover:border-[#F4B400] transition-colors bg-white/5">
@@ -604,9 +674,12 @@ export default function RegisterPage() {
 
                 {currentStep === 2 && (
                   <div>
-                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white mb-6 flex items-center gap-3">
-                      <Mail className="w-6 h-6 text-[#F4B400]" /> Contact Information
-                    </h2>
+                    <div className="mb-6 rounded-[20px] border border-[#F4B400]/20 bg-[#F4B400]/10 px-4 py-4 md:px-5">
+                      <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white flex items-center gap-3">
+                        <Mail className="w-6 h-6 text-[#F4B400]" /> Contact Information
+                      </h2>
+                      <p className="mt-2 text-sm text-gray-300">We’ll use these details to keep you updated and support your enrollment.</p>
+                    </div>
                     <div className="grid md:grid-cols-2 gap-4">
                       <PremiumInput
                         label="Phone"
@@ -630,7 +703,7 @@ export default function RegisterPage() {
                         iconLeft={<Mail className="w-5 h-5" />}
                         value={formData.email}
                         onChange={e => updateForm("email", e.target.value)}
-                        placeholder="your@email.com"
+                        placeholder="e.g. student@email.com"
                         required
                         error={errors.email}
                       />
@@ -646,14 +719,14 @@ export default function RegisterPage() {
                         iconLeft={<MapPinned className="w-5 h-5" />}
                         value={formData.district}
                         onChange={e => updateForm("district", e.target.value)}
-                        placeholder="Enter district"
+                        placeholder="e.g. Mbeya Urban"
                       />
                       <PremiumInput
                         label="Street"
                         iconLeft={<MapPinned className="w-5 h-5" />}
                         value={formData.street}
                         onChange={e => updateForm("street", e.target.value)}
-                        placeholder="Enter street"
+                        placeholder="e.g. Nyerere Road"
                       />
                       <div className="md:col-span-2">
                         <PremiumInput
@@ -661,7 +734,7 @@ export default function RegisterPage() {
                           iconLeft={<Hash className="w-5 h-5" />}
                           value={formData.postalAddress}
                           onChange={e => updateForm("postalAddress", e.target.value)}
-                          placeholder="P.O. Box ..."
+                          placeholder="e.g. P.O. Box 123"
                         />
                       </div>
                     </div>
@@ -670,18 +743,20 @@ export default function RegisterPage() {
 
                 {currentStep === 3 && (
                   <div>
-                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white mb-2 flex items-center gap-3">
-                      <BookOpen className="w-6 h-6 text-[#F4B400]" /> Course Selection
-                    </h2>
-                    <p className="text-gray-400 mb-4">Select one or more courses you want to enroll in.</p>
+                    <div className="mb-4 rounded-[20px] border border-[#F4B400]/20 bg-[#F4B400]/10 px-4 py-4 md:px-5">
+                      <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white flex items-center gap-3">
+                        <BookOpen className="w-6 h-6 text-[#F4B400]" /> Course Selection
+                      </h2>
+                      <p className="mt-2 text-sm text-gray-300">Choose one or more courses that align with your learning goals.</p>
+                    </div>
                     {errors.courses && <p className="text-red-400 text-sm mb-4">{errors.courses}</p>}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {courses.map(course => (
                         <label
                           key={course.id}
-                          className={`flex items-center gap-3 p-4 rounded-[20px] border-2 cursor-pointer transition-all ${
+                          className={`flex items-center gap-3 p-4 rounded-[20px] border cursor-pointer transition-all ${
                             selectedCourses.includes(course.id)
-                              ? "border-[#F4B400] bg-[#F4B400]/5"
+                              ? "border-[#F4B400] bg-[#F4B400]/10 shadow-[0_0_0_1px_rgba(244,180,0,0.25)]"
                               : "border-white/10 hover:border-white/20 bg-white/5"
                           }`}
                         >
@@ -709,20 +784,24 @@ export default function RegisterPage() {
 
                 {currentStep === 4 && (
                   <div>
-                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white mb-6 flex items-center gap-3">
-                      <Clock className="w-6 h-6 text-[#F4B400]" /> Training Mode
-                    </h2>
+                    <div className="mb-6 rounded-[20px] border border-[#F4B400]/20 bg-[#F4B400]/10 px-4 py-4 md:px-5">
+                      <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white flex items-center gap-3">
+                        <Clock className="w-6 h-6 text-[#F4B400]" /> Training Mode
+                      </h2>
+                      <p className="mt-2 text-sm text-gray-300">Select the delivery format and schedule that works best for you.</p>
+                    </div>
                     <div className="space-y-6">
                       <div>
                         <label className="block text-gray-300 text-lg mb-3 font-medium">How would you like to attend?</label>
+                        {errors.trainingMode && <p className="text-red-400 text-sm mb-3">{errors.trainingMode}</p>}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                           {["Physical", "Online"].map(mode => (
                             <button
                               key={mode}
                               onClick={() => updateForm("trainingMode", mode.toLowerCase())}
-                              className={`p-4 md:p-6 rounded-[20px] border-2 text-center transition-all ${
+                              className={`p-4 md:p-6 rounded-[20px] border text-center transition-all ${
                                 formData.trainingMode === mode.toLowerCase()
-                                  ? "border-[#F4B400] bg-[#F4B400]/5"
+                                  ? "border-[#F4B400] bg-[#F4B400]/10 shadow-[0_0_0_1px_rgba(244,180,0,0.25)]"
                                   : "border-white/10 hover:border-white/20 bg-white/5"
                               }`}
                             >
@@ -741,6 +820,7 @@ export default function RegisterPage() {
                       </div>
                       <div>
                         <label className="block text-gray-300 text-lg mb-3 font-medium">Preferred Time</label>
+                        {errors.preferredTime && <p className="text-red-400 text-sm mb-3">{errors.preferredTime}</p>}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                           {[
                             { value: "morning", label: "Morning", icon: Sun },
@@ -751,9 +831,9 @@ export default function RegisterPage() {
                             <button
                               key={time.value}
                               onClick={() => updateForm("preferredTime", time.value)}
-                              className={`p-3 md:p-4 rounded-[20px] border-2 text-center transition-all ${
+                              className={`p-3 md:p-4 rounded-[20px] border text-center transition-all ${
                                 formData.preferredTime === time.value
-                                  ? "border-[#F4B400] bg-[#F4B400]/5"
+                                  ? "border-[#F4B400] bg-[#F4B400]/10 shadow-[0_0_0_1px_rgba(244,180,0,0.25)]"
                                   : "border-white/10 hover:border-white/20 bg-white/5"
                               }`}
                             >
@@ -769,12 +849,16 @@ export default function RegisterPage() {
 
                 {currentStep === 5 && (
                   <div>
-                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white mb-6 flex items-center gap-3">
-                      <CreditCard className="w-6 h-6 text-[#F4B400]" /> Payment
-                    </h2>
+                    <div className="mb-6 rounded-[20px] border border-[#F4B400]/20 bg-[#F4B400]/10 px-4 py-4 md:px-5">
+                      <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white flex items-center gap-3">
+                        <CreditCard className="w-6 h-6 text-[#F4B400]" /> Payment
+                      </h2>
+                      <p className="mt-2 text-sm text-gray-300">Choose a payment option and confirm your transaction details.</p>
+                    </div>
                     <div className="space-y-6">
                       <div>
                         <label className="block text-gray-300 text-lg mb-3 font-medium">Payment Method</label>
+                        {errors.paymentMethod && <p className="text-red-400 text-sm mb-3">{errors.paymentMethod}</p>}
                         <div className="grid grid-cols-3 gap-3">
                           {[
                             { value: "cash", label: "Cash", icon: Wallet },
@@ -784,9 +868,9 @@ export default function RegisterPage() {
                             <button
                               key={method.value}
                               onClick={() => updateForm("paymentMethod", method.value)}
-                              className={`p-3 md:p-4 rounded-[20px] border-2 text-center transition-all ${
+                              className={`p-3 md:p-4 rounded-[20px] border text-center transition-all ${
                                 formData.paymentMethod === method.value
-                                  ? "border-[#F4B400] bg-[#F4B400]/5"
+                                  ? "border-[#F4B400] bg-[#F4B400]/10 shadow-[0_0_0_1px_rgba(244,180,0,0.25)]"
                                   : "border-white/10 hover:border-white/20 bg-white/5"
                               }`}
                             >
@@ -803,7 +887,7 @@ export default function RegisterPage() {
                           iconLeft={<Hash className="w-5 h-5" />}
                           value={formData.transactionId}
                           onChange={e => updateForm("transactionId", e.target.value.replace(/\s/g, ""))}
-                          placeholder="e.g. PBT78J4K9M"
+                          placeholder="e.g. TRX123456789"
                           maxLength={30}
                           hint="Enter the confirmation code from your M-Pesa message"
                           error={errors.transactionId}
@@ -838,9 +922,12 @@ export default function RegisterPage() {
 
                 {currentStep === 6 && (
                   <div>
-                    <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white mb-6 flex items-center gap-3">
-                      <CheckCircle2 className="w-6 h-6 text-[#F4B400]" /> Declaration
-                    </h2>
+                    <div className="mb-6 rounded-[20px] border border-[#F4B400]/20 bg-[#F4B400]/10 px-4 py-4 md:px-5">
+                      <h2 className="text-xl md:text-2xl font-heading font-extrabold text-white flex items-center gap-3">
+                        <CheckCircle2 className="w-6 h-6 text-[#F4B400]" /> Declaration
+                      </h2>
+                      <p className="mt-2 text-sm text-gray-300">Review everything carefully before submitting your registration.</p>
+                    </div>
                     <div className="space-y-4 mb-6">
                       <h3 className="font-semibold text-lg text-white">Summary</h3>
                       <div className="grid md:grid-cols-2 gap-4 bg-white/5 rounded-[20px] p-6">

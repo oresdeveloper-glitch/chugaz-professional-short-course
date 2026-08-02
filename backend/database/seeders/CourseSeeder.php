@@ -25,7 +25,7 @@ class CourseSeeder extends Seeder {
         foreach ($courses as $course) {
             Course::create(array_merge($course, [
                 'slug' => Str::slug($course['title']),
-                'description' => "Professional {$course['title']} training course at CHUGAZ Stationery.",
+                'description' => "Professional {$course['title']} training course at CHUGAZ ICT SERVICES OFFICE SUPPLIES.",
                 'duration' => '2 Months', 'currency' => 'TZS', 'image' => null,
                 'modules' => ['Module 1: Introduction','Module 2: Fundamentals','Module 3: Advanced Topics','Module 4: Practical Project'],
                 'requirements' => ['Basic computer skills'],

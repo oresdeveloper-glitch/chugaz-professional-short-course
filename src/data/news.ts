@@ -3,7 +3,7 @@ import { NewsItem } from "@/types";
 export const newsItems: NewsItem[] = [
   {
     id: "1",
-    title: "CHUGAZ Stationery Launches New Python for Data Science Course",
+    title: "CHUGAZ ICT SERVICES OFFICE SUPPLIES Launches New Python for Data Science Course",
     excerpt: "Our new comprehensive Python curriculum covers machine learning, data analysis, and visualization techniques.",
     image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=600&q=80",
     date: "2026-06-15",

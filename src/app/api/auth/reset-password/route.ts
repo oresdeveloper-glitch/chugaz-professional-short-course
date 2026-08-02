@@ -1,15 +1,21 @@
 import { NextResponse } from "next/server"
 import { readData, writeData } from "@/lib/server-store"
-import { hashPassword, checkRateLimit } from "@/lib/auth-server"
+import { hashPassword, checkRateLimit, validateBodySize } from "@/lib/auth-server"
 
 export async function POST(req: Request) {
   const ip = req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip") || "unknown"
-  let body: any
-  try { body = await req.json() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
-  const { email, code, password } = body
   if (!checkRateLimit(`reset:${ip}`, 5, 60000)) {
     return NextResponse.json({ message: "Too many attempts. Try again later." }, { status: 429 })
   }
+
+  let body: any
+  try { body = await req.json() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
+  
+  if (!validateBodySize(body)) {
+    return NextResponse.json({ message: "Request body too large" }, { status: 413 })
+  }
+
+  const { email, code, password } = body
 
   if (!email || !code || !password) {
     return NextResponse.json({ message: "Email, code, and new password are required" }, { status: 422 })
@@ -22,7 +28,9 @@ export async function POST(req: Request) {
   const data = readData()
   data.resetCodes = data.resetCodes || []
 
-  const idx = data.resetCodes.findIndex((r: any) => r.email === email.toLowerCase().trim() && r.code === code)
+  // Hash the incoming code to compare against stored hashed code
+  const hashedCode = await hashData(code)
+  const idx = data.resetCodes.findIndex((r: any) => r.email === email.toLowerCase().trim() && r.code === hashedCode)
   if (idx === -1) {
     return NextResponse.json({ message: "Invalid or expired code" }, { status: 400 })
   }
@@ -49,4 +57,10 @@ export async function POST(req: Request) {
   writeData(data)
 
   return NextResponse.json({ message: "Password has been reset successfully. You can now login." })
+}
+
+async function hashData(data: string): Promise<string> {
+  const encoder = new TextEncoder()
+  const buf = await crypto.subtle.digest("SHA-256", encoder.encode(data))
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("")
 }

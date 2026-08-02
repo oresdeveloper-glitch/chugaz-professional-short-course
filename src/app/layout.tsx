@@ -27,12 +27,12 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: "CHUGAZ STATIONERY | Professional ICT & Engineering Training Center",
+  title: "CHUGAZ ICT SERVICES OFFICE SUPPLIES | Professional ICT & Engineering Training Center",
   description:
-    "CHUGAZ STATIONERY offers professional ICT and Engineering courses in Mbeya, Tanzania. Computer Basics, Python, JavaScript, AutoCAD, Web Design and more. Empowering Minds, Building Futures.",
+    "CHUGAZ ICT SERVICES OFFICE SUPPLIES offers professional ICT and Engineering courses in Mbeya, Tanzania. Computer Basics, Python, JavaScript, AutoCAD, Web Design and more. Empowering Minds, Building Futures.",
   keywords: [
     "CHUGAZ",
-    "Stationery",
+    "ICT Services Office Supplies",
     "ICT Training",
     "Engineering Training",
     "Mbeya",
@@ -43,16 +43,16 @@ export const metadata: Metadata = {
     "AutoCAD",
     "Web Design",
   ],
-  authors: [{ name: "CHUGAZ STATIONERY" }],
-  creator: "CHUGAZ STATIONERY",
-  publisher: "CHUGAZ STATIONERY",
+  authors: [{ name: "CHUGAZ ICT SERVICES OFFICE SUPPLIES" }],
+  creator: "CHUGAZ ICT SERVICES OFFICE SUPPLIES",
+  publisher: "CHUGAZ ICT SERVICES OFFICE SUPPLIES",
   metadataBase: new URL("https://chugaz-professional-course.vercel.app"),
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://chugaz-professional-course.vercel.app",
-    siteName: "CHUGAZ STATIONERY",
-    title: "CHUGAZ STATIONERY | Professional ICT & Engineering Training Center",
+    siteName: "CHUGAZ ICT SERVICES OFFICE SUPPLIES",
+    title: "CHUGAZ ICT SERVICES OFFICE SUPPLIES | Professional ICT & Engineering Training Center",
     description:
       "Professional ICT and Engineering courses in Mbeya, Tanzania. Empowering Minds, Building Futures.",
     images: [
@@ -60,13 +60,13 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "CHUGAZ STATIONERY",
+        alt: "CHUGAZ ICT SERVICES OFFICE SUPPLIES",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "CHUGAZ STATIONERY | Professional ICT & Engineering Training Center",
+    title: "CHUGAZ ICT SERVICES OFFICE SUPPLIES | Professional ICT & Engineering Training Center",
     description:
       "Professional ICT and Engineering courses in Mbeya, Tanzania. Empowering Minds, Building Futures.",
     images: ["/og-image.jpg"],
