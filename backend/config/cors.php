@@ -5,7 +5,7 @@ return [
     'allowed_origins' => [
         'http://localhost:3000',
         'https://localhost:3000',
-        'https://chugaz-frontend.vercel.app',
+        'https://chugaz.vercel.app',
         'https://chugazshortcourse.com',
         'https://www.chugazshortcourse.com',
         'https://orresy-chugazprofessionalcourse.hf.space',
