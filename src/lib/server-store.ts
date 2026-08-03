@@ -1,7 +1,7 @@
 import fs from "fs"
 import path from "path"
 import os from "os"
-import { put, list } from "@vercel/blob"
+import { put, get } from "@vercel/blob"
 
 function getDataDir(): string {
   if (process.env.CHUGAZ_DATA_DIR) return process.env.CHUGAZ_DATA_DIR
@@ -133,12 +133,12 @@ function writeFileData(data: StoredData): void {
 
 async function readBlobData(): Promise<StoredData | null> {
   try {
-    const { blobs } = await list({ prefix: BLOB_KEY })
-    const blob = blobs.find(b => b.pathname.endsWith(BLOB_KEY))
-    if (!blob) return null
-    const res = await fetch(blob.url)
-    if (!res.ok) return null
-    return await res.json()
+    const result = await get(BLOB_KEY, { access: "private" })
+    if (!result) return null
+    const stream = result.stream
+    if (!stream) return null
+    const text = await new Response(stream).text()
+    return JSON.parse(text)
   } catch (e) {
     console.error("readBlobData error:", e)
     return null
@@ -155,12 +155,11 @@ async function writeBlobData(data: StoredData): Promise<void> {
 
 async function readBlobCounter(): Promise<number | null> {
   try {
-    const { blobs } = await list({ prefix: COUNTER_BLOB_KEY })
-    const blob = blobs.find(b => b.pathname.endsWith(COUNTER_BLOB_KEY))
-    if (!blob) return null
-    const res = await fetch(blob.url)
-    if (!res.ok) return null
-    const text = await res.text()
+    const result = await get(COUNTER_BLOB_KEY, { access: "private" })
+    if (!result) return null
+    const stream = result.stream
+    if (!stream) return null
+    const text = await new Response(stream).text()
     return parseInt(text.trim(), 10)
   } catch (e) {
     console.error("readBlobCounter error:", e)

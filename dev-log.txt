@@ -1,0 +1,14 @@
+
+> chugaz-frontend@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.11 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.100.225:3000
+- Environments: .env.local
+✓ Ready in 1484ms
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+
+ POST /api/auth/register 201 in 1089ms (next.js: 821ms, proxy.ts: 118ms, application-code: 151ms)
+ POST /api/auth/login 200 in 304ms (next.js: 194ms, proxy.ts: 8ms, application-code: 102ms)
+  Reload env: .env.local
