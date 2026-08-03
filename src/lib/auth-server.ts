@@ -76,7 +76,8 @@ export function sanitizeObject(obj: Record<string, any>): Record<string, any> {
   const result: Record<string, any> = {}
   for (const [key, value] of Object.entries(obj)) {
     if (typeof value === "string") {
-      result[key] = sanitizeInput(value)
+      // Preserve photo data URLs in full; strip HTML chars but do not truncate
+      result[key] = key === "photo" ? value.replace(/[<>]/g, "") : sanitizeInput(value)
     } else if (value === null || value === undefined) {
       result[key] = value
     } else {

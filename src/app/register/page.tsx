@@ -226,7 +226,9 @@ export default function RegisterPage() {
   .status-bar .status { background: #10b981; color: #fff; font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.5px; }
   .body { padding: 32px 40px; }
   .section-title { font-size: 13px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
-  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+  .student-head { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 24px; }
+  .passport-photo { width: 110px; height: 110px; border: 3px solid #0B1F4D; border-radius: 12px; object-fit: cover; flex-shrink: 0; background: #f9fafb; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .info-item label { display: block; font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
   .info-item p { font-size: 14px; font-weight: 600; color: #111827; }
   .divider { height: 1px; background: #e5e7eb; margin: 24px 0; }
@@ -276,39 +278,42 @@ export default function RegisterPage() {
   </div>
   <div class="body">
     <div class="section-title">Student Information</div>
-    <div class="info-grid">
-      <div class="info-item">
-        <label>Full Name</label>
-        <p>${formData.firstName} ${formData.middleName ? formData.middleName + " " : ""}${formData.lastName}</p>
+    <div class="student-head">
+      ${photoPreview ? `<img class="passport-photo" src="${photoPreview}" alt="Passport Photo" />` : ""}
+      <div class="info-grid" style="flex:1">
+        <div class="info-item">
+          <label>Full Name</label>
+          <p>${formData.firstName} ${formData.middleName ? formData.middleName + " " : ""}${formData.lastName}</p>
+        </div>
+        <div class="info-item">
+          <label>Email</label>
+          <p>${formData.email}</p>
+        </div>
+        <div class="info-item">
+          <label>Phone</label>
+          <p>${formData.phone}${formData.whatsapp ? " / " + formData.whatsapp : ""}</p>
+        </div>
+        <div class="info-item">
+          <label>Training Mode</label>
+          <p style="text-transform:capitalize">${formData.trainingMode || "â€”"}</p>
+        </div>
+        <div class="info-item">
+          <label>Preferred Time</label>
+          <p style="text-transform:capitalize">${formData.preferredTime || "â€”"}</p>
+        </div>
+        <div class="info-item">
+          <label>Payment Method</label>
+          <p style="text-transform:capitalize">${formData.paymentMethod || "â€”"}</p>
+        </div>
+        <div class="info-item">
+          <label>Payment Reference</label>
+          <p style="font-family:monospace;letter-spacing:0.5px">${paymentRef}</p>
+        </div>
+        ${formData.transactionId ? `<div class="info-item">
+          <label>Transaction ID</label>
+          <p style="font-family:monospace">${formData.transactionId}</p>
+        </div>` : ""}
       </div>
-      <div class="info-item">
-        <label>Email</label>
-        <p>${formData.email}</p>
-      </div>
-      <div class="info-item">
-        <label>Phone</label>
-        <p>${formData.phone}${formData.whatsapp ? " / " + formData.whatsapp : ""}</p>
-      </div>
-      <div class="info-item">
-        <label>Training Mode</label>
-        <p style="text-transform:capitalize">${formData.trainingMode || "â€”"}</p>
-      </div>
-      <div class="info-item">
-        <label>Preferred Time</label>
-        <p style="text-transform:capitalize">${formData.preferredTime || "â€”"}</p>
-      </div>
-      <div class="info-item">
-        <label>Payment Method</label>
-        <p style="text-transform:capitalize">${formData.paymentMethod || "â€”"}</p>
-      </div>
-      <div class="info-item">
-        <label>Payment Reference</label>
-        <p style="font-family:monospace;letter-spacing:0.5px">${paymentRef}</p>
-      </div>
-      ${formData.transactionId ? `<div class="info-item">
-        <label>Transaction ID</label>
-        <p style="font-family:monospace">${formData.transactionId}</p>
-      </div>` : ""}
     </div>
     <div class="divider"></div>
     <div class="section-title">Registered Courses</div>
