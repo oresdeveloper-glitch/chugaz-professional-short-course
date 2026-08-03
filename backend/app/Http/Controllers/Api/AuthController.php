@@ -30,10 +30,19 @@ class AuthController extends Controller
             'postal_address' => 'nullable|string|max:255',
             'training_mode' => 'nullable|string|in:online,onsite,hybrid',
             'preferred_time' => 'nullable|string|max:100',
+            'courses' => 'nullable|array',
+            'payment_method' => 'nullable|string',
+            'transaction_id' => 'nullable|string',
+            'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:width=150,height=150',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $photoPath = null;
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('photos', 'public');
         }
 
         $registrationNumber = 'CHG2026' . str_pad(random_int(0, 99999), 5, '0', STR_PAD_LEFT);
@@ -58,9 +67,10 @@ class AuthController extends Controller
             'region' => $request->region,
             'district' => $request->district,
             'street' => $request->street,
-            'postal_address' => $request->postal_address,
+            'postal_address' => $request->postalAddress,
             'training_mode' => $request->training_mode,
             'preferred_time' => $request->preferred_time,
+            'photo' => $photoPath,
             'status' => 'pending',
         ]);
 
