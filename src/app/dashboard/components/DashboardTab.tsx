@@ -43,8 +43,8 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
                   <stat.icon className={`w-5 h-5 md:w-6 md:h-6 ${stat.color}`} />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs md:text-sm text-gray-500 truncate">{stat.label}</p>
-                  <p className="text-lg md:text-2xl font-heading font-extrabold text-[#0B1F4D] dark:text-white truncate capitalize">{stat.value}</p>
+                  <p className="text-xs md:text-sm text-gray-500">{stat.label}</p>
+                  <p className="text-base sm:text-lg md:text-2xl font-heading font-extrabold text-[#0B1F4D] dark:text-white break-words capitalize leading-tight">{stat.value}</p>
                 </div>
               </GlassCardContent>
             </GlassCard>
@@ -103,7 +103,7 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
               <Separator />
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600 dark:text-gray-400">Email</span>
-                <span className="font-medium truncate ml-2">{user.email}</span>
+                <span className="font-medium break-words ml-2 text-right">{user.email}</span>
               </div>
               <Separator />
               <div className="flex justify-between text-sm">
