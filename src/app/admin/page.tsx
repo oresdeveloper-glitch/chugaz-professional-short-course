@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
 import { isAuthenticated, isAdmin, logout, getAllStudents } from "@/lib/auth"
+import { api } from "@/lib/api"
 import type { Student, AdminTab, SharedActions } from "./components/types"
 import { PremiumButton } from "@/components/ui/PremiumButton"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
@@ -57,7 +58,7 @@ export default function AdminDashboard() {
       const student = students.find(s => s.email === email)
       if (!student) return
       try {
-        await (await fetch(`/api/students/${student.regNo}/${status}`, { method: "POST" })).json()
+        await api.post(`/students/${student.regNo}/${status}`)
         setStudents(prev => prev.map(s => s.email === email ? { ...s, status } : s))
         showToast(`Student ${status}`)
       } catch (e: any) { showToast(e?.message || `Failed to ${status}`) }
@@ -66,16 +67,16 @@ export default function AdminDashboard() {
       const student = students.find(s => s.email === email)
       if (!student) return
       try {
-        const res = await (await fetch(`/api/students/${student.regNo}/payment`, { method: "POST" })).json()
-        setStudents(prev => prev.map(s => s.email === email ? { ...s, paymentStatus: (res as any).payment_status } : s))
-        showToast(`Payment ${(res as any).payment_status === "confirmed" ? "confirmed" : "reset"}`)
+        const res: any = await api.post(`/students/${student.regNo}/payment`)
+        setStudents(prev => prev.map(s => s.email === email ? { ...s, paymentStatus: res.payment_status } : s))
+        showToast(`Payment ${res.payment_status === "confirmed" ? "confirmed" : "reset"}`)
       } catch (e: any) { showToast(e?.message || "Payment action failed") }
     },
     sendReminder: async (email, reason) => {
       const student = students.find(s => s.email === email)
       if (!student) return
       try {
-        await (await fetch(`/api/students/${student.regNo}/remind`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ reason }) })).json()
+        await api.post(`/students/${student.regNo}/remind`, { reason })
         showToast("Reminder sent")
       } catch (e: any) { showToast(e?.message || "Reminder failed") }
     },
@@ -85,7 +86,7 @@ export default function AdminDashboard() {
       const student = students.find(s => s.email === email)
       if (!student) return
       try {
-        await (await fetch(`/api/students/${student.regNo}`, { method: "DELETE" })).json()
+        await api.delete(`/students/${student.regNo}`)
         setStudents(prev => prev.filter(s => s.email !== email))
         showToast("Student deleted")
       } catch (e: any) { showToast(e?.message || "Delete failed") }
