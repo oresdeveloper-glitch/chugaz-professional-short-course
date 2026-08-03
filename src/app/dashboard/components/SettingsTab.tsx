@@ -1,12 +1,13 @@
 "use client"
 
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import type { DashboardTabProps } from "./types"
 
 export default function SettingsTab({ user, studentData }: DashboardTabProps) {
   const initials = `${(user.firstName || "")[0] || ""}${(user.lastName || "")[0] || ""}` || user.email[0].toUpperCase()
+  const photo = studentData.photo || user.photo || null
 
   return (
     <div className="space-y-4 max-w-2xl">
@@ -15,7 +16,11 @@ export default function SettingsTab({ user, studentData }: DashboardTabProps) {
         <GlassCardContent className="p-6 space-y-4">
           <div className="flex items-center gap-4">
             <Avatar className="w-16 h-16 rounded-[20px]">
-              <AvatarFallback className="text-xl bg-[#F4B400] text-[#0B1F4D]">{initials}</AvatarFallback>
+              {photo ? (
+                <AvatarImage src={photo} alt={user.firstName} className="object-cover w-full h-full" />
+              ) : (
+                <AvatarFallback className="text-xl bg-[#F4B400] text-[#0B1F4D]">{initials}</AvatarFallback>
+              )}
             </Avatar>
             <div>
               <p className="font-semibold text-base md:text-lg text-[#0B1F4D] dark:text-white">{user.firstName} {user.lastName}</p>

@@ -10,6 +10,7 @@ function toCamelCase(s: any) {
     firstName: rest.first_name,
     middleName: rest.middle_name,
     lastName: rest.last_name,
+    photo: rest.photo || null,
     gender: rest.gender,
     dateOfBirth: rest.date_of_birth,
     nationality: rest.nationality,

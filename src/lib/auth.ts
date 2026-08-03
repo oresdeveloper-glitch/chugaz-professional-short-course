@@ -7,6 +7,7 @@ export interface AuthUser {
   lastName: string
   regNo: string
   role: "student" | "admin"
+  photo?: string | null
   token?: string
 }
 
@@ -21,6 +22,7 @@ export async function login(email: string, password: string): Promise<AuthUser |
     lastName: student?.last_name || admin?.name?.split(" ").slice(1).join(" ") || "",
     regNo: student?.registration_number || "ADMIN001",
     role: type === "admin" ? "admin" : "student",
+    photo: student?.photo || null,
     token,
   }
 

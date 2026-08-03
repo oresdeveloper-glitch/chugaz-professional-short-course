@@ -7,7 +7,7 @@ import {
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Separator } from "@/components/ui/separator"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
 import { getCurrentUser, getStudentData, logout, isAuthenticated } from "@/lib/auth"
 import { api } from "@/lib/api"
@@ -68,7 +68,8 @@ export default function StudentDashboard() {
   }
 
   const initials = `${(user.firstName || "")[0] || ""}${(user.lastName || "")[0] || ""}` || user.email[0].toUpperCase()
-  const safeStudent = studentData || { courses: [], status: "pending", phone: "", gender: "", nationality: "", occupation: "", educationLevel: "", region: "", district: "", paymentMethod: "", paymentStatus: "pending", paymentRef: "", transactionId: "", trainingMode: "", preferredTime: "" }
+  const safeStudent = studentData || { courses: [], status: "pending", photo: null, phone: "", gender: "", nationality: "", occupation: "", educationLevel: "", region: "", district: "", paymentMethod: "", paymentStatus: "pending", paymentRef: "", transactionId: "", trainingMode: "", preferredTime: "" }
+  const studentPhoto = safeStudent.photo || user.photo || null
   const sharedProps = { user, studentData: safeStudent, notifications, setNotifications, unreadCount, setUnreadCount, setActiveTab }
 
   return (
@@ -147,7 +148,11 @@ export default function StudentDashboard() {
               </GlassCard>
             )}
             <Avatar className="w-9 h-9 md:w-10 md:h-10 rounded-[20px]">
-              <AvatarFallback className="text-sm bg-[#F4B400] text-[#0B1F4D]">{initials}</AvatarFallback>
+              {studentPhoto ? (
+                <AvatarImage src={studentPhoto} alt={user.firstName} className="object-cover w-full h-full" />
+              ) : (
+                <AvatarFallback className="text-sm bg-[#F4B400] text-[#0B1F4D]">{initials}</AvatarFallback>
+              )}
             </Avatar>
           </div>
         </header>

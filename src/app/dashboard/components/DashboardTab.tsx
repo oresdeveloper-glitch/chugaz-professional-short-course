@@ -96,6 +96,12 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
           <h3 className="text-lg font-heading font-bold text-[#0B1F4D] dark:text-white">Quick Info</h3>
           <GlassCard variant="elevated" className="rounded-[20px] border-0 shadow-md">
             <GlassCardContent className="p-4 md:p-6 space-y-4">
+              {studentData.photo && (
+                <div className="flex justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={studentData.photo} alt="Profile" className="w-20 h-20 rounded-[20px] object-cover border-2 border-[#F4B400]/40" />
+                </div>
+              )}
 <div className="flex justify-between text-sm">
                 <span className="text-gray-600 dark:text-gray-400">Name</span>
                 <span className="font-medium">{user.firstName} {user.lastName}</span>
