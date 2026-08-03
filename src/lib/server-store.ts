@@ -177,10 +177,10 @@ async function writeBlobCounter(value: number): Promise<void> {
 
 async function readData(): Promise<StoredData> {
   if (BLOB_ENABLED) {
-    if (memoryData) return memoryData
     const blob = await readBlobData()
-    memoryData = blob || getDefaults()
-    return memoryData
+    const data = blob || getDefaults()
+    memoryData = data
+    return data
   }
   return readFileData()
 }
@@ -197,13 +197,9 @@ async function writeData(data: StoredData): Promise<void> {
 async function getNextRegNumber(): Promise<string> {
   let counter = 1
   if (BLOB_ENABLED) {
-    if (memoryCounter === null) {
-      const c = await readBlobCounter()
-      memoryCounter = (c || 0) + 1
-    } else {
-      memoryCounter += 1
-    }
-    counter = memoryCounter
+    const c = await readBlobCounter()
+    counter = (c || 0) + 1
+    memoryCounter = counter
     await writeBlobCounter(counter)
     return `CHG2026${String(counter).padStart(5, "0")}`
   }
