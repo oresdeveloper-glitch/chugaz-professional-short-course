@@ -28,7 +28,7 @@ async function request<T = any>(
     ...(options.headers as Record<string, string>),
   }
 
-  if (options.body) {
+  if (options.body && !(options.body instanceof FormData)) {
     headers["Content-Type"] = "application/json"
   }
 
@@ -58,6 +58,8 @@ export const api = {
   get: <T = any>(endpoint: string) => request<T>(endpoint),
   post: <T = any>(endpoint: string, data?: any) =>
     request<T>(endpoint, { method: "POST", body: JSON.stringify(data) }),
+  postForm: <T = any>(endpoint: string, formData: FormData) =>
+    request<T>(endpoint, { method: "POST", body: formData }),
   put: <T = any>(endpoint: string, data?: any) =>
     request<T>(endpoint, { method: "PUT", body: JSON.stringify(data) }),
   delete: <T = any>(endpoint: string) =>

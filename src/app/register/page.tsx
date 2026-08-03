@@ -37,6 +37,7 @@ const initialFormData = {
   trainingMode: "", preferredTime: "",
   paymentMethod: "", transactionId: "",
   declaration: false,
+  photo: null as File | null,
 }
 
 const stepDescriptions: Record<number, string> = {
@@ -78,9 +79,23 @@ export default function RegisterPage() {
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      setFormData(prev => ({ ...prev, photo: file }))
       const reader = new FileReader()
-      reader.onloadend = () => setPhotoPreview(reader.result as string)
+      reader.onloadend = () => {
+        const img = document.createElement("img")
+        img.onload = () => {
+          if (img.width !== 150 || img.height !== 150) {
+            setErrors(prev => ({ ...prev, photo: "Photo must be exactly 150x150 pixels" }))
+            return
+          }
+          setErrors(prev => ({ ...prev, photo: "" }))
+          setFormData(prev => ({ ...prev, photo: file }))
+          setPhotoPreview(reader.result as string)
+        }
+        img.onerror = () => {
+          setErrors(prev => ({ ...prev, photo: "Invalid image file" }))
+        }
+        img.src = reader.result as string
+      }
       reader.readAsDataURL(file)
     }
   }
@@ -90,6 +105,7 @@ export default function RegisterPage() {
     if (step === 1) {
       if (!formData.firstName.trim()) newErrors.firstName = "Required"
       if (!formData.lastName.trim()) newErrors.lastName = "Required"
+      if (!formData.photo) newErrors.photo = "Passport photo (150x150px) is required"
       if (!formData.password.trim()) newErrors.password = "Required"
       else if (formData.password.length < 8 || !/[a-z]/.test(formData.password) || !/[A-Z]/.test(formData.password) || !/\d/.test(formData.password))
         newErrors.password = "Min 8 chars, uppercase + lowercase + number"
@@ -137,31 +153,33 @@ export default function RegisterPage() {
         return course?.title
       }).filter(Boolean) as string[]
 
-      const json = await api.post("/auth/register", {
-        website,
-        first_name: formData.firstName,
-        middle_name: formData.middleName,
-        last_name: formData.lastName,
-        password: formData.password,
-        password_confirmation: formData.confirmPassword,
-        gender: formData.gender || undefined,
-        date_of_birth: formData.dateOfBirth || undefined,
-        nationality: formData.nationality || undefined,
-        occupation: formData.occupation || undefined,
-        education_level: formData.educationLevel || undefined,
-        phone: formData.phone,
-        whatsapp: formData.whatsapp || undefined,
-        email: formData.email,
-        region: formData.region || undefined,
-        district: formData.district || undefined,
-        street: formData.street || undefined,
-        postal_address: formData.postalAddress || undefined,
-        training_mode: formData.trainingMode || undefined,
-        preferred_time: formData.preferredTime || undefined,
-        courses: courseTitles,
-        payment_method: formData.paymentMethod || undefined,
-        transaction_id: formData.transactionId || undefined,
-      })
+      const formDataToSend = new FormData()
+      formDataToSend.append("website", website)
+      formDataToSend.append("first_name", formData.firstName)
+      formDataToSend.append("middle_name", formData.middleName || "")
+      formDataToSend.append("last_name", formData.lastName)
+      formDataToSend.append("password", formData.password)
+      formDataToSend.append("password_confirmation", formData.confirmPassword)
+      if (formData.gender) formDataToSend.append("gender", formData.gender)
+      if (formData.dateOfBirth) formDataToSend.append("date_of_birth", formData.dateOfBirth)
+      if (formData.nationality) formDataToSend.append("nationality", formData.nationality)
+      if (formData.occupation) formDataToSend.append("occupation", formData.occupation)
+      if (formData.educationLevel) formDataToSend.append("education_level", formData.educationLevel)
+      formDataToSend.append("phone", formData.phone)
+      if (formData.whatsapp) formDataToSend.append("whatsapp", formData.whatsapp)
+      formDataToSend.append("email", formData.email)
+      if (formData.region) formDataToSend.append("region", formData.region)
+      if (formData.district) formDataToSend.append("district", formData.district)
+      if (formData.street) formDataToSend.append("street", formData.street)
+      if (formData.postalAddress) formDataToSend.append("postal_address", formData.postalAddress)
+      if (formData.trainingMode) formDataToSend.append("training_mode", formData.trainingMode)
+      if (formData.preferredTime) formDataToSend.append("preferred_time", formData.preferredTime)
+      courseTitles.forEach((title, i) => formDataToSend.append(`courses[${i}]`, title))
+      if (formData.paymentMethod) formDataToSend.append("payment_method", formData.paymentMethod)
+      if (formData.transactionId) formDataToSend.append("transaction_id", formData.transactionId)
+      if (formData.photo) formDataToSend.append("photo", formData.photo)
+
+      const json = await api.postForm("/auth/register", formDataToSend)
 
       setRegistrationNumber(json.data.student.registration_number)
       setPaymentRef(json.data.payment_ref)
@@ -652,22 +670,26 @@ export default function RegisterPage() {
                           {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         </button>
                       </div>
-                      <div className="md:col-span-2">
-<label className="block text-sm text-gray-300 mb-2 font-medium">Student Photo</label>
-                        <div className="flex items-center gap-4">
-                          <label className="cursor-pointer">
-                            <div className="w-24 h-24 rounded-[20px] border-2 border-dashed border-gray-500/50 flex items-center justify-center hover:border-[#F4B400] transition-colors bg-white/5">
-                              {photoPreview ? (
-                                <Image src={photoPreview} alt="Preview" width={96} height={96} className="rounded-[20px] object-cover w-full h-full" />
-                              ) : (
-                                <Camera className="w-8 h-8 text-gray-400" />
-                              )}
-                            </div>
-                            <input type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" />
-                          </label>
-                          <p className="text-sm text-gray-500">Upload passport-size photo</p>
+<div className="md:col-span-2">
+                    <label className="block text-sm text-gray-300 mb-2 font-medium">Student Photo <span className="text-red-400">*</span></label>
+                    <div className="flex items-center gap-4">
+                      <label className="cursor-pointer">
+                        <div className="w-24 h-24 rounded-[20px] border-2 border-dashed border-gray-500/50 flex items-center justify-center hover:border-[#F4B400] transition-colors bg-white/5">
+                          {photoPreview ? (
+                            <Image src={photoPreview} alt="Preview" width={96} height={96} className="rounded-[20px] object-cover w-full h-full" />
+                          ) : (
+                            <Camera className="w-8 h-8 text-gray-400" />
+                          )}
                         </div>
+                        <input type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" />
+                      </label>
+                      <div className="flex flex-col justify-center">
+                        <p className="text-sm text-gray-500">Upload passport-size photo</p>
+                        <p className="text-xs text-gray-500">Exactly 150x150 pixels required</p>
                       </div>
+                    </div>
+                    {errors.photo && <p className="mt-2 text-sm text-red-400">{errors.photo}</p>}
+                  </div>
                     </div>
                   </div>
                 )}
