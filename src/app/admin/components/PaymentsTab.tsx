@@ -4,6 +4,7 @@ import { CreditCard } from "lucide-react"
 import { GlassCard, GlassCardHeader, GlassCardTitle, GlassCardContent } from "@/components/ui/GlassCard"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { getTotalFee } from "@/data/courses"
 import type { Student, SharedActions } from "./types"
 
 interface Props extends SharedActions {
@@ -13,7 +14,7 @@ interface Props extends SharedActions {
 export default function PaymentsTab({ students, confirmPayment }: Props) {
   const paidStudents = students.filter(s => s.paymentStatus === "confirmed")
   const pendingPay = students.filter(s => s.paymentStatus !== "confirmed")
-  const totalRevenue = paidStudents.reduce((sum, s) => sum + (s.courses.length * 200000), 0)
+  const totalRevenue = paidStudents.reduce((sum, s) => sum + getTotalFee(s.courses), 0)
 
   return (
     <GlassCard variant="elevated">
@@ -62,7 +63,7 @@ export default function PaymentsTab({ students, confirmPayment }: Props) {
                 </thead>
                 <tbody>
                   {students.slice().reverse().map((s) => {
-                    const amount = s.courses.length * 200000
+                    const amount = getTotalFee(s.courses)
                     return (
                       <tr key={s.regNo} className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
                         <td className="py-3 px-3 md:px-4 text-sm font-medium text-[#0B1F4D] whitespace-nowrap">{s.firstName} {s.lastName}</td>

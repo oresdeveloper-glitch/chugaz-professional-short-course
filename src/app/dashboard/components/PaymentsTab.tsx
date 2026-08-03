@@ -4,10 +4,11 @@ import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
+import { getTotalFee } from "@/data/courses"
 import type { DashboardTabProps } from "./types"
 
 export default function PaymentsTab({ studentData }: DashboardTabProps) {
-  const total = studentData.courses?.length * 200000 || 0
+  const total = getTotalFee(studentData.courses || [])
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-heading font-bold text-[#0B1F4D] dark:text-white">Payment Details</h3>

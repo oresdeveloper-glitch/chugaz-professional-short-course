@@ -10,6 +10,7 @@ import { PremiumButton } from "@/components/ui/PremiumButton"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
+import { getTotalFee } from "@/data/courses"
 import type { Student, SharedActions } from "./types"
 
 interface Props extends SharedActions {
@@ -22,6 +23,7 @@ export default function DashboardTab({ students, pendingStudents, approvedStuden
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null)
   const [customMsg, setCustomMsg] = useState("")
   const closeModal = () => { setSelectedStudent(null); setCustomMsg("") }
+  const totalRevenue = students.filter(s => s.paymentStatus === "confirmed").reduce((sum, s) => sum + getTotalFee(s.courses), 0)
 
   return (
     <>
@@ -30,7 +32,7 @@ export default function DashboardTab({ students, pendingStudents, approvedStuden
           { icon: Users, label: "Total Students", value: students.length.toString(), change: "+" + students.length, color: "text-blue-600", bg: "bg-blue-100 dark:bg-blue-900/20" },
           { icon: UserPlus, label: "New Registrations", value: pendingStudents.length.toString(), change: "+" + pendingStudents.length, color: "text-green-600", bg: "bg-green-100 dark:bg-green-900/20" },
           { icon: CheckCircle2, label: "Approved", value: approvedStudents.length.toString(), change: "+" + approvedStudents.length, color: "text-[#F4B400]", bg: "bg-yellow-100 dark:bg-yellow-900/20" },
-          { icon: TrendingUp, label: "Total Revenue", value: `TZS ${(approvedStudents.length * 200000).toLocaleString()}`, change: "+" + (approvedStudents.length * 200000).toLocaleString(), color: "text-purple-600", bg: "bg-purple-100 dark:bg-purple-900/20" },
+          { icon: TrendingUp, label: "Total Revenue", value: `TZS ${totalRevenue.toLocaleString()}`, change: "+" + totalRevenue.toLocaleString(), color: "text-purple-600", bg: "bg-purple-100 dark:bg-purple-900/20" },
           { icon: Clock, label: "Pending Payments", value: pendingStudents.length.toString(), change: pendingStudents.length > 0 ? "+" + pendingStudents.length : "0", color: "text-orange-600", bg: "bg-orange-100 dark:bg-orange-900/20" },
         ].map((stat, i) => (
           <div key={stat.label}>

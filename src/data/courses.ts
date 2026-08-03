@@ -525,6 +525,18 @@ export const getCourseById = (id: string): Course | undefined => {
   return courses.find(course => course.id === id);
 };
 
+export const getCourseByTitle = (title: string): Course | undefined => {
+  return courses.find(course => course.title === title);
+};
+
+export const resolveCourses = (titles: string[]): Course[] => {
+  return titles.map(title => getCourseByTitle(title)).filter((c): c is Course => !!c);
+};
+
+export const getTotalFee = (titles: string[]): number => {
+  return resolveCourses(titles).reduce((sum, c) => sum + c.fee, 0);
+};
+
 export const getCoursesByCategory = (category: string): Course[] => {
   return courses.filter(course => course.category === category);
 };

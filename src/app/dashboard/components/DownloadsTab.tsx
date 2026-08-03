@@ -3,12 +3,13 @@
 import { Download, Award, FileText, User, ArrowUpRight } from "lucide-react"
 import { GlassCard, GlassCardContent } from "@/components/ui/GlassCard"
 import { cn } from "@/lib/utils"
+import { getTotalFee, resolveCourses } from "@/data/courses"
 import type { DashboardTabProps } from "./types"
 
 export default function DownloadsTab({ user, studentData }: DashboardTabProps) {
   const downloadReceipt = () => {
-    const courses = studentData.courses || []
-    const totalFee = courses.reduce((sum: number, c: any) => sum + (c.fee || 0), 0)
+    const courses = resolveCourses(studentData.courses || [])
+    const totalFee = getTotalFee(studentData.courses || [])
     const courseRows = courses.map((c: any, i: number) => `
       <tr style="background:${i % 2 === 0 ? "#fff" : "#f8f9fa"}">
         <td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#6b7280;text-align:center">${i + 1}</td>
