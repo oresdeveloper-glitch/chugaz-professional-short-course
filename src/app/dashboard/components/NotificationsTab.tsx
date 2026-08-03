@@ -10,7 +10,7 @@ export default function NotificationsTab({ notifications, setNotifications }: Da
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-xl font-heading font-bold text-[#0B1F4D] dark:text-white">Notifications</h3>
+        <h3 className="text-lg font-heading font-bold text-[#0B1F4D] dark:text-white">Notifications</h3>
         {notifications.length > 0 && (
           <button onClick={() => { setNotifications([]) }} className="text-sm text-gray-500 hover:text-red-500">Clear all</button>
         )}

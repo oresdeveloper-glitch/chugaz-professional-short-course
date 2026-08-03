@@ -25,19 +25,19 @@ export default function PaymentsTab({ students, confirmPayment }: Props) {
           <GlassCard variant="elevated" className="bg-green-50 dark:bg-green-900/20">
             <GlassCardContent className="p-4 md:p-6 text-center">
               <p className="text-xs md:text-sm text-gray-500">Total Revenue</p>
-              <p className="text-lg md:text-2xl font-heading font-extrabold text-green-600">TZS {totalRevenue.toLocaleString()}</p>
+              <p className="text-base md:text-xl font-heading font-extrabold text-green-600">TZS {totalRevenue.toLocaleString()}</p>
             </GlassCardContent>
           </GlassCard>
           <GlassCard variant="elevated" className="bg-yellow-50 dark:bg-yellow-900/20">
             <GlassCardContent className="p-4 md:p-6 text-center">
               <p className="text-xs md:text-sm text-gray-500">Pending</p>
-              <p className="text-lg md:text-2xl font-heading font-extrabold text-[#F4B400]">{pendingPay.length}</p>
+              <p className="text-base md:text-xl font-heading font-extrabold text-[#F4B400]">{pendingPay.length}</p>
             </GlassCardContent>
           </GlassCard>
           <GlassCard variant="elevated" className="bg-blue-50 dark:bg-blue-900/20">
             <GlassCardContent className="p-4 md:p-6 text-center">
               <p className="text-xs md:text-sm text-gray-500">Completed</p>
-              <p className="text-lg md:text-2xl font-heading font-extrabold text-blue-600">{paidStudents.length}</p>
+              <p className="text-base md:text-xl font-heading font-extrabold text-blue-600">{paidStudents.length}</p>
             </GlassCardContent>
           </GlassCard>
         </div>

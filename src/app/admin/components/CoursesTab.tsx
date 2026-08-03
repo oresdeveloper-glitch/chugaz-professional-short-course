@@ -24,7 +24,7 @@ export default function CoursesTab({ students }: Props) {
             <GlassCard key={cat} variant="outlined">
               <GlassCardContent className="p-4 md:p-6">
                 <h3 className="font-semibold text-[#0B1F4D] dark:text-white mb-2 text-sm md:text-base">{cat}</h3>
-                <p className="text-xl md:text-2xl font-heading font-extrabold text-[#F4B400]">
+                <p className="text-lg md:text-2xl font-heading font-extrabold text-[#F4B400]">
                   {students.filter(s => s.courses.some(c => catCourses[cat]?.includes(c))).length}
                 </p>
                 <p className="text-xs md:text-sm text-gray-500">Registered students</p>

@@ -10,18 +10,18 @@ export default function PaymentsTab({ studentData }: DashboardTabProps) {
   const total = studentData.courses?.length * 200000 || 0
   return (
     <div className="space-y-4">
-      <h3 className="text-xl font-heading font-bold text-[#0B1F4D] dark:text-white">Payment Details</h3>
+      <h3 className="text-lg font-heading font-bold text-[#0B1F4D] dark:text-white">Payment Details</h3>
       <div className="grid md:grid-cols-3 gap-4">
         <GlassCard variant="elevated" className="rounded-[20px] border-0 bg-green-50 dark:bg-green-900/20 shadow-md">
           <GlassCardContent className="p-6 text-center">
             <p className="text-sm text-gray-500">Total Fee</p>
-            <p className="text-2xl font-heading font-extrabold text-green-600">{total.toLocaleString()} TZS</p>
+            <p className="text-base sm:text-2xl font-heading font-extrabold text-green-600">{total.toLocaleString()} TZS</p>
           </GlassCardContent>
         </GlassCard>
         <GlassCard variant="elevated" className="rounded-[20px] border-0 bg-blue-50 dark:bg-blue-900/20 shadow-md">
           <GlassCardContent className="p-6 text-center">
             <p className="text-sm text-gray-500">Payment Method</p>
-            <p className="text-lg font-heading font-extrabold text-blue-600 capitalize">{studentData.paymentMethod || "—"}</p>
+            <p className="text-base md:text-lg font-heading font-extrabold text-blue-600 capitalize">{studentData.paymentMethod || "—"}</p>
           </GlassCardContent>
         </GlassCard>
         <GlassCard variant="elevated" className="rounded-[20px] border-0 shadow-md">

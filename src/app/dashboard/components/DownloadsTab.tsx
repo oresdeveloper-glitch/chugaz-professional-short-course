@@ -8,7 +8,7 @@ import type { DashboardTabProps } from "./types"
 export default function DownloadsTab({ studentData }: DashboardTabProps) {
   return (
     <div className="space-y-4">
-      <h3 className="text-xl font-heading font-bold text-[#0B1F4D] dark:text-white">Downloads</h3>
+      <h3 className="text-lg font-heading font-bold text-[#0B1F4D] dark:text-white">Downloads</h3>
       <div className="grid md:grid-cols-2 gap-4">
         {[
           { icon: Download, label: "Registration Receipt", desc: "Download your registration receipt", color: "text-green-600", bg: "bg-green-100" },

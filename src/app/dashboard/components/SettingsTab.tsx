@@ -10,7 +10,7 @@ export default function SettingsTab({ user, studentData }: DashboardTabProps) {
 
   return (
     <div className="space-y-4 max-w-2xl">
-      <h3 className="text-xl font-heading font-bold text-[#0B1F4D] dark:text-white">Account Settings</h3>
+      <h3 className="text-lg font-heading font-bold text-[#0B1F4D] dark:text-white">Account Settings</h3>
       <GlassCard variant="elevated" className="rounded-[20px] border-0 shadow-md">
         <GlassCardContent className="p-6 space-y-4">
           <div className="flex items-center gap-4">
@@ -18,7 +18,7 @@ export default function SettingsTab({ user, studentData }: DashboardTabProps) {
               <AvatarFallback className="text-xl bg-[#F4B400] text-[#0B1F4D]">{initials}</AvatarFallback>
             </Avatar>
             <div>
-              <p className="font-semibold text-lg text-[#0B1F4D] dark:text-white">{user.firstName} {user.lastName}</p>
+              <p className="font-semibold text-base md:text-lg text-[#0B1F4D] dark:text-white">{user.firstName} {user.lastName}</p>
               <p className="text-sm text-gray-500">{user.email}</p>
             </div>
           </div>

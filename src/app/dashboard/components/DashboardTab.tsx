@@ -22,7 +22,7 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
           <GlassCardContent className="p-6 md:p-8 relative">
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#F4B400]/10 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="relative z-10">
-              <h2 className="text-2xl font-heading font-extrabold mb-1">Welcome back, {user.firstName}!</h2>
+              <h2 className="text-xl sm:text-2xl font-heading font-extrabold mb-1">Welcome back, {user.firstName}!</h2>
               <p className="text-white/70">Reg No: {user.regNo}</p>
             </div>
           </GlassCardContent>
@@ -43,8 +43,8 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
                   <stat.icon className={`w-5 h-5 md:w-6 md:h-6 ${stat.color}`} />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs md:text-sm text-gray-500">{stat.label}</p>
-                  <p className="text-base sm:text-lg md:text-2xl font-heading font-extrabold text-[#0B1F4D] dark:text-white break-words capitalize leading-tight">{stat.value}</p>
+                  <p className="text-[11px] md:text-sm text-gray-500">{stat.label}</p>
+                  <p className="text-sm sm:text-base md:text-xl font-heading font-extrabold text-[#0B1F4D] dark:text-white break-words capitalize leading-tight">{stat.value}</p>
                 </div>
               </GlassCardContent>
             </GlassCard>
@@ -54,7 +54,7 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-4">
-          <h3 className="text-xl font-heading font-bold text-[#0B1F4D] dark:text-white">My Courses</h3>
+          <h3 className="text-lg font-heading font-bold text-[#0B1F4D] dark:text-white">My Courses</h3>
           {studentData.courses?.length > 0 ? studentData.courses.map((courseTitle: string, i: number) => {
             const course = courses.find(c => c.title === courseTitle)
             return (
@@ -93,7 +93,7 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-xl font-heading font-bold text-[#0B1F4D] dark:text-white">Quick Info</h3>
+          <h3 className="text-lg font-heading font-bold text-[#0B1F4D] dark:text-white">Quick Info</h3>
           <GlassCard variant="elevated" className="rounded-[20px] border-0 shadow-md">
             <GlassCardContent className="p-4 md:p-6 space-y-4">
 <div className="flex justify-between text-sm">
@@ -118,7 +118,7 @@ export default function DashboardTab({ user, studentData, setActiveTab }: Dashbo
             </GlassCardContent>
           </GlassCard>
 
-          <h3 className="text-xl font-heading font-bold text-[#0B1F4D] dark:text-white pt-4">Quick Actions</h3>
+          <h3 className="text-lg font-heading font-bold text-[#0B1F4D] dark:text-white pt-4">Quick Actions</h3>
           <div className="grid grid-cols-2 gap-3">
             {[
               { icon: Download, label: "Receipt", color: "text-green-600", bg: "bg-green-100", tab: "downloads" as const },

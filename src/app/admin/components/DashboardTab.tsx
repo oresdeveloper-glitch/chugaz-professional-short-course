@@ -42,7 +42,7 @@ export default function DashboardTab({ students, pendingStudents, approvedStuden
                   </div>
                   <span className="text-[10px] md:text-xs font-medium text-green-600 bg-green-100 dark:bg-green-900/30 dark:text-green-400 rounded-[20px] px-2 py-0.5 md:px-2 md:py-1">{stat.change}</span>
                 </div>
-                <p className="text-lg md:text-2xl font-heading font-extrabold text-[#0B1F4D] dark:text-white truncate">{stat.value}</p>
+                <p className="text-base md:text-xl font-heading font-extrabold text-[#0B1F4D] dark:text-white break-words">{stat.value}</p>
                 <p className="text-xs md:text-sm text-gray-500">{stat.label}</p>
               </GlassCardContent>
             </GlassCard>
@@ -126,7 +126,7 @@ export default function DashboardTab({ students, pendingStudents, approvedStuden
       {selectedStudent && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-3 md:p-4" onClick={closeModal}>
           <div className="bg-white dark:bg-gray-900 rounded-[20px] p-4 md:p-8 max-w-lg w-full max-h-[80vh] overflow-y-auto mx-2 md:mx-0" onClick={e => e.stopPropagation()}>
-            <h3 className="text-lg md:text-xl font-heading font-bold text-[#0B1F4D] dark:text-white mb-3 md:mb-4">Student Details</h3>
+            <h3 className="text-base md:text-xl font-heading font-bold text-[#0B1F4D] dark:text-white mb-3 md:mb-4">Student Details</h3>
             <div className="space-y-2 md:space-y-3 text-xs md:text-sm">
               <p><strong>Reg No:</strong> {selectedStudent.regNo}</p>
               <p><strong>Name:</strong> {selectedStudent.firstName} {selectedStudent.middleName} {selectedStudent.lastName}</p>

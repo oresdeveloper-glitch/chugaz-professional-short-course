@@ -13,7 +13,7 @@ import type { DashboardTabProps } from "./types"
 export default function CoursesTab({ studentData }: DashboardTabProps) {
   return (
     <div className="space-y-4">
-      <h3 className="text-xl font-heading font-bold text-[#0B1F4D] dark:text-white">My Courses</h3>
+      <h3 className="text-lg font-heading font-bold text-[#0B1F4D] dark:text-white">My Courses</h3>
       {studentData.courses?.length > 0 ? (
         <div className="grid md:grid-cols-2 gap-4">
           {studentData.courses.map((courseTitle: string, i: number) => {
