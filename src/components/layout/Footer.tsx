@@ -83,11 +83,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 py-16">
           <div className="space-y-6">
 <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 relative rounded-[20px] overflow-hidden flex-shrink-0">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 relative rounded-[20px] overflow-hidden flex-shrink-0">
                 <Image src="/images/chugaz-logo.png" alt="CHUGAZ" fill className="object-contain" />
               </div>
               <div className="flex flex-col">
-                <span className="text-base sm:text-lg lg:text-xl font-heading font-extrabold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent leading-tight">
+                <span className="text-base sm:text-lg lg:text-2xl font-heading font-extrabold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent leading-tight">
                   CHUGAZ
                 </span>
                 <span className="text-[7px] sm:text-[8px] font-heading font-semibold text-gray-400 tracking-[0.1em] sm:tracking-[0.15em] leading-tight">

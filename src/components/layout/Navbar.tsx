@@ -57,13 +57,13 @@ export default function Navbar() {
     >
       <nav className="bg-white/80 dark:bg-[#0B1F4D]/80 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20 lg:h-24">
+          <div className="flex items-center justify-between h-24 lg:h-28">
 <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink min-w-0">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 relative rounded-[20px] overflow-hidden flex-shrink-0">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 relative rounded-[20px] overflow-hidden flex-shrink-0">
                 <Image src="/images/chugaz-logo.png" alt="CHUGAZ" fill className="object-contain" />
               </div>
               <div className="flex flex-col min-w-0">
-                <span className="text-sm sm:text-xl lg:text-2xl font-heading font-extrabold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent leading-tight truncate">
+                <span className="text-sm sm:text-xl lg:text-3xl font-heading font-extrabold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent leading-tight truncate">
                   CHUGAZ
                 </span>
                 <span className="text-[6px] sm:text-[8px] font-heading font-semibold text-primary dark:text-gray-300 tracking-[0.1em] sm:tracking-[0.15em] leading-tight hidden sm:block truncate">
