@@ -53,7 +53,7 @@ export default function LoginPage() {
           <GlassCardHeader className="text-center mb-6">
             <div className="flex items-center justify-center gap-3 mb-4">
 <div className="w-48 sm:w-60 lg:w-72 aspect-[515/195] relative overflow-hidden">
-                <Image src="/images/chugaz-logo.png" alt="CHUGAZ" fill className="object-contain" />
+                <Image src="/images/chugaz-logo.png" alt="CHUGAZ" fill className="object-fill" />
               </div>
             </div>
 <GlassCardTitle as="h1" className="text-2xl md:text-3xl text-[#F4B400] mb-1">

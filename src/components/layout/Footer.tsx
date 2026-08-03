@@ -84,7 +84,7 @@ export default function Footer() {
           <div className="space-y-6">
 <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
               <div className="w-36 sm:w-44 lg:w-52 aspect-[515/195] relative overflow-hidden flex-shrink-0">
-                <Image src="/images/chugaz-logo.png" alt="CHUGAZ" fill className="object-contain" />
+                <Image src="/images/chugaz-logo.png" alt="CHUGAZ" fill className="object-fill" />
               </div>
               <div className="flex flex-col">
                 <span className="text-base sm:text-lg lg:text-2xl font-heading font-extrabold bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent leading-tight">
