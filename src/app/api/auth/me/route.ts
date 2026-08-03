@@ -42,12 +42,12 @@ export async function GET(req: Request) {
   }
 
   const token = auth.slice(7)
-  const result = verifyToken(token)
+  const result = await verifyToken(token)
   if (!result) {
     return NextResponse.json({ data: { type: "guest", student: null } })
   }
 
-  const data = readData()
+  const data = await readData()
 
   if (result.type === "admin") {
     const admin = data.admins[0]

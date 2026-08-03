@@ -108,12 +108,12 @@ export function verifyPassword(password: string, stored: string): boolean {
   return hash === verify
 }
 
-export function generateToken(type: "student" | "admin", userId: number): string {
+export async function generateToken(type: "student" | "admin", userId: number): Promise<string> {
   const raw = crypto.randomUUID()
   const expiresAt = Date.now() + TOKEN_EXPIRY_HOURS * 60 * 60 * 1000
   const token = `${type}_${raw}_${userId}`
 
-  const data = readData()
+  const data = await readData()
   data.tokens = data.tokens || []
   data.tokens.push({
     token,
@@ -123,40 +123,40 @@ export function generateToken(type: "student" | "admin", userId: number): string
     createdAt: Date.now(),
     lastActivity: Date.now(),
   })
-  writeData(data)
+  await writeData(data)
 
   return token
 }
 
-export function verifyToken(token: string): { type: string; userId: number } | null {
-  const data = readData()
+export async function verifyToken(token: string): Promise<{ type: string; userId: number } | null> {
+  const data = await readData()
   data.tokens = data.tokens || []
   const entry = data.tokens.find((t: any) => t.token === token)
   if (!entry) return null
   if (Date.now() > entry.expiresAt) {
     data.tokens = data.tokens.filter((t: any) => t.token !== token)
-    writeData(data)
+    await writeData(data)
     return null
   }
   // Update last activity
   entry.lastActivity = Date.now()
-  writeData(data)
+  void writeData(data)
   return { type: entry.type, userId: entry.userId }
 }
 
-export function requireAdmin(authHeader: string | null): boolean {
+export async function requireAdmin(authHeader: string | null): Promise<boolean> {
   if (!authHeader || !authHeader.startsWith("Bearer ")) return false
   const token = authHeader.slice(7)
-  const result = verifyToken(token)
+  const result = await verifyToken(token)
   return result !== null && result.type === "admin"
 }
 
-export function cleanExpiredTokens(): void {
-  const data = readData()
+export async function cleanExpiredTokens(): Promise<void> {
+  const data = await readData()
   data.tokens = data.tokens || []
   const before = data.tokens.length
   data.tokens = data.tokens.filter((t: any) => Date.now() <= t.expiresAt)
-  if (data.tokens.length !== before) writeData(data)
+  if (data.tokens.length !== before) await writeData(data)
 }
 
 export function generateCSRFToken(): string {

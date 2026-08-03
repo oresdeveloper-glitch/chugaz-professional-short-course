@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Name, email, and message are required" }, { status: 422 })
   }
 
-  const data = readData()
+  const data = await readData()
   data.messages.push({
     id: Date.now(),
     name: sanitizeInput(name.trim()),
@@ -30,6 +30,6 @@ export async function POST(req: Request) {
     message: sanitizeInput(message.trim()),
     created_at: new Date().toISOString(),
   })
-  writeData(data)
+  await writeData(data)
   return NextResponse.json({ message: "Message sent successfully" })
 }

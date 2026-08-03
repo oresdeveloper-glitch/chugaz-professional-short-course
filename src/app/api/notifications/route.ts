@@ -8,7 +8,7 @@ export async function GET(req: Request) {
   }
 
   const token = authHeader.slice(7)
-  const data = readData()
+  const data = await readData()
 
   const tok = (data.tokens || []).find((t: any) => t.token === token)
   if (!tok) return NextResponse.json({ message: "Invalid token" }, { status: 401 })

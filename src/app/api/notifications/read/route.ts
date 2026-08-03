@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   try { body = await req.json() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
   const notificationId = body.id
 
-  const data = readData()
+  const data = await readData()
 
   const tok = (data.tokens || []).find((t: any) => t.token === token)
   if (!tok) return NextResponse.json({ message: "Invalid token" }, { status: 401 })
@@ -31,6 +31,6 @@ export async function POST(req: Request) {
     if (n && n.student_email === student.email) n.read = true
   }
 
-  writeData(data)
+  await writeData(data)
   return NextResponse.json({ message: "Notifications marked as read" })
 }

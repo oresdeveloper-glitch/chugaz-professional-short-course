@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Too many attempts. Try again later." }, { status: 429 })
   }
 
-  const data = readData()
+  const data = await readData()
 
   function migratePassword(record: any): boolean {
     if (!record.password || !record.password.includes(":")) {
@@ -34,9 +34,9 @@ export async function POST(req: Request) {
 
   const admin = data.admins.find((a: any) => a.email === email.toLowerCase())
   if (admin) {
-    if (migratePassword(admin)) writeData(data)
+    if (migratePassword(admin)) await writeData(data)
     if (verifyPassword(password, admin.password)) {
-      const token = generateToken("admin", admin.id)
+      const token = await generateToken("admin", admin.id)
       return NextResponse.json({
         message: "Login successful",
         data: {
@@ -54,9 +54,9 @@ export async function POST(req: Request) {
     if (student.status === "rejected") {
       return NextResponse.json({ message: "Your account has been rejected. Contact support for more information." }, { status: 403 })
     }
-    if (migratePassword(student)) writeData(data)
+    if (migratePassword(student)) await writeData(data)
     if (verifyPassword(password, student.password)) {
-      const token = generateToken("student", student.id)
+      const token = await generateToken("student", student.id)
       const { password: _, ...safe } = student
       return NextResponse.json({
         message: "Login successful",

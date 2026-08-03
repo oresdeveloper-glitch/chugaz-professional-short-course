@@ -3,11 +3,11 @@ import { readData } from "@/lib/server-store"
 import { requireAdmin } from "@/lib/auth-server"
 
 export async function GET(req: Request) {
-  if (!requireAdmin(req.headers.get("authorization"))) {
+  if (!(await requireAdmin(req.headers.get("authorization")))) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
   }
 
-  const data = readData()
+  const data = await readData()
   const students = data.students.map((s: any) => {
     const { password, ...rest } = s
     return {

@@ -1,6 +1,7 @@
 import fs from "fs"
 import path from "path"
 import os from "os"
+import { put, list } from "@vercel/blob"
 
 function getDataDir(): string {
   if (process.env.CHUGAZ_DATA_DIR) return process.env.CHUGAZ_DATA_DIR
@@ -18,6 +19,14 @@ const DATA_DIR = getDataDir()
 const DATA_FILE = path.join(DATA_DIR, "chugaz_data.json")
 const LOCK_FILE = path.join(DATA_DIR, "chugaz.lock")
 const COUNTER_FILE = path.join(DATA_DIR, "chugaz_counter.txt")
+
+const BLOB_KEY = "chugaz_data.json"
+const COUNTER_BLOB_KEY = "chugaz_counter.txt"
+const BLOB_ENABLED = !!process.env.BLOB_READ_WRITE_TOKEN
+
+// In-memory cache so synchronous reads are fast and consistent within an instance
+let memoryData: StoredData | null = null
+let memoryCounter: number | null = null
 
 interface StoredData {
   students: any[]
@@ -88,7 +97,7 @@ function releaseLock(): void {
   try { fs.rmdirSync(LOCK_FILE) } catch {}
 }
 
-function readData(): StoredData {
+function readFileData(): StoredData {
   try {
     ensureDir()
     if (fs.existsSync(DATA_FILE)) {
@@ -105,7 +114,7 @@ function readData(): StoredData {
   return getDefaults()
 }
 
-function writeData(data: StoredData): void {
+function writeFileData(data: StoredData): void {
   ensureDir()
   if (!acquireLock()) {
     console.error("writeData: could not acquire lock, writing anyway")
@@ -122,8 +131,84 @@ function writeData(data: StoredData): void {
   finally { releaseLock() }
 }
 
-function getNextRegNumber(): string {
+async function readBlobData(): Promise<StoredData | null> {
+  try {
+    const { blobs } = await list({ prefix: BLOB_KEY })
+    const blob = blobs.find(b => b.pathname.endsWith(BLOB_KEY))
+    if (!blob) return null
+    const res = await fetch(blob.url)
+    if (!res.ok) return null
+    return await res.json()
+  } catch (e) {
+    console.error("readBlobData error:", e)
+    return null
+  }
+}
+
+async function writeBlobData(data: StoredData): Promise<void> {
+  try {
+    await put(BLOB_KEY, JSON.stringify(data), { access: "private", addRandomSuffix: false, contentType: "application/json", allowOverwrite: true })
+  } catch (e) {
+    console.error("writeBlobData error:", e)
+  }
+}
+
+async function readBlobCounter(): Promise<number | null> {
+  try {
+    const { blobs } = await list({ prefix: COUNTER_BLOB_KEY })
+    const blob = blobs.find(b => b.pathname.endsWith(COUNTER_BLOB_KEY))
+    if (!blob) return null
+    const res = await fetch(blob.url)
+    if (!res.ok) return null
+    const text = await res.text()
+    return parseInt(text.trim(), 10)
+  } catch (e) {
+    console.error("readBlobCounter error:", e)
+    return null
+  }
+}
+
+async function writeBlobCounter(value: number): Promise<void> {
+  try {
+    await put(COUNTER_BLOB_KEY, String(value), { access: "private", addRandomSuffix: false, contentType: "text/plain", allowOverwrite: true })
+  } catch (e) {
+    console.error("writeBlobCounter error:", e)
+  }
+}
+
+async function readData(): Promise<StoredData> {
+  if (BLOB_ENABLED) {
+    if (memoryData) return memoryData
+    const blob = await readBlobData()
+    memoryData = blob || getDefaults()
+    return memoryData
+  }
+  return readFileData()
+}
+
+async function writeData(data: StoredData): Promise<void> {
+  if (BLOB_ENABLED) {
+    memoryData = data
+    await writeBlobData(data)
+    return
+  }
+  writeFileData(data)
+}
+
+async function getNextRegNumber(): Promise<string> {
   let counter = 1
+  if (BLOB_ENABLED) {
+    if (memoryCounter === null) {
+      const c = await readBlobCounter()
+      memoryCounter = (c || 0) + 1
+    } else {
+      memoryCounter += 1
+    }
+    counter = memoryCounter
+    await writeBlobCounter(counter)
+    return `CHG2026${String(counter).padStart(5, "0")}`
+  }
+
   ensureDir()
   if (acquireLock()) {
     try {

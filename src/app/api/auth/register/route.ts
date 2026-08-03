@@ -107,7 +107,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Validation failed", errors }, { status: 422 })
   }
 
-  const data = readData()
+  const data = await readData()
 
   if (data.students.find((s: any) => s.email === email)) {
     return NextResponse.json({ message: "Email already registered", errors: { email: ["Already taken"] } }, { status: 422 })
@@ -121,7 +121,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "WhatsApp already registered", errors: { whatsapp: ["Already taken"] } }, { status: 422 })
   }
 
-  const regNum = getNextRegNumber()
+  const regNum = await getNextRegNumber()
   const payment_ref = generatePaymentRef(regNum)
   const student = {
     id: Date.now(),
@@ -155,7 +155,7 @@ export async function POST(req: Request) {
   }
 
   data.students.push(student)
-  writeData(data)
+  await writeData(data)
 
   return NextResponse.json({
     message: "Registration successful",

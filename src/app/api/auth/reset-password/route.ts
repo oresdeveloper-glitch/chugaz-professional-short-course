@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Password must be at least 8 characters" }, { status: 422 })
   }
 
-  const data = readData()
+  const data = await readData()
   data.resetCodes = data.resetCodes || []
 
   // Hash the incoming code to compare against stored hashed code
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
   const record = data.resetCodes[idx]
   if (Date.now() > record.expiresAt) {
     data.resetCodes.splice(idx, 1)
-    writeData(data)
+    await writeData(data)
     return NextResponse.json({ message: "Code has expired. Request a new one." }, { status: 400 })
   }
 
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
   }
 
   data.resetCodes.splice(idx, 1)
-  writeData(data)
+  await writeData(data)
 
   return NextResponse.json({ message: "Password has been reset successfully. You can now login." })
 }

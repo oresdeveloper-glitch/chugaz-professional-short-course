@@ -3,7 +3,7 @@ import { testConnection, sendResetCodeEmail } from "@/lib/email"
 import { requireAdmin } from "@/lib/auth-server"
 
 export async function GET(req: Request) {
-  if (!requireAdmin(req.headers.get("authorization"))) {
+  if (!(await requireAdmin(req.headers.get("authorization")))) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
   }
   const result = await testConnection()
@@ -11,7 +11,7 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  if (!requireAdmin(req.headers.get("authorization"))) {
+  if (!(await requireAdmin(req.headers.get("authorization")))) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
   }
   let body: any

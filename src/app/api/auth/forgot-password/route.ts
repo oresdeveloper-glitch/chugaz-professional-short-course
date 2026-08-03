@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Email is required" }, { status: 422 })
   }
 
-  const data = readData()
+  const data = await readData()
   const normalized = email.toLowerCase().trim()
   const exists = data.students.some((s: any) => s.email === normalized)
     || data.admins.some((a: any) => a.email === normalized)
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
 
   data.resetCodes = data.resetCodes || []
   data.resetCodes.push({ email: normalized, code: await hashData(code), expiresAt })
-  writeData(data)
+  await writeData(data)
 
   // Send the actual plain code via email (not stored plain)
   const result = await sendResetCodeEmail(normalized, code)

@@ -5,7 +5,7 @@ import { requireAdmin } from "@/lib/auth-server"
 const REASONS = ["payment", "registration", "document", "general"] as const
 
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  if (!requireAdmin(req.headers.get("authorization"))) {
+  if (!(await requireAdmin(req.headers.get("authorization")))) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
   }
 
@@ -18,7 +18,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     return NextResponse.json({ message: "Invalid reminder reason" }, { status: 422 })
   }
 
-  const data = readData()
+  const data = await readData()
   const index = data.students.findIndex((s: any) => s.registration_number === id || String(s.id) === id)
   if (index === -1) return NextResponse.json({ message: "Student not found" }, { status: 404 })
 
@@ -35,7 +35,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
   data.notifications = data.notifications || []
   data.notifications.push(notification)
-  writeData(data)
+  await writeData(data)
 
   return NextResponse.json({ message: "Notification sent", notification })
 }
