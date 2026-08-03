@@ -30,10 +30,11 @@ class AuthController extends Controller
             'postal_address' => 'nullable|string|max:255',
             'training_mode' => 'nullable|string|in:online,onsite,hybrid',
             'preferred_time' => 'nullable|string|max:100',
+            'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:width=150,height=150',
+            // Extra fields sent by frontend but handled separately
             'courses' => 'nullable|array',
             'payment_method' => 'nullable|string',
             'transaction_id' => 'nullable|string',
-            'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048|dimensions:width=150,height=150',
         ]);
 
         if ($validator->fails()) {
@@ -67,7 +68,7 @@ class AuthController extends Controller
             'region' => $request->region,
             'district' => $request->district,
             'street' => $request->street,
-            'postal_address' => $request->postalAddress,
+            'postal_address' => $request->postal_address,
             'training_mode' => $request->training_mode,
             'preferred_time' => $request->preferred_time,
             'photo' => $photoPath,
