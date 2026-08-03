@@ -45,3 +45,6 @@ next-env.d.ts
 backend/.env
 backend/storage/
 backend/public/storage/
+
+.vercel
+.env*
