@@ -57,7 +57,7 @@ export default function Navbar() {
     >
       <nav className="bg-white/80 dark:bg-[#0B1F4D]/80 backdrop-blur-xl border-b border-white/20 dark:border-white/10 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-stretch justify-between h-14 sm:h-16 lg:h-20">
+          <div className="flex items-stretch justify-between h-24 lg:h-28">
 <Link href="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink min-w-0">
               <div className="h-full aspect-[515/195] relative overflow-hidden flex-shrink-0">
                 <Image src="/images/chugaz-logo.png" alt="CHUGAZ" fill className="object-fill" priority />
