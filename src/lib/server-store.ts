@@ -133,7 +133,7 @@ function writeFileData(data: StoredData): void {
 
 async function readBlobData(): Promise<StoredData | null> {
   try {
-    const result = await get(BLOB_KEY, { access: "private" })
+    const result = await get(BLOB_KEY, { access: "private", useCache: false })
     if (!result) return null
     const stream = result.stream
     if (!stream) return null
@@ -155,7 +155,7 @@ async function writeBlobData(data: StoredData): Promise<void> {
 
 async function readBlobCounter(): Promise<number | null> {
   try {
-    const result = await get(COUNTER_BLOB_KEY, { access: "private" })
+    const result = await get(COUNTER_BLOB_KEY, { access: "private", useCache: false })
     if (!result) return null
     const stream = result.stream
     if (!stream) return null
