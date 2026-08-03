@@ -44,6 +44,15 @@ async function request<T = any>(
   const json = await res.json()
 
   if (!res.ok) {
+    if (res.status === 401) {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("chugaz_user")
+        localStorage.removeItem("chugaz_token")
+        if (!window.location.pathname.startsWith("/login")) {
+          window.location.href = "/login"
+        }
+      }
+    }
     throw new ApiError(
       json.message || "Something went wrong",
       res.status,
