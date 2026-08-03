@@ -68,7 +68,7 @@ export default function AdminDashboard() {
       if (!student) return
       try {
         const res: any = await api.post(`/students/${student.regNo}/payment`)
-        setStudents(prev => prev.map(s => s.email === email ? { ...s, paymentStatus: res.payment_status } : s))
+        setStudents(prev => prev.map(s => s.email === email ? { ...s, paymentStatus: res.payment_status, status: res.status } : s))
         showToast(`Payment ${res.payment_status === "confirmed" ? "confirmed" : "reset"}`)
       } catch (e: any) { showToast(e?.message || "Payment action failed") }
     },

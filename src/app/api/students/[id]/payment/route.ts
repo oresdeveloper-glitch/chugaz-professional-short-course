@@ -14,10 +14,16 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
   const student = data.students[index]
   student.payment_status = student.payment_status === "confirmed" ? "pending" : "confirmed"
+  if (student.payment_status === "confirmed") {
+    student.status = "approved"
+  } else {
+    student.status = "pending"
+  }
   writeData(data)
 
   return NextResponse.json({
     message: `Payment ${student.payment_status === "confirmed" ? "confirmed" : "reset to pending"}`,
     payment_status: student.payment_status,
+    status: student.status,
   })
 }
