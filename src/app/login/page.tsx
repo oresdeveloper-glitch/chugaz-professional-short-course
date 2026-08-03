@@ -52,7 +52,7 @@ export default function LoginPage() {
         <GlassCard variant="elevated" padding="lg" borderRadius="2xl">
           <GlassCardHeader className="text-center mb-6">
             <div className="flex items-center justify-center gap-3 mb-4">
-<div className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 relative rounded-xl overflow-hidden">
+<div className="w-48 sm:w-60 lg:w-72 aspect-[515/195] relative overflow-hidden">
                 <Image src="/images/chugaz-logo.png" alt="CHUGAZ" fill className="object-contain" />
               </div>
             </div>
