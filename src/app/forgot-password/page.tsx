@@ -54,7 +54,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-<div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(244,180,0,0.12),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(129,140,248,0.10),transparent_40%),linear-gradient(135deg,#0B1F4D_0%,#1a3a7a_50%,#0B1F4D_100%)]">
+<div className="dark relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.35),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(255,201,51,0.30),transparent_40%),linear-gradient(135deg,#F4B400_0%,#FFC933_50%,#E8A200_100%)]">
 
       <div
         
@@ -62,7 +62,7 @@ export default function ForgotPasswordPage() {
         
         className="w-full max-w-md z-10"
       >
-        <GlassCard variant="elevated" padding="lg" borderRadius="2xl">
+        <GlassCard variant="dark" padding="lg" borderRadius="2xl">
             {step === "done" ? (
               <div
                 key="done"

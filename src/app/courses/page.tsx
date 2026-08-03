@@ -62,17 +62,17 @@ export default function CoursesPage() {
         </div>
       </section>
 
-<section className="sticky top-20 z-30 bg-white/95 backdrop-blur-md border-b border-gray-200/80 shadow-sm">
+<section className="dark sticky top-20 z-30 bg-[#0B1F4D]/95 backdrop-blur-md border-b border-white/10 shadow-lg">
         <div className="container mx-auto px-4 py-3">
           <div className="flex flex-col md:flex-row gap-3 items-center justify-between max-w-6xl mx-auto">
-            <div className="flex-nowrap md:flex-wrap gap-2 justify-start md:justify-center overflow-x-auto md:overflow-visible flex w-full md:w-auto pb-1 md:pb-0">
+            <div className="flex flex-wrap gap-2 justify-start md:justify-center w-full md:w-auto pb-1 md:pb-0">
               {allCategories.map((category) => (
                 <PremiumButton
                   key={category}
-                  variant={activeCategory === category ? "gradient-primary" : "glass"}
+                  variant={activeCategory === category ? "gradient-gold" : "glass"}
                   size="sm"
                   onClick={() => setActiveCategory(category)}
-                  className="whitespace-nowrap text-xs md:text-sm"
+                  className="whitespace-nowrap text-[11px] sm:text-xs md:text-sm"
                 >
                   {category}
                 </PremiumButton>
@@ -122,7 +122,7 @@ export default function CoursesPage() {
                       <h3 className="text-lg font-bold text-primary mb-3 font-heading group-hover:text-gold transition-colors duration-300">
                         {course.title}
                       </h3>
-                      <p className="text-gray-700 text-sm leading-relaxed line-clamp-2 mb-4 flex-1">
+                      <p className="text-gray-700 text-sm leading-relaxed mb-4 flex-1">
                         {course.description}
                       </p>
                       <div className="flex items-center justify-between gap-4 text-sm text-gray-500 mb-4">
