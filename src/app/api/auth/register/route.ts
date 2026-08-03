@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { readData, writeData, getNextRegNumber } from "@/lib/server-store"
-import { hashPassword, checkRateLimit, generatePaymentRef, validateTransactionId, sanitizeObject, sanitizeInput, validateBodySize } from "@/lib/auth-server"
+import { hashPassword, checkRateLimit, generatePaymentRef, validateTransactionId, sanitizeObject, sanitizeInput } from "@/lib/auth-server"
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PHONE_RE = /^\+?[\d\s\-()]{7,15}$/
@@ -13,29 +13,44 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Too many registration attempts. Try again later." }, { status: 429 })
   }
 
-  let body: any
-  try { body = await req.json() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
+  let fd: FormData
+  try { fd = await req.formData() } catch { return NextResponse.json({ message: "Invalid request body" }, { status: 400 }) }
 
   // Validate request body size
-  if (!validateBodySize(body)) {
+  const sizeJson = JSON.stringify({ body: [...fd.keys()], photo: (fd.get("photo") instanceof File) ? (fd.get("photo") as File).size : 0 })
+  if (sizeJson.length > 4096) {
     return NextResponse.json({ message: "Request body too large" }, { status: 413 })
   }
 
-  // Sanitize all string inputs
-  body = sanitizeObject(body)
+  const body: Record<string, any> = {}
+  for (const key of fd.keys()) {
+    const v = fd.get(key)
+    if (key === "photo" && v instanceof File) {
+      const buf = Buffer.from(await v.arrayBuffer())
+      if (buf.length > 2 * 1024 * 1024) {
+        return NextResponse.json({ message: "Photo exceeds 2MB limit" }, { status: 413 })
+      }
+      body.photo = `data:${v.type || "image/jpeg"};base64,${buf.toString("base64")}`
+      continue
+    }
+    if (typeof v === "string") body[key] = v
+  }
 
-  if (body.website && body.website.trim()) {
+  // Sanitize all string inputs
+  const sanitizedBody = sanitizeObject(body)
+
+  if (sanitizedBody.website && sanitizedBody.website.trim()) {
     return NextResponse.json({ message: "Bot detected" }, { status: 400 })
   }
 
-  const first_name = body.first_name?.trim() || ""
-  const middle_name = body.middle_name?.trim() || null
-  const last_name = body.last_name?.trim() || ""
-  const email = body.email?.toLowerCase().trim() || ""
-  const phone = body.phone?.trim() || ""
-  const whatsapp = body.whatsapp?.trim() || null
-  const password = body.password || ""
-  const password_confirmation = body.password_confirmation || ""
+  const first_name = sanitizedBody.first_name?.trim() || ""
+  const middle_name = sanitizedBody.middle_name?.trim() || null
+  const last_name = sanitizedBody.last_name?.trim() || ""
+  const email = sanitizedBody.email?.toLowerCase().trim() || ""
+  const phone = sanitizedBody.phone?.trim() || ""
+  const whatsapp = sanitizedBody.whatsapp?.trim() || null
+  const password = sanitizedBody.password || ""
+  const password_confirmation = sanitizedBody.password_confirmation || ""
 
   const errors: Record<string, string[]> = {}
 
@@ -58,6 +73,8 @@ export async function POST(req: Request) {
   if (whatsapp && !PHONE_RE.test(whatsapp)) errors.whatsapp = ["Invalid phone format"]
   if (whatsapp && whatsapp.length > MAX_LENGTH) errors.whatsapp = [`Max ${MAX_LENGTH} characters`]
 
+  if (!sanitizedBody.photo) errors.photo = ["Passport photo (150x150px) is required"]
+
   if (!password) errors.password = ["Password is required"]
   else if (!PASSWORD_RE.test(password)) errors.password = [
     "Min 8 characters with uppercase, lowercase, and a number"
@@ -66,12 +83,18 @@ export async function POST(req: Request) {
   if (password !== password_confirmation) errors.password_confirmation = ["Passwords do not match"]
 
   for (const field of ["nationality", "occupation", "region", "district", "street", "postal_address"]) {
-    const val = body[field]?.trim()
+    const val = sanitizedBody[field]?.trim()
     if (val && val.length > MAX_LENGTH) errors[field] = [`Max ${MAX_LENGTH} characters`]
   }
 
-  const payment_method = body.payment_method || null
-  const transaction_id = body.transaction_id?.trim() || null
+  const payment_method = sanitizedBody.payment_method || null
+  const transaction_id = sanitizedBody.transaction_id?.trim() || null
+
+  const courses: string[] = []
+  for (const key of Object.keys(sanitizedBody)) {
+    const m = key.match(/^courses\[(\d+)\]$/)
+    if (m && sanitizedBody[key]) courses[Number(m[1])] = sanitizedBody[key]
+  }
 
   if (payment_method === "mobile" && !transaction_id) {
     errors.transaction_id = ["Transaction ID is required for mobile payments"]
@@ -110,18 +133,19 @@ export async function POST(req: Request) {
     phone,
     whatsapp,
     password: hashPassword(password),
-    gender: body.gender || null,
-    date_of_birth: body.date_of_birth || null,
-    nationality: body.nationality?.trim() || null,
-    occupation: body.occupation?.trim() || null,
-    education_level: body.education_level || null,
-    region: body.region?.trim() || null,
-    district: body.district?.trim() || null,
-    street: body.street?.trim() || null,
-    postal_address: body.postal_address?.trim() || null,
-    training_mode: body.training_mode || null,
-    preferred_time: body.preferred_time || null,
-    courses: body.courses || [],
+    photo: sanitizedBody.photo || null,
+    gender: sanitizedBody.gender || null,
+    date_of_birth: sanitizedBody.date_of_birth || null,
+    nationality: sanitizedBody.nationality?.trim() || null,
+    occupation: sanitizedBody.occupation?.trim() || null,
+    education_level: sanitizedBody.education_level || null,
+    region: sanitizedBody.region?.trim() || null,
+    district: sanitizedBody.district?.trim() || null,
+    street: sanitizedBody.street?.trim() || null,
+    postal_address: sanitizedBody.postal_address?.trim() || null,
+    training_mode: sanitizedBody.training_mode || null,
+    preferred_time: sanitizedBody.preferred_time || null,
+    courses: courses.filter(Boolean),
     payment_method,
     transaction_id,
     payment_ref,
